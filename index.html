@@ -15,24 +15,24 @@
             --text-dark: #1a1a1a;
             --text-gray: #555;
             --danger: #d93025;
-            --shadow: 0 8px 24px rgba(0,0,0,0.08);
-            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
         
         body { background-color: var(--bg-body); color: var(--text-dark); overflow-x: hidden; padding-bottom: 80px; }
 
-        /* --- HEADER CON GRADIENTE ANIMADO --- */
+        /* --- HEADER CON GRADIENTE ANIMADO PRO --- */
         header {
-            background: linear-gradient(-45deg, #0a2f5c, #16468a, #0a2f5c, #1e3a5f);
+            background: linear-gradient(-45deg, #0a2f5c, #1a4b8f, #0d3b75, #081f3d);
             background-size: 400% 400%;
-            animation: gradientAnim 15s ease infinite;
+            animation: gradientAnim 12s ease infinite;
             color: var(--white);
-            padding: 40px 20px 70px; /* Más espacio abajo para evitar solapamiento */
+            padding: 50px 20px 90px; /* Aumentado para dar aire al buscador */
             text-align: center;
             border-bottom: 5px solid var(--yellow-accent);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
             position: relative;
         }
 
@@ -43,157 +43,158 @@
         }
 
         .logo-box {
-            width: 100px; height: 100px;
+            width: 105px; height: 105px;
             background: var(--white);
             border-radius: 50%;
             margin: 0 auto 20px;
             display: flex; align-items: center; justify-content: center;
-            border: 3px solid var(--yellow-accent);
+            border: 4px solid var(--yellow-accent);
             overflow: hidden;
-            box-shadow: var(--shadow);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             transition: var(--transition);
         }
-        .logo-box:hover { transform: scale(1.05); }
+        .logo-box:hover { transform: scale(1.08) rotate(3deg); }
         .logo-box img { width: 100%; height: 100%; object-fit: cover; }
-        .logo-box span { font-size: 11px; color: var(--blue-main); font-weight: 700; text-align: center; line-height: 1.1; }
+        .logo-box span { font-size: 11px; color: var(--blue-main); font-weight: 800; text-align: center; line-height: 1; }
 
         header h1 {
             font-family: 'Rajdhani', sans-serif;
-            font-size: clamp(26px, 8vw, 36px);
+            font-size: clamp(28px, 9vw, 40px);
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.4);
+            font-weight: 700;
         }
         header h1 span { color: var(--yellow-accent); }
 
-        /* --- BUSCADOR CORREGIDO --- */
+        /* --- BUSCADOR POSICIONADO SIN SOLAPAMIENTO --- */
         .search-wrapper {
-            max-width: 550px;
-            margin: -32px auto 0; /* Posición controlada sobre el gradiente */
-            padding: 0 20px;
+            max-width: 580px;
+            margin: -40px auto 0; /* Desplazamiento controlado */
+            padding: 0 25px;
             position: relative;
             z-index: 100;
         }
         .search-bar {
             background: var(--white);
             display: flex; align-items: center;
-            padding: 14px 24px;
+            padding: 16px 28px;
             border-radius: 50px;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
             transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.05);
         }
-        .search-bar:focus-within { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
+        .search-bar:focus-within { transform: translateY(-5px); box-shadow: 0 20px 45px rgba(0,0,0,0.2); }
         .search-bar input {
             border: none; outline: none; width: 100%;
-            font-size: 16px; margin-left: 12px; color: var(--text-dark);
+            font-size: 16px; margin-left: 15px; color: var(--text-dark);
+            background: transparent;
         }
 
-        /* --- CONTENIDO DE TARJETAS --- */
+        /* --- GRID DE TARJETAS --- */
         .main-container {
             max-width: 1200px;
-            margin: 50px auto;
+            margin: 60px auto;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 30px;
-            padding: 0 20px;
+            gap: 35px;
+            padding: 0 25px;
         }
 
         .church-card {
             background: var(--white);
-            border-radius: 24px;
+            border-radius: 28px;
             overflow: hidden;
             box-shadow: var(--shadow);
             display: flex;
             flex-direction: column;
             transition: var(--transition);
             opacity: 0;
-            transform: translateY(20px);
-            animation: cardAppear 0.6s forwards;
+            transform: translateY(30px);
+            animation: cardFadeIn 0.8s cubic-bezier(0.2, 1, 0.3, 1) forwards;
         }
-        @keyframes cardAppear { to { opacity: 1; transform: translateY(0); } }
+        @keyframes cardFadeIn { to { opacity: 1; transform: translateY(0); } }
         
-        .church-card:hover { transform: translateY(-8px); box-shadow: 0 15px 40px rgba(0,0,0,0.12); }
+        .church-card:hover { transform: translateY(-12px); box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
 
         .card-gallery {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            height: 190px;
-            background: #eee;
-            gap: 2px;
+            height: 200px;
+            background: #f0f0f0;
+            gap: 3px;
         }
-        .card-gallery img { width: 100%; height: 100%; object-fit: cover; }
+        .card-gallery img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .church-card:hover .card-gallery img { filter: brightness(1.1); }
 
         .card-content { 
-            padding: 24px; 
+            padding: 28px; 
             background: var(--white);
             flex-grow: 1;
+            border-top: 1px solid #f8f8f8;
         }
-        .card-content h2 { color: var(--blue-main); font-size: 20px; margin-bottom: 12px; font-weight: 700; }
-        .card-content p { font-size: 14px; color: var(--text-gray); margin-bottom: 10px; display: flex; align-items: center; gap: 10px; line-height: 1.4; }
-        .card-content .phone-text { color: var(--blue-main); font-weight: 700; margin-top: 10px; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-size: 15px; }
+        .card-content h2 { color: var(--blue-main); font-size: 22px; margin-bottom: 12px; font-weight: 700; letter-spacing: -0.5px; }
+        .card-content p { font-size: 14.5px; color: var(--text-gray); margin-bottom: 12px; display: flex; align-items: flex-start; gap: 10px; line-height: 1.5; }
+        .card-content .phone-link { color: var(--blue-main); font-weight: 700; margin-top: 10px; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-size: 16px; transition: 0.2s; }
+        .card-content .phone-link:hover { opacity: 0.7; }
 
         .btn-maps {
             display: flex; align-items: center; justify-content: center;
             background: var(--blue-main); color: var(--white);
-            padding: 15px; border-radius: 14px;
+            padding: 16px; border-radius: 16px;
             text-decoration: none; font-weight: 700; font-size: 14px;
-            gap: 10px; width: 100%; margin-top: 20px;
+            gap: 10px; width: 100%; margin-top: 25px;
             transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(10, 47, 92, 0.2);
         }
-        .btn-maps:hover { background: var(--blue-light); }
+        .btn-maps:hover { background: var(--blue-light); transform: scale(1.02); }
 
-        /* ADMIN CONTROLS */
+        /* --- ADMIN CONTROLS --- */
         .admin-controls {
             display: none;
-            padding: 15px 24px 24px;
-            gap: 12px;
-            background: #fdfdfd;
+            padding: 15px 28px 28px;
+            gap: 15px;
+            background: #fafafa;
             border-top: 1px solid #f0f0f0;
         }
-        .btn-edit { flex: 1; background: #eef4ff; color: var(--blue-main); border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: var(--transition); }
-        .btn-delete { background: #fff1f1; color: var(--danger); border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: var(--transition); }
-        .btn-edit:hover { background: #d0e1ff; }
+        .btn-edit { flex: 1; background: #eef4ff; color: var(--blue-main); border: none; padding: 12px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.3s; }
+        .btn-delete { background: #fff1f1; color: var(--danger); border: none; padding: 12px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.3s; }
+        .btn-edit:hover { background: #dce7ff; }
 
-        /* --- MODALES FLUIDOS --- */
+        /* --- MODALES --- */
         .modal-overlay {
             display: none; position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(10px);
             z-index: 2000; align-items: center; justify-content: center;
             padding: 20px;
         }
         .modal-body {
             background: var(--white);
-            padding: 30px;
-            border-radius: 28px;
-            width: 100%; max-width: 480px;
+            padding: 35px;
+            border-radius: 32px;
+            width: 100%; max-width: 500px;
             max-height: 90vh; overflow-y: auto;
             transform: scale(0.9); opacity: 0;
             transition: var(--transition);
         }
         .modal-overlay.active .modal-body { transform: scale(1); opacity: 1; }
 
-        .form-field { margin-bottom: 18px; }
-        .form-field label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 8px; color: var(--blue-main); text-transform: uppercase; }
-        .form-field input { width: 100%; padding: 14px; border: 2px solid #eee; border-radius: 12px; font-size: 15px; outline: none; transition: var(--transition); }
-        .form-field input:focus { border-color: var(--yellow-accent); }
-
-        .btn-action {
-            width: 100%; background: var(--blue-main); color: white;
-            padding: 18px; border: none; border-radius: 16px;
-            font-weight: 700; cursor: pointer; font-size: 16px; margin-top: 15px;
-            box-shadow: 0 8px 20px rgba(10, 47, 92, 0.2);
-        }
+        .form-field { margin-bottom: 20px; }
+        .form-field label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 8px; color: var(--blue-main); text-transform: uppercase; letter-spacing: 1px; }
+        .form-field input { width: 100%; padding: 15px; border: 2px solid #f0f0f0; border-radius: 14px; font-size: 15px; outline: none; transition: 0.3s; }
+        .form-field input:focus { border-color: var(--yellow-accent); background: #fdfdfd; }
 
         /* --- FOOTER --- */
         .static-footer {
             text-align: center;
-            padding: 50px 20px 130px;
-            font-size: 15px;
+            padding: 60px 20px 140px;
+            font-size: 16px;
             font-weight: 700;
             color: var(--blue-main);
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            opacity: 0.7;
         }
 
         /* --- NAVBAR --- */
@@ -201,12 +202,14 @@
             position: fixed; bottom: 0; width: 100%;
             background: var(--blue-main);
             display: flex; justify-content: space-around;
-            padding: 16px 0; border-top: 4px solid var(--yellow-accent);
+            padding: 18px 0; border-top: 5px solid var(--yellow-accent);
             z-index: 1500;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.2);
         }
-        .nav-link { background: none; border: none; color: var(--white); font-weight: 700; cursor: pointer; font-size: 11px; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+        .nav-link { background: none; border: none; color: var(--white); font-weight: 700; cursor: pointer; font-size: 11px; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 8px; transition: 0.3s; }
+        .nav-link:active { transform: scale(0.9); }
 
-        #loader { text-align: center; grid-column: 1/-1; padding: 100px; color: var(--blue-main); font-weight: 700; font-size: 1.2rem; }
+        #loader { text-align: center; grid-column: 1/-1; padding: 120px; color: var(--blue-main); font-weight: 700; font-size: 1.3rem; }
     </style>
 </head>
 <body>
@@ -220,222 +223,25 @@
         
         <div class="search-wrapper">
             <div class="search-bar">
-                <svg width="22" height="22" fill="var(--blue-main)" viewBox="0 0 20 20"><path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"></path></svg>
-                <input type="text" id="searchInput" placeholder="Buscar por templo o ciudad..." onkeyup="searchLocal()">
+                <svg width="24" height="24" fill="var(--blue-main)" viewBox="0 0 20 20"><path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"></path></svg>
+                <input type="text" id="searchInput" placeholder="Buscar por nombre o ciudad..." onkeyup="searchLocal()">
             </div>
         </div>
     </header>
 
     <div class="main-container" id="churchGrid">
-        <div id="loader">Conectando con el Directorio...</div>
+        <div id="loader">Conectando con AVCSur...</div>
     </div>
 
     <footer class="static-footer">
         Robert Paraco - AVCSur
     </footer>
 
-    <!-- MODALES -->
+    <!-- MODAL ACCESO -->
     <div id="loginOverlay" class="modal-overlay">
         <div class="modal-body">
-            <h2 style="color:var(--blue-main); margin-bottom:20px;">Acceso Administrador</h2>
-            <div class="form-field"><label>Usuario</label><input type="text" id="uInp"></div>
-            <div class="form-field"><label>Contraseña</label><input type="password" id="pInp"></div>
-            <button class="btn-action" onclick="validateAdmin()">INGRESAR</button>
-            <button onclick="closeMod('loginOverlay')" style="background:none; border:none; width:100%; margin-top:20px; color:var(--text-gray); cursor:pointer; font-weight:600;">Cancelar</button>
-        </div>
-    </div>
-
-    <div id="manageOverlay" class="modal-overlay">
-        <div class="modal-body">
-            <h2 id="manageTitle">Nuevo Registro</h2>
-            <input type="hidden" id="editKey">
-            <div class="form-field"><label>Nombre del Templo</label><input type="text" id="nameIn"></div>
-            <div class="form-field"><label>Dirección Corta</label><input type="text" id="addrIn"></div>
-            <div class="form-field"><label>Teléfono de Contacto</label><input type="tel" id="phoneIn" placeholder="Ej: +58 412 1234567"></div>
-            <div class="form-field"><label>Enlace Google Maps</label><input type="url" id="linkIn"></div>
-            <div class="form-field"><label>Foto 1 (Exterior)</label><input type="file" id="f1" accept="image/*"></div>
-            <div class="form-field"><label>Foto 2 (Interior)</label><input type="file" id="f2" accept="image/*"></div>
-            <button class="btn-action" id="saveBtn" onclick="saveToFirebase()">GUARDAR DATOS</button>
-            
-            <div style="margin-top:25px; padding-top:20px; border-top:2px solid #eee; text-align:center;">
-                <p style="font-size: 11px; font-weight: 700; color: var(--blue-main); margin-bottom:10px;">CAMBIAR LOGO PRINCIPAL</p>
-                <input type="file" id="logoFile" style="display:none" accept="image/*" onchange="handleLogoChange(this)">
-                <button onclick="document.getElementById('logoFile').click()" style="background:#eee; border:1px solid #ddd; padding:12px; border-radius:12px; width:100%; cursor:pointer; font-weight:600; font-size:13px;">SUBIR NUEVO LOGOTIPO</button>
-            </div>
-
-            <button onclick="closeMod('manageOverlay')" style="background:none; border:none; width:100%; margin-top:25px; color:var(--text-gray); cursor:pointer; font-weight:bold;">Cerrar Panel</button>
-        </div>
-    </div>
-
-    <nav>
-        <button class="nav-link" onclick="location.reload()">
-            <svg width="22" height="22" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
-            Explorar
-        </button>
-        <button class="nav-link" onclick="checkAuth()">
-            <svg width="22" height="22" fill="currentColor" viewBox="0 0 20 20"><path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"></path></svg>
-            Gestionar
-        </button>
-    </nav>
-
-    <!-- FIREBASE MODULE -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, push, onValue, set, remove, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
-        const firebaseConfig = {
-             apiKey: "AIzaSyDvYgLYGRrTvLNlhdNHnroBkvHCYXOywfU",
-             authDomain: "guiatemplo-a6420.firebaseapp.com",
-             databaseURL: "https://guiatemplo-a6420-default-rtdb.firebaseio.com",
-             projectId: "guiatemplo-a6420",
-             storageBucket: "guiatemplo-a6420.firebasestorage.app",
-             messagingSenderId: "880420054184",
-             appId: "1:880420054184:web:ec44f720081e81c18a0e9d"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-
-        onValue(ref(db, 'templos'), (snapshot) => {
-            const data = snapshot.val();
-            const list = [];
-            if(data) { for(let key in data) { list.push({ id: key, ...data[key] }); } }
-            window.globalList = list.reverse();
-            renderCards(window.globalList);
-        });
-
-        onValue(ref(db, 'config/logo'), (snapshot) => {
-            const logo = snapshot.val();
-            if(logo) {
-                document.getElementById('logoImg').src = logo;
-                document.getElementById('logoImg').style.display = 'block';
-                document.getElementById('logoLabel').style.display = 'none';
-            }
-        });
-
-        window.saveToFirebase = async () => {
-            const btn = document.getElementById('saveBtn');
-            const key = document.getElementById('editKey').value;
-            const name = document.getElementById('nameIn').value;
-            const addr = document.getElementById('addrIn').value;
-            const phone = document.getElementById('phoneIn').value;
-            const link = document.getElementById('linkIn').value;
-            const file1 = document.getElementById('f1').files[0];
-            const file2 = document.getElementById('f2').files[0];
-
-            if(!name || !addr || !link) return alert("Faltan campos obligatorios.");
-            btn.disabled = true; btn.innerText = "Sincronizando...";
-
-            let data = { name, addr, phone, link };
-            if(file1) data.img1 = await toB64(file1);
-            if(file2) data.img2 = await toB64(file2);
-
-            if(key) {
-                update(ref(db, 'templos/' + key), data).then(() => finalize());
-            } else {
-                if(!file1 || !file2) { btn.disabled = false; btn.innerText = "GUARDAR DATOS"; return alert("Fotos obligatorias."); }
-                push(ref(db, 'templos'), data).then(() => finalize());
-            }
-            function finalize() { btn.disabled = false; btn.innerText = "GUARDAR DATOS"; closeMod('manageOverlay'); }
-        };
-
-        window.deleteTemple = (id) => {
-            if(confirm("¿Eliminar este templo definitivamente?")) remove(ref(db, 'templos/' + id));
-        };
-
-        window.handleLogoChange = async (input) => {
-            if(!window.isAuth || !input.files[0]) return;
-            const b64 = await toB64(input.files[0]);
-            set(ref(db, 'config/logo'), b64).then(() => alert("Logo actualizado."));
-        };
-    </script>
-
-    <script>
-        const AUTH = { u: "admin_templo", p: "Templo2026*" };
-        window.isAuth = false;
-
-        function renderCards(data) {
-            const grid = document.getElementById('churchGrid');
-            grid.innerHTML = data.length === 0 ? '<p id="loader">No hay registros.</p>' : '';
-            
-            data.forEach((item, index) => {
-                const div = document.createElement('div');
-                div.className = 'church-card';
-                div.style.animationDelay = (index * 0.1) + 's';
-                div.innerHTML = `
-                    <div class="card-gallery">
-                        <img src="${item.img1}" loading="lazy">
-                        <img src="${item.img2}" loading="lazy">
-                    </div>
-                    <div class="card-content">
-                        <h2>${item.name}</h2>
-                        <p>📍 ${item.addr}</p>
-                        ${item.phone ? `<a href="tel:${item.phone}" class="phone-text">📞 ${item.phone}</a>` : ''}
-                        <a href="${item.link}" target="_blank" class="btn-maps">VER RUTA EN MAPS</a>
-                    </div>
-                    <div class="admin-controls" id="ctrl-${item.id}">
-                        <button class="btn-edit" onclick="prepEdit('${item.id}')">EDITAR</button>
-                        <button class="btn-delete" onclick="deleteTemple('${item.id}')">BORRAR</button>
-                    </div>
-                `;
-                grid.appendChild(div);
-                if(window.isAuth) div.querySelector('.admin-controls').style.display = 'flex';
-            });
-        }
-
-        function validateAdmin() {
-            if(document.getElementById('uInp').value === AUTH.u && document.getElementById('pInp').value === AUTH.p) {
-                window.isAuth = true;
-                closeMod('loginOverlay');
-                document.querySelectorAll('.admin-controls').forEach(el => el.style.display = 'flex');
-                showManageModal();
-            } else alert("Credenciales incorrectas.");
-        }
-
-        function checkAuth() { window.isAuth ? showManageModal() : showMod('loginOverlay'); }
-
-        function showManageModal() {
-            document.getElementById('manageTitle').innerText = "Nuevo Registro";
-            document.getElementById('editKey').value = "";
-            document.getElementById('nameIn').value = "";
-            document.getElementById('addrIn').value = "";
-            document.getElementById('phoneIn').value = "";
-            document.getElementById('linkIn').value = "";
-            showMod('manageOverlay');
-        }
-
-        function prepEdit(id) {
-            const item = window.globalList.find(x => x.id === id);
-            document.getElementById('manageTitle').innerText = "Editar Registro";
-            document.getElementById('editKey').value = id;
-            document.getElementById('nameIn').value = item.name;
-            document.getElementById('addrIn').value = item.addr;
-            document.getElementById('phoneIn').value = item.phone || "";
-            document.getElementById('linkIn').value = item.link;
-            showMod('manageOverlay');
-        }
-
-        function searchLocal() {
-            const val = document.getElementById('searchInput').value.toLowerCase();
-            document.querySelectorAll('.church-card').forEach(card => {
-                card.style.display = card.innerText.toLowerCase().includes(val) ? 'flex' : 'none';
-            });
-        }
-
-        function showMod(id) { 
-            const el = document.getElementById(id);
-            el.style.display = 'flex'; 
-            setTimeout(() => el.classList.add('active'), 10);
-        }
-        function closeMod(id) { 
-            const el = document.getElementById(id);
-            el.classList.remove('active');
-            setTimeout(() => el.style.display = 'none', 400);
-        }
-        const toB64 = f => new Promise((res, rej) => {
-            const r = new FileReader(); r.readAsDataURL(f);
-            r.onload = () => res(r.result); r.onerror = e => rej(e);
-        });
-    </script>
-</body>
-</html>
+            <h2 style="color:var(--blue-main); margin-bottom:25px; text-align: center;">Seguridad AVCSur</h2>
+            <div class="form-field"><label>Usuario</label><input type="text" id="uInp" placeholder="Admin ID"></div>
+            <div class="form-field"><label>Contraseña</label><input type="password" id="pInp" placeholder="••••••••"></div>
+            <button class="btn-action" onclick="validateAdmin()">INGRESAR AL PANEL</button>
+            <button onclick="closeMod('loginOverlay')" style="background:none; border:none; width:100%; margin-top:25px; color:var(--text-gray); cursor:pointer; font-weight:700;">Cancelar</button>
