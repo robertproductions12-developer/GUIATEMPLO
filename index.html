@@ -16,24 +16,25 @@
             --text-gray: #555;
             --danger: #d93025;
             --shadow: 0 10px 30px rgba(0,0,0,0.08);
-            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            --transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
         
         body { background-color: var(--bg-body); color: var(--text-dark); overflow-x: hidden; padding-bottom: 80px; }
 
-        /* --- HEADER CON GRADIENTE ANIMADO PRO --- */
+        /* --- HEADER CON GRADIENTE ANIMADO --- */
         header {
             background: linear-gradient(-45deg, #0a2f5c, #1a4b8f, #0d3b75, #081f3d);
             background-size: 400% 400%;
             animation: gradientAnim 12s ease infinite;
             color: var(--white);
-            padding: 50px 20px 90px; /* Aumentado para dar aire al buscador */
+            padding: 60px 20px;
             text-align: center;
             border-bottom: 5px solid var(--yellow-accent);
             box-shadow: 0 4px 20px rgba(0,0,0,0.4);
             position: relative;
+            z-index: 10;
         }
 
         @keyframes gradientAnim {
@@ -42,8 +43,29 @@
             100% { background-position: 0% 50%; }
         }
 
+        /* BOTÓN LUPA SUPERIOR DERECHA */
+        .search-trigger {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: rgba(255,255,255,0.15);
+            border: 2px solid var(--yellow-accent);
+            color: var(--white);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+            z-index: 20;
+        }
+        .search-trigger:active { transform: scale(0.9); }
+
         .logo-box {
-            width: 105px; height: 105px;
+            width: 110px; height: 110px;
             background: var(--white);
             border-radius: 50%;
             margin: 0 auto 20px;
@@ -51,51 +73,80 @@
             border: 4px solid var(--yellow-accent);
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            transition: var(--transition);
         }
-        .logo-box:hover { transform: scale(1.08) rotate(3deg); }
         .logo-box img { width: 100%; height: 100%; object-fit: cover; }
-        .logo-box span { font-size: 11px; color: var(--blue-main); font-weight: 800; text-align: center; line-height: 1; }
 
         header h1 {
             font-family: 'Rajdhani', sans-serif;
-            font-size: clamp(28px, 9vw, 40px);
+            font-size: clamp(30px, 9vw, 42px);
             text-transform: uppercase;
             letter-spacing: 3px;
-            margin-bottom: 15px;
-            text-shadow: 0 4px 8px rgba(0,0,0,0.4);
             font-weight: 700;
         }
         header h1 span { color: var(--yellow-accent); }
 
-        /* --- BUSCADOR POSICIONADO SIN SOLAPAMIENTO --- */
-        .search-wrapper {
-            max-width: 580px;
-            margin: -40px auto 0; /* Desplazamiento controlado */
-            padding: 0 25px;
-            position: relative;
-            z-index: 100;
-        }
-        .search-bar {
-            background: var(--white);
-            display: flex; align-items: center;
-            padding: 16px 28px;
-            border-radius: 50px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        /* --- OVERLAY DE BÚSQUEDA PROFESIONAL --- */
+        #searchOverlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 47, 92, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: none;
+            z-index: 3000;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 15vh;
+            opacity: 0;
             transition: var(--transition);
-            border: 1px solid rgba(0,0,0,0.05);
         }
-        .search-bar:focus-within { transform: translateY(-5px); box-shadow: 0 20px 45px rgba(0,0,0,0.2); }
-        .search-bar input {
-            border: none; outline: none; width: 100%;
-            font-size: 16px; margin-left: 15px; color: var(--text-dark);
+        #searchOverlay.active { display: flex; opacity: 1; }
+
+        .search-container {
+            width: 90%;
+            max-width: 600px;
+            transform: translateY(-20px);
+            transition: var(--transition);
+        }
+        #searchOverlay.active .search-container { transform: translateY(0); }
+
+        .search-box {
+            background: var(--white);
+            padding: 20px 30px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            border: 2px solid var(--yellow-accent);
+        }
+        .search-box input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--blue-main);
+            margin-left: 15px;
             background: transparent;
+        }
+
+        .close-search {
+            margin-top: 30px;
+            background: var(--yellow-accent);
+            color: var(--blue-main);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
         /* --- GRID DE TARJETAS --- */
         .main-container {
             max-width: 1200px;
-            margin: 60px auto;
+            margin: 40px auto;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 35px;
@@ -104,19 +155,15 @@
 
         .church-card {
             background: var(--white);
-            border-radius: 28px;
+            border-radius: 30px;
             overflow: hidden;
             box-shadow: var(--shadow);
             display: flex;
             flex-direction: column;
             transition: var(--transition);
-            opacity: 0;
-            transform: translateY(30px);
-            animation: cardFadeIn 0.8s cubic-bezier(0.2, 1, 0.3, 1) forwards;
+            animation: cardFadeIn 0.8s backwards;
         }
-        @keyframes cardFadeIn { to { opacity: 1; transform: translateY(0); } }
-        
-        .church-card:hover { transform: translateY(-12px); box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
+        @keyframes cardFadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
         .card-gallery {
             display: grid;
@@ -125,79 +172,59 @@
             background: #f0f0f0;
             gap: 3px;
         }
-        .card-gallery img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .church-card:hover .card-gallery img { filter: brightness(1.1); }
+        .card-gallery img { width: 100%; height: 100%; object-fit: cover; }
 
-        .card-content { 
-            padding: 28px; 
-            background: var(--white);
-            flex-grow: 1;
-            border-top: 1px solid #f8f8f8;
-        }
-        .card-content h2 { color: var(--blue-main); font-size: 22px; margin-bottom: 12px; font-weight: 700; letter-spacing: -0.5px; }
-        .card-content p { font-size: 14.5px; color: var(--text-gray); margin-bottom: 12px; display: flex; align-items: flex-start; gap: 10px; line-height: 1.5; }
-        .card-content .phone-link { color: var(--blue-main); font-weight: 700; margin-top: 10px; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-size: 16px; transition: 0.2s; }
-        .card-content .phone-link:hover { opacity: 0.7; }
+        .card-content { padding: 30px; background: var(--white); flex-grow: 1; }
+        .card-content h2 { color: var(--blue-main); font-size: 22px; margin-bottom: 15px; font-weight: 700; }
+        .card-content p { font-size: 15px; color: var(--text-gray); margin-bottom: 12px; display: flex; gap: 10px; line-height: 1.5; }
+        .card-content .phone-link { color: var(--blue-main); font-weight: 700; margin-top: 10px; display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 16px; }
 
         .btn-maps {
             display: flex; align-items: center; justify-content: center;
             background: var(--blue-main); color: var(--white);
-            padding: 16px; border-radius: 16px;
+            padding: 16px; border-radius: 18px;
             text-decoration: none; font-weight: 700; font-size: 14px;
             gap: 10px; width: 100%; margin-top: 25px;
-            transition: var(--transition);
             box-shadow: 0 5px 15px rgba(10, 47, 92, 0.2);
         }
-        .btn-maps:hover { background: var(--blue-light); transform: scale(1.02); }
 
         /* --- ADMIN CONTROLS --- */
         .admin-controls {
             display: none;
-            padding: 15px 28px 28px;
+            padding: 15px 30px 30px;
             gap: 15px;
             background: #fafafa;
             border-top: 1px solid #f0f0f0;
         }
-        .btn-edit { flex: 1; background: #eef4ff; color: var(--blue-main); border: none; padding: 12px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.3s; }
-        .btn-delete { background: #fff1f1; color: var(--danger); border: none; padding: 12px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.3s; }
-        .btn-edit:hover { background: #dce7ff; }
+        .btn-edit { flex: 1; background: #eef4ff; color: var(--blue-main); border: none; padding: 12px; border-radius: 12px; font-weight: 700; cursor: pointer; }
+        .btn-delete { background: #fff1f1; color: var(--danger); border: none; padding: 12px; border-radius: 12px; font-weight: 700; cursor: pointer; }
 
         /* --- MODALES --- */
         .modal-overlay {
             display: none; position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.6); backdrop-filter: blur(10px);
-            z-index: 2000; align-items: center; justify-content: center;
+            z-index: 4000; align-items: center; justify-content: center;
             padding: 20px;
         }
         .modal-body {
             background: var(--white);
             padding: 35px;
-            border-radius: 32px;
+            border-radius: 35px;
             width: 100%; max-width: 500px;
             max-height: 90vh; overflow-y: auto;
             transform: scale(0.9); opacity: 0;
             transition: var(--transition);
         }
+        .modal-overlay.active { display: flex; }
         .modal-overlay.active .modal-body { transform: scale(1); opacity: 1; }
 
         .form-field { margin-bottom: 20px; }
-        .form-field label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 8px; color: var(--blue-main); text-transform: uppercase; letter-spacing: 1px; }
-        .form-field input { width: 100%; padding: 15px; border: 2px solid #f0f0f0; border-radius: 14px; font-size: 15px; outline: none; transition: 0.3s; }
-        .form-field input:focus { border-color: var(--yellow-accent); background: #fdfdfd; }
+        .form-field label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 8px; color: var(--blue-main); text-transform: uppercase; }
+        .form-field input { width: 100%; padding: 15px; border: 2px solid #f0f0f0; border-radius: 14px; font-size: 15px; outline: none; }
 
-        /* --- FOOTER --- */
-        .static-footer {
-            text-align: center;
-            padding: 60px 20px 140px;
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--blue-main);
-            letter-spacing: 2px;
-            opacity: 0.7;
-        }
+        .static-footer { text-align: center; padding: 60px 20px 140px; font-size: 16px; font-weight: 700; color: var(--blue-main); letter-spacing: 2px; opacity: 0.7; }
 
-        /* --- NAVBAR --- */
         nav {
             position: fixed; bottom: 0; width: 100%;
             background: var(--blue-main);
@@ -206,8 +233,7 @@
             z-index: 1500;
             box-shadow: 0 -5px 20px rgba(0,0,0,0.2);
         }
-        .nav-link { background: none; border: none; color: var(--white); font-weight: 700; cursor: pointer; font-size: 11px; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 8px; transition: 0.3s; }
-        .nav-link:active { transform: scale(0.9); }
+        .nav-link { background: none; border: none; color: var(--white); font-weight: 700; cursor: pointer; font-size: 11px; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 8px; }
 
         #loader { text-align: center; grid-column: 1/-1; padding: 120px; color: var(--blue-main); font-weight: 700; font-size: 1.3rem; }
     </style>
@@ -215,19 +241,27 @@
 <body>
 
     <header>
+        <button class="search-trigger" onclick="openSearch()">
+            <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20"><path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"></path></svg>
+        </button>
+
         <div class="logo-box" id="logoDisplay">
             <img id="logoImg" src="" style="display:none;">
             <span id="logoLabel">LOGO<br>AVCSur</span>
         </div>
         <h1>TEMPLOS <span>AVCSur</span></h1>
-        
-        <div class="search-wrapper">
-            <div class="search-bar">
-                <svg width="24" height="24" fill="var(--blue-main)" viewBox="0 0 20 20"><path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"></path></svg>
-                <input type="text" id="searchInput" placeholder="Buscar por nombre o ciudad..." onkeyup="searchLocal()">
-            </div>
-        </div>
     </header>
+
+    <!-- OVERLAY DE BÚSQUEDA -->
+    <div id="searchOverlay">
+        <div class="search-container">
+            <div class="search-box">
+                <svg width="28" height="28" fill="var(--blue-main)" viewBox="0 0 20 20"><path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"></path></svg>
+                <input type="text" id="searchInput" placeholder="Escribe el nombre o ciudad..." onkeyup="searchLocal()">
+            </div>
+            <center><button class="close-search" onclick="closeSearch()">Ver Resultados</button></center>
+        </div>
+    </div>
 
     <div class="main-container" id="churchGrid">
         <div id="loader">Conectando con AVCSur...</div>
@@ -243,5 +277,219 @@
             <h2 style="color:var(--blue-main); margin-bottom:25px; text-align: center;">Seguridad AVCSur</h2>
             <div class="form-field"><label>Usuario</label><input type="text" id="uInp" placeholder="Admin ID"></div>
             <div class="form-field"><label>Contraseña</label><input type="password" id="pInp" placeholder="••••••••"></div>
-            <button class="btn-action" onclick="validateAdmin()">INGRESAR AL PANEL</button>
+            <button onclick="validateAdmin()" style="width:100%; background:var(--blue-main); color:white; padding:18px; border:none; border-radius:16px; font-weight:700; cursor:pointer;">INGRESAR AL PANEL</button>
             <button onclick="closeMod('loginOverlay')" style="background:none; border:none; width:100%; margin-top:25px; color:var(--text-gray); cursor:pointer; font-weight:700;">Cancelar</button>
+        </div>
+    </div>
+
+    <!-- MODAL GESTIÓN -->
+    <div id="manageOverlay" class="modal-overlay">
+        <div class="modal-body">
+            <h2 id="manageTitle">Nuevo Registro</h2>
+            <input type="hidden" id="editKey">
+            <div class="form-field"><label>Nombre del Templo</label><input type="text" id="nameIn"></div>
+            <div class="form-field"><label>Dirección Corta</label><input type="text" id="addrIn"></div>
+            <div class="form-field"><label>Teléfono (WhatsApp)</label><input type="tel" id="phoneIn" placeholder="Ej: +58 412 1234567"></div>
+            <div class="form-field"><label>Enlace Google Maps</label><input type="url" id="linkIn"></div>
+            <div class="form-field"><label>Foto Exterior</label><input type="file" id="f1" accept="image/*"></div>
+            <div class="form-field"><label>Foto Interior</label><input type="file" id="f2" accept="image/*"></div>
+            <button id="saveBtn" onclick="saveToFirebase()" style="width:100%; background:var(--blue-main); color:white; padding:18px; border:none; border-radius:16px; font-weight:700; cursor:pointer;">SINCRO CON RED</button>
+            
+            <div style="margin-top:30px; padding-top:20px; border-top:2px solid #eee; text-align:center;">
+                <p style="font-size: 11px; font-weight: 700; color: var(--blue-main); margin-bottom:12px;">ACTUALIZAR LOGO GLOBAL</p>
+                <input type="file" id="logoFile" style="display:none" accept="image/*" onchange="handleLogoChange(this)">
+                <button onclick="document.getElementById('logoFile').click()" style="background:#f4f4f4; border:1px solid #ddd; padding:15px; border-radius:15px; width:100%; cursor:pointer; font-weight:700; font-size:13px;">SUBIR NUEVO ICONO</button>
+            </div>
+
+            <button onclick="closeMod('manageOverlay')" style="background:none; border:none; width:100%; margin-top:30px; color:var(--text-gray); cursor:pointer; font-weight:bold;">Cerrar Gestión</button>
+        </div>
+    </div>
+
+    <nav>
+        <button class="nav-link" onclick="location.reload()">
+            <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+            Explorar
+        </button>
+        <button class="nav-link" onclick="checkAuth()">
+            <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20"><path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"></path></svg>
+            Gestionar
+        </button>
+    </nav>
+
+    <!-- FIREBASE MODULE -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, push, onValue, set, remove, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+             apiKey: "AIzaSyDvYgLYGRrTvLNlhdNHnroBkvHCYXOywfU",
+             authDomain: "guiatemplo-a6420.firebaseapp.com",
+             databaseURL: "https://guiatemplo-a6420-default-rtdb.firebaseio.com",
+             projectId: "guiatemplo-a6420",
+             storageBucket: "guiatemplo-a6420.firebasestorage.app",
+             messagingSenderId: "880420054184",
+             appId: "1:880420054184:web:ec44f720081e81c18a0e9d"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        onValue(ref(db, 'templos'), (snapshot) => {
+            const data = snapshot.val();
+            const list = [];
+            if(data) { for(let key in data) { list.push({ id: key, ...data[key] }); } }
+            window.globalList = list.reverse();
+            renderCards(window.globalList);
+        });
+
+        onValue(ref(db, 'config/logo'), (snapshot) => {
+            const logo = snapshot.val();
+            if(logo) {
+                document.getElementById('logoImg').src = logo;
+                document.getElementById('logoImg').style.display = 'block';
+                document.getElementById('logoLabel').style.display = 'none';
+            }
+        });
+
+        window.saveToFirebase = async () => {
+            const btn = document.getElementById('saveBtn');
+            const key = document.getElementById('editKey').value;
+            const name = document.getElementById('nameIn').value;
+            const addr = document.getElementById('addrIn').value;
+            const phone = document.getElementById('phoneIn').value;
+            const link = document.getElementById('linkIn').value;
+            const file1 = document.getElementById('f1').files[0];
+            const file2 = document.getElementById('f2').files[0];
+
+            if(!name || !addr || !link) return alert("Faltan campos.");
+            btn.disabled = true; btn.innerText = "Sincronizando...";
+
+            let data = { name, addr, phone, link };
+            if(file1) data.img1 = await toB64(file1);
+            if(file2) data.img2 = await toB64(file2);
+
+            if(key) {
+                update(ref(db, 'templos/' + key), data).then(() => finalize());
+            } else {
+                if(!file1 || !file2) { btn.disabled = false; return alert("Sube las fotos."); }
+                push(ref(db, 'templos'), data).then(() => finalize());
+            }
+            function finalize() { btn.disabled = false; closeMod('manageOverlay'); }
+        };
+
+        window.deleteTemple = (id) => {
+            if(confirm("¿Borrar definitivamente?")) remove(ref(db, 'templos/' + id));
+        };
+
+        window.handleLogoChange = async (input) => {
+            if(!window.isAuth || !input.files[0]) return;
+            const b64 = await toB64(input.files[0]);
+            set(ref(db, 'config/logo'), b64).then(() => alert("Logo Actualizado."));
+        };
+    </script>
+
+    <script>
+        const AUTH = { u: "admin_templo", p: "Templo2026*" };
+        window.isAuth = false;
+
+        // FUNCIONES DE BÚSQUEDA DESPLEGABLE
+        function openSearch() {
+            const overlay = document.getElementById('searchOverlay');
+            overlay.style.display = 'flex';
+            setTimeout(() => {
+                overlay.classList.add('active');
+                document.getElementById('searchInput').focus();
+            }, 10);
+        }
+
+        function closeSearch() {
+            const overlay = document.getElementById('searchOverlay');
+            overlay.classList.remove('active');
+            setTimeout(() => overlay.style.display = 'none', 500);
+        }
+
+        function searchLocal() {
+            const val = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.church-card');
+            cards.forEach(card => {
+                card.style.display = card.innerText.toLowerCase().includes(val) ? 'flex' : 'none';
+            });
+        }
+
+        function renderCards(data) {
+            const grid = document.getElementById('churchGrid');
+            grid.innerHTML = data.length === 0 ? '<p id="loader">Buscando...</p>' : '';
+            data.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'church-card';
+                div.style.animationDelay = (index * 0.05) + 's';
+                div.innerHTML = `
+                    <div class="card-gallery">
+                        <img src="${item.img1}" loading="lazy">
+                        <img src="${item.img2}" loading="lazy">
+                    </div>
+                    <div class="card-content">
+                        <h2>${item.name}</h2>
+                        <p>📍 ${item.addr}</p>
+                        ${item.phone ? `<a href="tel:${item.phone}" class="phone-link">📞 ${item.phone}</a>` : ''}
+                        <a href="${item.link}" target="_blank" class="btn-maps">EXPLORAR EN MAPS</a>
+                    </div>
+                    <div class="admin-controls" id="ctrl-${item.id}">
+                        <button class="btn-edit" onclick="prepEdit('${item.id}')">MODIFICAR</button>
+                        <button class="btn-delete" onclick="deleteTemple('${item.id}')">ELIMINAR</button>
+                    </div>
+                `;
+                grid.appendChild(div);
+                if(window.isAuth) div.querySelector('.admin-controls').style.display = 'flex';
+            });
+        }
+
+        function validateAdmin() {
+            if(document.getElementById('uInp').value === AUTH.u && document.getElementById('pInp').value === AUTH.p) {
+                window.isAuth = true;
+                closeMod('loginOverlay');
+                document.querySelectorAll('.admin-controls').forEach(el => el.style.display = 'flex');
+                showManageModal();
+            } else alert("Acceso Denegado.");
+        }
+
+        function checkAuth() { window.isAuth ? showManageModal() : showMod('loginOverlay'); }
+
+        function showManageModal() {
+            document.getElementById('manageTitle').innerText = "Nuevo Registro";
+            document.getElementById('editKey').value = "";
+            document.getElementById('nameIn').value = "";
+            document.getElementById('addrIn').value = "";
+            document.getElementById('phoneIn').value = "";
+            document.getElementById('linkIn').value = "";
+            showMod('manageOverlay');
+        }
+
+        function prepEdit(id) {
+            const item = window.globalList.find(x => x.id === id);
+            document.getElementById('manageTitle').innerText = "Modificar Templo";
+            document.getElementById('editKey').value = id;
+            document.getElementById('nameIn').value = item.name;
+            document.getElementById('addrIn').value = item.addr;
+            document.getElementById('phoneIn').value = item.phone || "";
+            document.getElementById('linkIn').value = item.link;
+            showMod('manageOverlay');
+        }
+
+        function showMod(id) { 
+            const el = document.getElementById(id);
+            el.style.display = 'flex'; 
+            setTimeout(() => el.classList.add('active'), 20);
+        }
+        function closeMod(id) { 
+            const el = document.getElementById(id);
+            el.classList.remove('active');
+            setTimeout(() => el.style.display = 'none', 400);
+        }
+        const toB64 = f => new Promise((res, rej) => {
+            const r = new FileReader(); r.readAsDataURL(f);
+            r.onload = () => res(r.result); r.onerror = e => rej(e);
+        });
+    </script>
+</body>
+</html>
