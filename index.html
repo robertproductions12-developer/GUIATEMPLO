@@ -2,134 +2,142 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Consigue el Templo - Directorio Oficial</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Rajdhani:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Rajdhani:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
             --blue-main: #0a2f5c;
             --yellow-accent: #ffb81c;
             --white: #ffffff;
-            --gray-light: #f4f4f4;
-            --text-dark: #333;
+            --bg-body: #f0f2f5;
+            --text-dark: #1a1a1a;
+            --text-gray: #65676b;
+            --shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background-color: var(--gray-light); color: var(--text-dark); overflow-x: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        
+        body { background-color: var(--bg-body); color: var(--text-dark); overflow-x: hidden; padding-bottom: 80px; }
 
         /* --- HEADER --- */
         header {
             background-color: var(--blue-main);
             color: var(--white);
-            padding: 30px 20px;
+            padding: 25px 20px 40px;
             text-align: center;
-            border-bottom: 6px solid var(--yellow-accent);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border-bottom: 5px solid var(--yellow-accent);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        .logo-upload {
-            width: 100px; height: 100px;
+        .logo-box {
+            width: 90px; height: 90px;
             background: var(--white);
             border-radius: 50%;
             margin: 0 auto 15px;
             display: flex; align-items: center; justify-content: center;
             border: 3px solid var(--yellow-accent);
-            cursor: pointer; overflow: hidden; position: relative;
+            cursor: pointer; overflow: hidden;
+            box-shadow: var(--shadow);
         }
-        .logo-upload img { width: 100%; height: 100%; object-fit: cover; }
-        .logo-upload span { font-size: 10px; color: var(--blue-main); text-align: center; font-weight: bold; }
+        .logo-box img { width: 100%; height: 100%; object-fit: cover; }
+        .logo-box span { font-size: 11px; color: var(--blue-main); font-weight: 700; line-height: 1.2; }
 
         header h1 {
             font-family: 'Rajdhani', sans-serif;
-            font-size: 28px;
+            font-size: clamp(22px, 6vw, 28px);
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
         }
 
-        /* --- SEARCH BAR --- */
-        .search-container {
+        /* --- BUSCADOR --- */
+        .search-wrapper {
             max-width: 500px;
-            margin: 20px auto 0;
-            position: relative;
-            display: flex;
-            align-items: center;
+            margin: -22px auto 0;
+            padding: 0 20px;
         }
-        .search-container input {
-            width: 100%;
-            padding: 12px 45px 12px 20px;
-            border-radius: 25px;
-            border: none;
-            outline: none;
-            font-size: 16px;
+        .search-bar {
+            background: var(--white);
+            display: flex; align-items: center;
+            padding: 12px 20px;
+            border-radius: 30px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
         }
-        .search-icon {
-            position: absolute;
-            right: 15px;
-            color: var(--blue-main);
+        .search-bar input {
+            border: none; outline: none; width: 100%;
+            font-size: 16px; margin-left: 10px; color: var(--text-dark);
         }
+        .search-bar svg { color: var(--blue-main); flex-shrink: 0; }
 
-        /* --- APP CONTENT --- */
-        .content { max-width: 800px; margin: 30px auto; padding: 0 20px; padding-bottom: 100px; }
+        /* --- CONTENIDO --- */
+        .main-container {
+            max-width: 900px;
+            margin: 30px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            padding: 0 20px;
+        }
 
         .church-card {
             background: var(--white);
-            border-radius: 12px;
-            margin-bottom: 25px;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
+            transition: transform 0.2s;
         }
 
-        .card-photos {
+        .card-gallery {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            height: 180px;
-            background: #ddd;
+            height: 160px;
+            background: #e4e6eb;
             gap: 2px;
         }
-        .card-photos img { width: 100%; height: 100%; object-fit: cover; }
+        .card-gallery img { width: 100%; height: 100%; object-fit: cover; }
 
-        .card-info { padding: 20px; }
-        .card-info h2 { color: var(--blue-main); font-size: 20px; margin-bottom: 5px; }
-        .card-info p { font-size: 14px; color: #666; margin-bottom: 15px; }
+        .card-content { padding: 18px; }
+        .card-content h2 { color: var(--blue-main); font-size: 18px; margin-bottom: 6px; }
+        .card-content p { font-size: 13px; color: var(--text-gray); margin-bottom: 15px; line-height: 1.4; }
 
-        .btn-link {
-            display: inline-block;
-            background: var(--blue-main);
-            color: var(--white);
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 13px;
-            transition: 0.3s;
+        .btn-maps {
+            display: flex; align-items: center; justify-content: center;
+            background: var(--blue-main); color: var(--white);
+            padding: 12px; border-radius: 10px;
+            text-decoration: none; font-weight: 700; font-size: 14px;
+            transition: opacity 0.2s; gap: 8px;
         }
-        .btn-link:hover { background: var(--yellow-accent); color: var(--blue-main); }
+        .btn-maps:active { opacity: 0.8; }
 
         /* --- MODALES --- */
-        .modal {
-            display: none;
-            position: fixed;
+        .modal-overlay {
+            display: none; position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 1000;
-            justify-content: center; align-items: center;
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+            z-index: 2000; align-items: center; justify-content: center;
+            padding: 20px;
         }
-        .modal-content {
+        .modal-body {
             background: var(--white);
-            padding: 30px;
-            border-radius: 15px;
-            width: 90%; max-width: 450px;
+            padding: 25px;
+            border-radius: 20px;
+            width: 100%; max-width: 450px;
+            max-height: 90vh; overflow-y: auto;
             position: relative;
         }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 5px; }
-        .form-group input, .form-group select {
-            width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;
-        }
+        .modal-body h2 { color: var(--blue-main); margin-bottom: 20px; font-size: 20px; border-left: 4px solid var(--yellow-accent); padding-left: 10px; }
 
-        .btn-admin-submit {
+        .form-field { margin-bottom: 16px; }
+        .form-field label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 6px; color: var(--text-gray); text-transform: uppercase; }
+        .form-field input, .form-field select {
+            width: 100%; padding: 12px; border: 1.5px solid #e4e6eb; border-radius: 10px; font-size: 14px; outline: none;
+        }
+        .form-field input:focus { border-color: var(--blue-main); }
+
+        .btn-action {
             width: 100%; background: var(--blue-main); color: white;
-            padding: 12px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;
+            padding: 15px; border: none; border-radius: 12px;
+            font-weight: 700; cursor: pointer; font-size: 15px; margin-top: 10px;
         }
 
         /* --- NAVBAR --- */
@@ -137,201 +145,237 @@
             position: fixed; bottom: 0; width: 100%;
             background: var(--blue-main);
             display: flex; justify-content: space-around;
-            padding: 15px; border-top: 4px solid var(--yellow-accent);
+            padding: 12px 0; border-top: 4px solid var(--yellow-accent);
+            z-index: 1500;
         }
-        .nav-btn { background: none; border: none; color: var(--white); font-weight: bold; cursor: pointer; font-size: 12px; text-transform: uppercase; }
+        .nav-link { 
+            background: none; border: none; color: var(--white); 
+            font-weight: 700; cursor: pointer; font-size: 11px; 
+            text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 4px;
+        }
+        .nav-link svg { width: 20px; height: 20px; }
 
-        #adminPanel { display: none; }
+        @media (max-width: 480px) {
+            .main-container { grid-template-columns: 1fr; }
+            header { padding: 20px 15px 35px; }
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo-upload" onclick="document.getElementById('logoInput').click()">
+        <div class="logo-box" onclick="document.getElementById('logoInput').click()">
             <img id="logoPreview" src="" style="display:none;">
-            <span id="logoText">SUBIR<br>ICONO</span>
-            <input type="file" id="logoInput" style="display:none" accept="image/*" onchange="previewLogo(this)">
+            <span id="logoText">LOGOTIPO<br>AQUÍ</span>
+            <input type="file" id="logoInput" style="display:none" accept="image/*" onchange="uploadLogo(this)">
         </div>
         <h1>CONSIGUE EL <span>TEMPLO</span></h1>
         
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Buscar por nombre o dirección..." onkeyup="searchChurches()">
-            <span class="search-icon">🔍</span>
+        <div class="search-wrapper">
+            <div class="search-bar">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+                <input type="text" id="searchInput" placeholder="Buscar nombre o dirección..." onkeyup="filterResults()">
+            </div>
         </div>
     </header>
 
-    <div class="content" id="churchContainer">
-        <!-- Las tarjetas se cargarán aquí -->
+    <div class="main-container" id="churchGrid">
+        <!-- Render dinámico -->
     </div>
 
-    <!-- MODAL LOGIN ADMIN -->
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <h2 style="margin-bottom:20px; color: var(--blue-main)">Acceso Administrador</h2>
-            <div class="form-group">
+    <!-- MODAL LOGIN -->
+    <div id="loginOverlay" class="modal-overlay">
+        <div class="modal-body">
+            <h2>Acceso Administrador</h2>
+            <div class="form-field">
                 <label>Usuario</label>
-                <input type="text" id="adminUser">
+                <input type="text" id="userInp" autocomplete="off">
             </div>
-            <div class="form-group">
+            <div class="form-field">
                 <label>Contraseña</label>
-                <input type="password" id="adminPass">
+                <input type="password" id="passInp">
             </div>
-            <button class="btn-admin-submit" onclick="loginAdmin()">INGRESAR</button>
-            <button onclick="closeModals()" style="background:none; border:none; width:100%; margin-top:10px; cursor:pointer">Cancelar</button>
+            <button class="btn-action" onclick="tryLogin()">INGRESAR</button>
+            <button onclick="hideModal('loginOverlay')" style="background:none; border:none; width:100%; margin-top:15px; color:var(--text-gray); font-weight:600; cursor:pointer">Cancelar</button>
         </div>
     </div>
 
-    <!-- MODAL AGREGAR LUGAR -->
-    <div id="addModal" class="modal">
-        <div class="modal-content">
-            <h2 style="margin-bottom:20px; color: var(--blue-main)">Agregar Nuevo Templo</h2>
-            <div class="form-group">
-                <label>Nombre del Templo</label>
-                <input type="text" id="newName" placeholder="Ej: Iglesia Central">
+    <!-- MODAL AGREGAR -->
+    <div id="addOverlay" class="modal-overlay">
+        <div class="modal-body">
+            <h2>Nuevo Registro</h2>
+            <div class="form-field">
+                <label>Nombre de la Sede</label>
+                <input type="text" id="nameInp" placeholder="Ej: Iglesia Central">
             </div>
-            <div class="form-group">
-                <label>Dirección</label>
-                <input type="text" id="newAddr" placeholder="Ciudad, Barrio...">
+            <div class="form-field">
+                <label>Ubicación / Dirección</label>
+                <input type="text" id="addrInp" placeholder="Calle, Ciudad, Barrio...">
             </div>
-            <div class="form-group">
-                <label>Link Google Maps</label>
-                <input type="url" id="newLink" placeholder="https://maps.google.com/...">
+            <div class="form-field">
+                <label>Enlace Google Maps</label>
+                <input type="url" id="linkInp" placeholder="https://goo.gl/maps/...">
             </div>
-            <div class="form-group">
-                <label>Foto 1</label>
-                <input type="file" id="photo1" accept="image/*">
+            <div class="form-field">
+                <label>Fotografía de Fachada</label>
+                <input type="file" id="pic1" accept="image/*">
             </div>
-            <div class="form-group">
-                <label>Foto 2</label>
-                <input type="file" id="photo2" accept="image/*">
+            <div class="form-field">
+                <label>Fotografía de Salón / Interior</label>
+                <input type="file" id="pic2" accept="image/*">
             </div>
-            <button class="btn-admin-submit" onclick="saveNewChurch()">GUARDAR LUGAR</button>
-            <button onclick="closeModals()" style="background:none; border:none; width:100%; margin-top:10px; cursor:pointer">Cerrar</button>
+            <button class="btn-action" onclick="processNewChurch()">GUARDAR TEMPLO</button>
+            <button onclick="hideModal('addOverlay')" style="background:none; border:none; width:100%; margin-top:15px; color:var(--text-gray); font-weight:600; cursor:pointer">Volver</button>
         </div>
     </div>
 
     <nav>
-        <button class="nav-btn" onclick="showUserView()">Explorar</button>
-        <button class="nav-btn" id="addBtnNav" onclick="checkAdmin()">+ Agregar</button>
+        <button class="nav-link" onclick="location.reload()">
+            <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+            Explorar
+        </button>
+        <button class="nav-link" onclick="checkAuth()">
+            <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+            Agregar
+        </button>
     </nav>
 
     <script>
-        // --- CONFIGURACIÓN ADMIN ---
-        const ADMIN_CREDENTIALS = { user: "admin", pass: "1234" };
-        let isAdmin = false;
+        // CONFIGURACIÓN ÚNICA
+        const AUTH = { u: "admin_templo", p: "Templo2026*" };
+        let isAuth = false;
 
-        let churches = [
+        // Cargar datos de LocalStorage o usar iniciales
+        let churchList = JSON.parse(localStorage.getItem('churchList')) || [
             {
-                name: "Templo Central IASD",
-                addr: "Av. Libertad 123, Centro",
+                name: "Sede Central de Adoración",
+                addr: "Distrito Central, Calle Libertad #12",
                 link: "https://maps.google.com",
-                img1: "https://via.placeholder.com/300x200?text=Foto+1",
-                img2: "https://via.placeholder.com/300x200?text=Foto+2"
+                img1: "https://via.placeholder.com/400x300?text=Fachada",
+                img2: "https://via.placeholder.com/400x300?text=Interior"
             }
         ];
 
-        function renderChurches(data = churches) {
-            const container = document.getElementById('churchContainer');
-            container.innerHTML = '';
+        function initApp() {
+            renderCards(churchList);
+            loadSavedLogo();
+        }
+
+        function renderCards(data) {
+            const grid = document.getElementById('churchGrid');
+            grid.innerHTML = data.length ? '' : '<p style="text-align:center; grid-column:1/-1; color:#999; margin-top:40px;">No se encontraron templos.</p>';
             
-            data.forEach(c => {
-                container.innerHTML += `
+            data.forEach(item => {
+                grid.innerHTML += `
                     <div class="church-card">
-                        <div class="card-photos">
-                            <img src="${c.img1}" alt="Foto 1">
-                            <img src="${c.img2}" alt="Foto 2">
+                        <div class="card-gallery">
+                            <img src="${item.img1}" loading="lazy">
+                            <img src="${item.img2}" loading="lazy">
                         </div>
-                        <div class="card-info">
-                            <h2>${c.name}</h2>
-                            <p>${c.addr}</p>
-                            <a href="${c.link}" target="_blank" class="btn-link">📍 ABRIR MAPA</a>
+                        <div class="card-content">
+                            <h2>${item.name}</h2>
+                            <p>${item.addr}</p>
+                            <a href="${item.link}" target="_blank" class="btn-maps">
+                                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                ABRIR EN GOOGLE MAPS
+                            </a>
                         </div>
                     </div>
                 `;
             });
         }
 
-        function searchChurches() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = churches.filter(c => 
-                c.name.toLowerCase().includes(query) || 
-                c.addr.toLowerCase().includes(query)
+        function filterResults() {
+            const val = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = churchList.filter(c => 
+                c.name.toLowerCase().includes(val) || c.addr.toLowerCase().includes(val)
             );
-            renderChurches(filtered);
+            renderCards(filtered);
         }
 
-        function previewLogo(input) {
+        function uploadLogo(input) {
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
                 reader.onload = (e) => {
-                    document.getElementById('logoPreview').src = e.target.result;
+                    const data = e.target.result;
+                    document.getElementById('logoPreview').src = data;
                     document.getElementById('logoPreview').style.display = 'block';
                     document.getElementById('logoText').style.display = 'none';
+                    localStorage.setItem('churchLogo', data);
                 };
                 reader.readAsDataURL(input.files[0]);
             }
         }
 
-        function checkAdmin() {
-            if (isAdmin) {
-                document.getElementById('addModal').style.display = 'flex';
-            } else {
-                document.getElementById('loginModal').style.display = 'flex';
+        function loadSavedLogo() {
+            const savedLogo = localStorage.getItem('churchLogo');
+            if(savedLogo) {
+                document.getElementById('logoPreview').src = savedLogo;
+                document.getElementById('logoPreview').style.display = 'block';
+                document.getElementById('logoText').style.display = 'none';
             }
         }
 
-        function loginAdmin() {
-            const u = document.getElementById('adminUser').value;
-            const p = document.getElementById('adminPass').value;
-            if (u === ADMIN_CREDENTIALS.user && p === ADMIN_CREDENTIALS.pass) {
-                isAdmin = true;
-                closeModals();
-                document.getElementById('addModal').style.display = 'flex';
-                alert("Acceso concedido como administrador");
+        function checkAuth() {
+            if (isAuth) showModal('addOverlay');
+            else showModal('loginOverlay');
+        }
+
+        function tryLogin() {
+            const u = document.getElementById('userInp').value;
+            const p = document.getElementById('passInp').value;
+            if (u === AUTH.u && p === AUTH.p) {
+                isAuth = true;
+                hideModal('loginOverlay');
+                showModal('addOverlay');
+                document.getElementById('userInp').value = "";
+                document.getElementById('passInp').value = "";
             } else {
-                alert("Usuario o contraseña incorrectos");
+                alert("Usuario o Contraseña incorrectos.");
             }
         }
 
-        async function saveNewChurch() {
-            const name = document.getElementById('newName').value;
-            const addr = document.getElementById('newAddr').value;
-            const link = document.getElementById('newLink').value;
-            const p1 = document.getElementById('photo1').files[0];
-            const p2 = document.getElementById('photo2').files[0];
+        async function processNewChurch() {
+            const name = document.getElementById('nameInp').value;
+            const addr = document.getElementById('addrInp').value;
+            const link = document.getElementById('linkInp').value;
+            const f1 = document.getElementById('pic1').files[0];
+            const f2 = document.getElementById('pic2').files[0];
 
-            if(!name || !addr || !link || !p1 || !p2) {
-                alert("Por favor completa todos los campos y sube las dos fotos");
+            if(!name || !addr || !link || !f1 || !f2) {
+                alert("Todos los campos y fotos son obligatorios.");
                 return;
             }
 
-            const img1 = await toBase64(p1);
-            const img2 = await toBase64(p2);
+            try {
+                const img1 = await toBase64(f1);
+                const img2 = await toBase64(f2);
 
-            churches.unshift({ name, addr, link, img1, img2 });
-            renderChurches();
-            closeModals();
-            alert("Sede agregada correctamente");
+                churchList.unshift({ name, addr, link, img1, img2 });
+                localStorage.setItem('churchList', JSON.stringify(churchList));
+                
+                renderCards(churchList);
+                hideModal('addOverlay');
+                alert("Templo registrado con éxito.");
+                document.getElementById('nameInp').value = "";
+                document.getElementById('addrInp').value = "";
+                document.getElementById('linkInp').value = "";
+            } catch (err) {
+                alert("Error al procesar las imágenes.");
+            }
         }
 
-        const toBase64 = file => new Promise((resolve, reject) => {
+        const toBase64 = file => new Promise((res, rej) => {
             const reader = new FileReader();
             reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = error => reject(error);
+            reader.onload = () => res(reader.result);
+            reader.onerror = e => rej(e);
         });
 
-        function closeModals() {
-            document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
-        }
+        function showModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function hideModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        function showUserView() {
-            closeModals();
-            renderChurches();
-        }
-
-        // Inicializar
-        renderChurches();
+        initApp();
     </script>
 </body>
 </html>
