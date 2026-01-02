@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Consigue el Templo - Directorio Oficial</title>
+    <title>Consigue el Templo - AVCSur</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Rajdhani:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -18,13 +18,13 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
         
-        body { background-color: var(--bg-body); color: var(--text-dark); overflow-x: hidden; padding-bottom: 80px; }
+        body { background-color: var(--bg-body); color: var(--text-dark); overflow-x: hidden; padding-bottom: 70px; }
 
         /* --- HEADER --- */
         header {
             background-color: var(--blue-main);
             color: var(--white);
-            padding: 25px 20px 40px;
+            padding: 25px 20px 45px;
             text-align: center;
             border-bottom: 5px solid var(--yellow-accent);
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
@@ -67,16 +67,16 @@
             border: none; outline: none; width: 100%;
             font-size: 16px; margin-left: 10px; color: var(--text-dark);
         }
-        .search-bar svg { color: var(--blue-main); flex-shrink: 0; }
 
         /* --- CONTENIDO --- */
         .main-container {
             max-width: 900px;
-            margin: 30px auto;
+            margin: 40px auto;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 20px;
+            gap: 25px;
             padding: 0 20px;
+            min-height: 40vh;
         }
 
         .church-card {
@@ -84,60 +84,70 @@
             border-radius: 16px;
             overflow: hidden;
             box-shadow: var(--shadow);
-            transition: transform 0.2s;
+            animation: fadeIn 0.5s ease;
         }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .card-gallery {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            height: 160px;
+            height: 170px;
             background: #e4e6eb;
             gap: 2px;
         }
         .card-gallery img { width: 100%; height: 100%; object-fit: cover; }
 
-        .card-content { padding: 18px; }
-        .card-content h2 { color: var(--blue-main); font-size: 18px; margin-bottom: 6px; }
-        .card-content p { font-size: 13px; color: var(--text-gray); margin-bottom: 15px; line-height: 1.4; }
+        .card-content { padding: 20px; }
+        .card-content h2 { color: var(--blue-main); font-size: 19px; margin-bottom: 6px; }
+        .card-content p { font-size: 13.5px; color: var(--text-gray); margin-bottom: 18px; line-height: 1.4; }
 
         .btn-maps {
             display: flex; align-items: center; justify-content: center;
             background: var(--blue-main); color: var(--white);
-            padding: 12px; border-radius: 10px;
+            padding: 13px; border-radius: 12px;
             text-decoration: none; font-weight: 700; font-size: 14px;
-            transition: opacity 0.2s; gap: 8px;
+            gap: 8px;
         }
-        .btn-maps:active { opacity: 0.8; }
+
+        /* --- FOOTER ESTATICO --- */
+        .static-footer {
+            background-color: #ffffff;
+            color: var(--blue-main);
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            border-top: 1px solid #e4e6eb;
+            margin-top: 50px;
+            padding-bottom: 100px; /* Espacio para la nav */
+        }
 
         /* --- MODALES --- */
         .modal-overlay {
             display: none; position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+            background: rgba(0,0,0,0.75); backdrop-filter: blur(5px);
             z-index: 2000; align-items: center; justify-content: center;
             padding: 20px;
         }
         .modal-body {
             background: var(--white);
             padding: 25px;
-            border-radius: 20px;
+            border-radius: 24px;
             width: 100%; max-width: 450px;
-            max-height: 90vh; overflow-y: auto;
-            position: relative;
+            max-height: 85vh; overflow-y: auto;
         }
-        .modal-body h2 { color: var(--blue-main); margin-bottom: 20px; font-size: 20px; border-left: 4px solid var(--yellow-accent); padding-left: 10px; }
 
-        .form-field { margin-bottom: 16px; }
-        .form-field label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 6px; color: var(--text-gray); text-transform: uppercase; }
-        .form-field input, .form-field select {
-            width: 100%; padding: 12px; border: 1.5px solid #e4e6eb; border-radius: 10px; font-size: 14px; outline: none;
-        }
-        .form-field input:focus { border-color: var(--blue-main); }
+        .form-field { margin-bottom: 18px; }
+        .form-field label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 8px; color: var(--blue-main); text-transform: uppercase; }
+        .form-field input { width: 100%; padding: 13px; border: 1.5px solid #e4e6eb; border-radius: 12px; font-size: 14.5px; outline: none; }
 
         .btn-action {
             width: 100%; background: var(--blue-main); color: white;
-            padding: 15px; border: none; border-radius: 12px;
-            font-weight: 700; cursor: pointer; font-size: 15px; margin-top: 10px;
+            padding: 16px; border: none; border-radius: 14px;
+            font-weight: 700; cursor: pointer; font-size: 16px;
         }
 
         /* --- NAVBAR --- */
@@ -145,126 +155,161 @@
             position: fixed; bottom: 0; width: 100%;
             background: var(--blue-main);
             display: flex; justify-content: space-around;
-            padding: 12px 0; border-top: 4px solid var(--yellow-accent);
+            padding: 14px 0; border-top: 4px solid var(--yellow-accent);
             z-index: 1500;
         }
-        .nav-link { 
-            background: none; border: none; color: var(--white); 
-            font-weight: 700; cursor: pointer; font-size: 11px; 
-            text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 4px;
-        }
-        .nav-link svg { width: 20px; height: 20px; }
+        .nav-link { background: none; border: none; color: var(--white); font-weight: 700; cursor: pointer; font-size: 11px; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 5px; }
 
-        @media (max-width: 480px) {
-            .main-container { grid-template-columns: 1fr; }
-            header { padding: 20px 15px 35px; }
-        }
+        /* LOADING SPINNER */
+        #loader { text-align: center; grid-column: 1/-1; padding: 50px; color: var(--blue-main); font-weight: 700; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo-box" onclick="document.getElementById('logoInput').click()">
-            <img id="logoPreview" src="" style="display:none;">
-            <span id="logoText">LOGOTIPO<br>AQUÍ</span>
-            <input type="file" id="logoInput" style="display:none" accept="image/*" onchange="uploadLogo(this)">
+        <div class="logo-box" id="logoDisplay" onclick="triggerLogoUpload()">
+            <img id="logoImg" src="" style="display:none;">
+            <span id="logoLabel">AVCSur<br>LOGO</span>
         </div>
         <h1>CONSIGUE EL <span>TEMPLO</span></h1>
+        <input type="file" id="logoFile" style="display:none" accept="image/*" onchange="handleLogoChange(this)">
         
         <div class="search-wrapper">
             <div class="search-bar">
-                <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
-                <input type="text" id="searchInput" placeholder="Buscar nombre o dirección..." onkeyup="filterResults()">
+                <svg width="20" height="20" fill="#0a2f5c" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+                <input type="text" id="searchInput" placeholder="Buscar templo o ubicación..." onkeyup="searchLocal()">
             </div>
         </div>
     </header>
 
     <div class="main-container" id="churchGrid">
-        <!-- Render dinámico -->
+        <div id="loader">Conectando con la red...</div>
     </div>
+
+    <footer class="static-footer">
+        DepCom - AVCSur
+    </footer>
 
     <!-- MODAL LOGIN -->
     <div id="loginOverlay" class="modal-overlay">
         <div class="modal-body">
-            <h2>Acceso Administrador</h2>
-            <div class="form-field">
-                <label>Usuario</label>
-                <input type="text" id="userInp" autocomplete="off">
-            </div>
-            <div class="form-field">
-                <label>Contraseña</label>
-                <input type="password" id="passInp">
-            </div>
-            <button class="btn-action" onclick="tryLogin()">INGRESAR</button>
-            <button onclick="hideModal('loginOverlay')" style="background:none; border:none; width:100%; margin-top:15px; color:var(--text-gray); font-weight:600; cursor:pointer">Cancelar</button>
+            <h2 style="color:var(--blue-main); margin-bottom:20px;">Acceso Admin</h2>
+            <div class="form-field"><label>Usuario</label><input type="text" id="uInp"></div>
+            <div class="form-field"><label>Contraseña</label><input type="password" id="pInp"></div>
+            <button class="btn-action" onclick="validateAdmin()">INGRESAR</button>
+            <button onclick="closeMod('loginOverlay')" style="background:none; border:none; width:100%; margin-top:15px; color:var(--text-gray); cursor:pointer">Cancelar</button>
         </div>
     </div>
 
     <!-- MODAL AGREGAR -->
     <div id="addOverlay" class="modal-overlay">
         <div class="modal-body">
-            <h2>Nuevo Registro</h2>
-            <div class="form-field">
-                <label>Nombre de la Sede</label>
-                <input type="text" id="nameInp" placeholder="Ej: Iglesia Central">
-            </div>
-            <div class="form-field">
-                <label>Ubicación / Dirección</label>
-                <input type="text" id="addrInp" placeholder="Calle, Ciudad, Barrio...">
-            </div>
-            <div class="form-field">
-                <label>Enlace Google Maps</label>
-                <input type="url" id="linkInp" placeholder="https://goo.gl/maps/...">
-            </div>
-            <div class="form-field">
-                <label>Fotografía de Fachada</label>
-                <input type="file" id="pic1" accept="image/*">
-            </div>
-            <div class="form-field">
-                <label>Fotografía de Salón / Interior</label>
-                <input type="file" id="pic2" accept="image/*">
-            </div>
-            <button class="btn-action" onclick="processNewChurch()">GUARDAR TEMPLO</button>
-            <button onclick="hideModal('addOverlay')" style="background:none; border:none; width:100%; margin-top:15px; color:var(--text-gray); font-weight:600; cursor:pointer">Volver</button>
+            <h2 style="color:var(--blue-main); margin-bottom:20px;">Nuevo Templo</h2>
+            <div class="form-field"><label>Nombre de Iglesia</label><input type="text" id="nameIn"></div>
+            <div class="form-field"><label>Dirección Corta</label><input type="text" id="addrIn"></div>
+            <div class="form-field"><label>Link Maps</label><input type="url" id="linkIn"></div>
+            <div class="form-field"><label>Foto Exterior</label><input type="file" id="f1" accept="image/*"></div>
+            <div class="form-field"><label>Foto Interior</label><input type="file" id="f2" accept="image/*"></div>
+            <button class="btn-action" id="saveBtn" onclick="pushToFirebase()">GUARDAR EN RED</button>
+            <button onclick="closeMod('addOverlay')" style="background:none; border:none; width:100%; margin-top:15px; color:var(--text-gray); cursor:pointer">Volver</button>
         </div>
     </div>
 
     <nav>
-        <button class="nav-link" onclick="location.reload()">
-            <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
-            Explorar
+        <button class="nav-link" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+            Inicio
         </button>
         <button class="nav-link" onclick="checkAuth()">
-            <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
             Agregar
         </button>
     </nav>
 
-    <script>
-        // CONFIGURACIÓN ÚNICA
-        const AUTH = { u: "admin_templo", p: "Templo2026*" };
-        let isAuth = false;
+    <!-- FIREBASE SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, push, onValue, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        // Cargar datos de LocalStorage o usar iniciales
-        let churchList = JSON.parse(localStorage.getItem('churchList')) || [
-            {
-                name: "Sede Central de Adoración",
-                addr: "Distrito Central, Calle Libertad #12",
-                link: "https://maps.google.com",
-                img1: "https://via.placeholder.com/400x300?text=Fachada",
-                img2: "https://via.placeholder.com/400x300?text=Interior"
+        // CONFIGURACIÓN FIREBASE (REEMPLAZA CON TUS DATOS)
+        const firebaseConfig = {
+             apiKey: "AIzaSyDvYgLYGRrTvLNlhdNHnroBkvHCYXOywfU",
+             authDomain: "guiatemplo-a6420.firebaseapp.com",
+             databaseURL: "https://guiatemplo-a6420-default-rtdb.firebaseio.com",
+             projectId: "guiatemplo-a6420",
+             storageBucket: "guiatemplo-a6420.firebasestorage.app",
+             messagingSenderId: "880420054184",
+             appId: "1:880420054184:web:ec44f720081e81c18a0e9d"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        let globalChurches = [];
+
+        // 1. ESCUCHAR CAMBIOS EN TIEMPO REAL
+        onValue(ref(db, 'templos'), (snapshot) => {
+            const data = snapshot.val();
+            globalChurches = data ? Object.values(data).reverse() : [];
+            renderCards(globalChurches);
+        });
+
+        onValue(ref(db, 'config/logo'), (snapshot) => {
+            const logo = snapshot.val();
+            if(logo) {
+                document.getElementById('logoImg').src = logo;
+                document.getElementById('logoImg').style.display = 'block';
+                document.getElementById('logoLabel').style.display = 'none';
             }
-        ];
+        });
 
-        function initApp() {
-            renderCards(churchList);
-            loadSavedLogo();
+        // 2. SUBIR NUEVO TEMPLO
+        window.pushToFirebase = async () => {
+            const btn = document.getElementById('saveBtn');
+            const name = document.getElementById('nameIn').value;
+            const addr = document.getElementById('addrIn').value;
+            const link = document.getElementById('linkIn').value;
+            const file1 = document.getElementById('f1').files[0];
+            const file2 = document.getElementById('f2').files[0];
+
+            if(!name || !addr || !file1 || !file2) return alert("Faltan datos");
+
+            btn.disabled = true;
+            btn.innerText = "Sincronizando...";
+
+            const img1 = await toB64(file1);
+            const img2 = await toB64(file2);
+
+            push(ref(db, 'templos'), { name, addr, link, img1, img2 })
+            .then(() => {
+                btn.disabled = false;
+                btn.innerText = "GUARDAR EN RED";
+                closeMod('addOverlay');
+                alert("Templo sincronizado globalmente");
+                location.reload();
+            });
+        };
+
+        // 3. ACTUALIZAR LOGO GLOBAL
+        window.handleLogoChange = async (input) => {
+            if(!window.isAuth) return alert("Solo admin puede cambiar logo");
+            const file = input.files[0];
+            const b64 = await toB64(file);
+            set(ref(db, 'config/logo'), b64);
         }
+    </script>
+
+    <script>
+        // LÓGICA DE INTERFAZ
+        const AUTH = { u: "admin_templo", p: "Templo2026*" };
+        window.isAuth = false;
 
         function renderCards(data) {
             const grid = document.getElementById('churchGrid');
-            grid.innerHTML = data.length ? '' : '<p style="text-align:center; grid-column:1/-1; color:#999; margin-top:40px;">No se encontraron templos.</p>';
-            
+            if(data.length === 0) {
+                grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; color:#999; margin-top:40px;">No hay registros compartidos todavía.</p>';
+                return;
+            }
+            grid.innerHTML = '';
             data.forEach(item => {
                 grid.innerHTML += `
                     <div class="church-card">
@@ -276,8 +321,7 @@
                             <h2>${item.name}</h2>
                             <p>${item.addr}</p>
                             <a href="${item.link}" target="_blank" class="btn-maps">
-                                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                                ABRIR EN GOOGLE MAPS
+                                📍 ABRIR EN GOOGLE MAPS
                             </a>
                         </div>
                     </div>
@@ -285,97 +329,30 @@
             });
         }
 
-        function filterResults() {
+        function searchLocal() {
             const val = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = churchList.filter(c => 
-                c.name.toLowerCase().includes(val) || c.addr.toLowerCase().includes(val)
-            );
-            renderCards(filtered);
+            const filtered = Array.from(document.querySelectorAll('.church-card')).forEach(card => {
+                const text = card.innerText.toLowerCase();
+                card.style.display = text.includes(val) ? 'block' : 'none';
+            });
         }
 
-        function uploadLogo(input) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const data = e.target.result;
-                    document.getElementById('logoPreview').src = data;
-                    document.getElementById('logoPreview').style.display = 'block';
-                    document.getElementById('logoText').style.display = 'none';
-                    localStorage.setItem('churchLogo', data);
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
+        function validateAdmin() {
+            if(document.getElementById('uInp').value === AUTH.u && document.getElementById('pInp').value === AUTH.p) {
+                window.isAuth = true;
+                closeMod('loginOverlay');
+                showMod('addOverlay');
+            } else alert("Error de acceso");
         }
 
-        function loadSavedLogo() {
-            const savedLogo = localStorage.getItem('churchLogo');
-            if(savedLogo) {
-                document.getElementById('logoPreview').src = savedLogo;
-                document.getElementById('logoPreview').style.display = 'block';
-                document.getElementById('logoText').style.display = 'none';
-            }
-        }
-
-        function checkAuth() {
-            if (isAuth) showModal('addOverlay');
-            else showModal('loginOverlay');
-        }
-
-        function tryLogin() {
-            const u = document.getElementById('userInp').value;
-            const p = document.getElementById('passInp').value;
-            if (u === AUTH.u && p === AUTH.p) {
-                isAuth = true;
-                hideModal('loginOverlay');
-                showModal('addOverlay');
-                document.getElementById('userInp').value = "";
-                document.getElementById('passInp').value = "";
-            } else {
-                alert("Usuario o Contraseña incorrectos.");
-            }
-        }
-
-        async function processNewChurch() {
-            const name = document.getElementById('nameInp').value;
-            const addr = document.getElementById('addrInp').value;
-            const link = document.getElementById('linkInp').value;
-            const f1 = document.getElementById('pic1').files[0];
-            const f2 = document.getElementById('pic2').files[0];
-
-            if(!name || !addr || !link || !f1 || !f2) {
-                alert("Todos los campos y fotos son obligatorios.");
-                return;
-            }
-
-            try {
-                const img1 = await toBase64(f1);
-                const img2 = await toBase64(f2);
-
-                churchList.unshift({ name, addr, link, img1, img2 });
-                localStorage.setItem('churchList', JSON.stringify(churchList));
-                
-                renderCards(churchList);
-                hideModal('addOverlay');
-                alert("Templo registrado con éxito.");
-                document.getElementById('nameInp').value = "";
-                document.getElementById('addrInp').value = "";
-                document.getElementById('linkInp').value = "";
-            } catch (err) {
-                alert("Error al procesar las imágenes.");
-            }
-        }
-
-        const toBase64 = file => new Promise((res, rej) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => res(reader.result);
-            reader.onerror = e => rej(e);
+        function checkAuth() { window.isAuth ? showMod('addOverlay') : showMod('loginOverlay'); }
+        function triggerLogoUpload() { if(window.isAuth) document.getElementById('logoFile').click(); }
+        function showMod(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeMod(id) { document.getElementById(id).style.display = 'none'; }
+        const toB64 = f => new Promise((res, rej) => {
+            const r = new FileReader(); r.readAsDataURL(f);
+            r.onload = () => res(r.result); r.onerror = e => rej(e);
         });
-
-        function showModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function hideModal(id) { document.getElementById(id).style.display = 'none'; }
-
-        initApp();
     </script>
 </body>
 </html>
