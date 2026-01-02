@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Consigue el Templo - AVCSur</title>
+    <title>Templos AVCSur - Guía Oficial</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Rajdhani:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -13,6 +13,7 @@
             --bg-body: #f0f2f5;
             --text-dark: #1a1a1a;
             --text-gray: #65676b;
+            --danger: #d93025;
             --shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
@@ -45,10 +46,11 @@
 
         header h1 {
             font-family: 'Rajdhani', sans-serif;
-            font-size: clamp(22px, 6vw, 28px);
+            font-size: clamp(24px, 7vw, 32px);
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 2px;
         }
+        header h1 span { color: var(--yellow-accent); }
 
         /* --- BUSCADOR --- */
         .search-wrapper {
@@ -70,13 +72,12 @@
 
         /* --- CONTENIDO --- */
         .main-container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 40px auto;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 25px;
             padding: 0 20px;
-            min-height: 40vh;
         }
 
         .church-card {
@@ -84,10 +85,8 @@
             border-radius: 16px;
             overflow: hidden;
             box-shadow: var(--shadow);
-            animation: fadeIn 0.5s ease;
+            position: relative;
         }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .card-gallery {
             display: grid;
@@ -99,36 +98,32 @@
         .card-gallery img { width: 100%; height: 100%; object-fit: cover; }
 
         .card-content { padding: 20px; }
-        .card-content h2 { color: var(--blue-main); font-size: 19px; margin-bottom: 6px; }
-        .card-content p { font-size: 13.5px; color: var(--text-gray); margin-bottom: 18px; line-height: 1.4; }
+        .card-content h2 { color: var(--blue-main); font-size: 19px; margin-bottom: 8px; font-weight: 700; }
+        .card-content p { font-size: 14px; color: var(--text-gray); margin-bottom: 20px; line-height: 1.5; }
 
         .btn-maps {
             display: flex; align-items: center; justify-content: center;
             background: var(--blue-main); color: var(--white);
             padding: 13px; border-radius: 12px;
             text-decoration: none; font-weight: 700; font-size: 14px;
-            gap: 8px;
+            gap: 8px; width: 100%;
         }
 
-        /* --- FOOTER ESTATICO --- */
-        .static-footer {
-            background-color: #ffffff;
-            color: var(--blue-main);
-            text-align: center;
-            padding: 30px 20px;
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            border-top: 1px solid #e4e6eb;
-            margin-top: 50px;
-            padding-bottom: 100px; /* Espacio para la nav */
+        /* BOTONES ADMIN EN TARJETA */
+        .admin-controls {
+            display: none; /* Se activa con JS */
+            padding: 10px 20px 20px;
+            gap: 10px;
+            border-top: 1px dashed #eee;
         }
+        .btn-edit { flex: 1; background: #f0f2f5; color: var(--blue-main); border: none; padding: 10px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+        .btn-delete { background: #fee; color: var(--danger); border: none; padding: 10px; border-radius: 8px; font-weight: 700; cursor: pointer; }
 
         /* --- MODALES --- */
         .modal-overlay {
             display: none; position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.75); backdrop-filter: blur(5px);
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
             z-index: 2000; align-items: center; justify-content: center;
             padding: 20px;
         }
@@ -137,7 +132,7 @@
             padding: 25px;
             border-radius: 24px;
             width: 100%; max-width: 450px;
-            max-height: 85vh; overflow-y: auto;
+            max-height: 90vh; overflow-y: auto;
         }
 
         .form-field { margin-bottom: 18px; }
@@ -147,7 +142,18 @@
         .btn-action {
             width: 100%; background: var(--blue-main); color: white;
             padding: 16px; border: none; border-radius: 14px;
-            font-weight: 700; cursor: pointer; font-size: 16px;
+            font-weight: 700; cursor: pointer; font-size: 16px; margin-top: 10px;
+        }
+
+        /* --- FOOTER --- */
+        .static-footer {
+            text-align: center;
+            padding: 40px 20px 120px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--blue-main);
+            letter-spacing: 1px;
+            opacity: 0.6;
         }
 
         /* --- NAVBAR --- */
@@ -160,30 +166,29 @@
         }
         .nav-link { background: none; border: none; color: var(--white); font-weight: 700; cursor: pointer; font-size: 11px; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 5px; }
 
-        /* LOADING SPINNER */
-        #loader { text-align: center; grid-column: 1/-1; padding: 50px; color: var(--blue-main); font-weight: 700; }
+        #loader { text-align: center; grid-column: 1/-1; padding: 100px; color: var(--blue-main); font-weight: 700; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo-box" id="logoDisplay" onclick="triggerLogoUpload()">
+        <div class="logo-box" onclick="triggerLogoUpload()">
             <img id="logoImg" src="" style="display:none;">
             <span id="logoLabel">AVCSur<br>LOGO</span>
         </div>
-        <h1>CONSIGUE EL <span>TEMPLO</span></h1>
+        <h1>TEMPLOS <span>AVCSur</span></h1>
         <input type="file" id="logoFile" style="display:none" accept="image/*" onchange="handleLogoChange(this)">
         
         <div class="search-wrapper">
             <div class="search-bar">
-                <svg width="20" height="20" fill="#0a2f5c" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
-                <input type="text" id="searchInput" placeholder="Buscar templo o ubicación..." onkeyup="searchLocal()">
+                <svg width="20" height="20" fill="#0a2f5c" viewBox="0 0 20 20"><path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"></path></svg>
+                <input type="text" id="searchInput" placeholder="Buscar por nombre o ubicación..." onkeyup="searchLocal()">
             </div>
         </div>
     </header>
 
     <div class="main-container" id="churchGrid">
-        <div id="loader">Conectando con la red...</div>
+        <div id="loader">Sincronizando con AVCSur...</div>
     </div>
 
     <footer class="static-footer">
@@ -193,7 +198,7 @@
     <!-- MODAL LOGIN -->
     <div id="loginOverlay" class="modal-overlay">
         <div class="modal-body">
-            <h2 style="color:var(--blue-main); margin-bottom:20px;">Acceso Admin</h2>
+            <h2 style="color:var(--blue-main); margin-bottom:20px;">Acceso Administrador</h2>
             <div class="form-field"><label>Usuario</label><input type="text" id="uInp"></div>
             <div class="form-field"><label>Contraseña</label><input type="password" id="pInp"></div>
             <button class="btn-action" onclick="validateAdmin()">INGRESAR</button>
@@ -201,37 +206,37 @@
         </div>
     </div>
 
-    <!-- MODAL AGREGAR -->
-    <div id="addOverlay" class="modal-overlay">
+    <!-- MODAL GESTIÓN (AGREGAR/EDITAR) -->
+    <div id="manageOverlay" class="modal-overlay">
         <div class="modal-body">
-            <h2 style="color:var(--blue-main); margin-bottom:20px;">Nuevo Templo</h2>
+            <h2 id="manageTitle" style="color:var(--blue-main); margin-bottom:20px;">Nuevo Templo</h2>
+            <input type="hidden" id="editKey">
             <div class="form-field"><label>Nombre de Iglesia</label><input type="text" id="nameIn"></div>
-            <div class="form-field"><label>Dirección Corta</label><input type="text" id="addrIn"></div>
-            <div class="form-field"><label>Link Maps</label><input type="url" id="linkIn"></div>
-            <div class="form-field"><label>Foto Exterior</label><input type="file" id="f1" accept="image/*"></div>
-            <div class="form-field"><label>Foto Interior</label><input type="file" id="f2" accept="image/*"></div>
-            <button class="btn-action" id="saveBtn" onclick="pushToFirebase()">GUARDAR EN RED</button>
-            <button onclick="closeMod('addOverlay')" style="background:none; border:none; width:100%; margin-top:15px; color:var(--text-gray); cursor:pointer">Volver</button>
+            <div class="form-field"><label>Dirección / Ciudad</label><input type="text" id="addrIn"></div>
+            <div class="form-field"><label>Enlace Google Maps</label><input type="url" id="linkIn"></div>
+            <div class="form-field"><label>Foto 1 (Exterior)</label><input type="file" id="f1" accept="image/*"></div>
+            <div class="form-field"><label>Foto 2 (Interior)</label><input type="file" id="f2" accept="image/*"></div>
+            <button class="btn-action" id="saveBtn" onclick="saveToFirebase()">SINCRONIZAR CAMBIOS</button>
+            <button onclick="closeMod('manageOverlay')" style="background:none; border:none; width:100%; margin-top:15px; color:var(--text-gray); cursor:pointer">Volver</button>
         </div>
     </div>
 
     <nav>
-        <button class="nav-link" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+        <button class="nav-link" onclick="location.reload()">
             <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
             Inicio
         </button>
         <button class="nav-link" onclick="checkAuth()">
-            <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
-            Agregar
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"></path></svg>
+            Gestionar
         </button>
     </nav>
 
-    <!-- FIREBASE SDK -->
+    <!-- FIREBASE MODULE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, push, onValue, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        import { getDatabase, ref, push, onValue, set, remove, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        // CONFIGURACIÓN FIREBASE (REEMPLAZA CON TUS DATOS)
         const firebaseConfig = {
              apiKey: "AIzaSyDvYgLYGRrTvLNlhdNHnroBkvHCYXOywfU",
              authDomain: "guiatemplo-a6420.firebaseapp.com",
@@ -244,13 +249,18 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
-        let globalChurches = [];
 
-        // 1. ESCUCHAR CAMBIOS EN TIEMPO REAL
+        // 1. CARGAR TEMPLOS Y LOGO EN TIEMPO REAL
         onValue(ref(db, 'templos'), (snapshot) => {
             const data = snapshot.val();
-            globalChurches = data ? Object.values(data).reverse() : [];
-            renderCards(globalChurches);
+            const list = [];
+            if(data) {
+                for(let key in data) {
+                    list.push({ id: key, ...data[key] });
+                }
+            }
+            window.globalList = list.reverse();
+            renderCards(window.globalList);
         });
 
         onValue(ref(db, 'config/logo'), (snapshot) => {
@@ -262,40 +272,61 @@
             }
         });
 
-        // 2. SUBIR NUEVO TEMPLO
-        window.pushToFirebase = async () => {
+        // 2. FUNCIÓN GUARDAR (AGREGAR O EDITAR)
+        window.saveToFirebase = async () => {
             const btn = document.getElementById('saveBtn');
+            const key = document.getElementById('editKey').value;
             const name = document.getElementById('nameIn').value;
             const addr = document.getElementById('addrIn').value;
             const link = document.getElementById('linkIn').value;
             const file1 = document.getElementById('f1').files[0];
             const file2 = document.getElementById('f2').files[0];
 
-            if(!name || !addr || !file1 || !file2) return alert("Faltan datos");
+            if(!name || !addr || !link) return alert("Por favor, rellena los campos básicos.");
 
             btn.disabled = true;
             btn.innerText = "Sincronizando...";
 
-            const img1 = await toB64(file1);
-            const img2 = await toB64(file2);
+            let data = { name, addr, link };
+            
+            // Si hay fotos nuevas, procesarlas
+            if(file1) data.img1 = await toB64(file1);
+            if(file2) data.img2 = await toB64(file2);
 
-            push(ref(db, 'templos'), { name, addr, link, img1, img2 })
-            .then(() => {
+            if(key) {
+                // MODO EDICIÓN
+                update(ref(db, 'templos/' + key), data).then(() => finalize());
+            } else {
+                // MODO NUEVO
+                if(!file1 || !file2) {
+                    btn.disabled = false;
+                    btn.innerText = "SINCRONIZAR CAMBIOS";
+                    return alert("Para un nuevo templo, ambas fotos son obligatorias.");
+                }
+                push(ref(db, 'templos'), data).then(() => finalize());
+            }
+
+            function finalize() {
                 btn.disabled = false;
-                btn.innerText = "GUARDAR EN RED";
-                closeMod('addOverlay');
-                alert("Templo sincronizado globalmente");
-                location.reload();
-            });
+                btn.innerText = "SINCRONIZAR CAMBIOS";
+                closeMod('manageOverlay');
+                alert("Red AVCSur actualizada.");
+            }
         };
 
-        // 3. ACTUALIZAR LOGO GLOBAL
+        // 3. ELIMINAR TEMPLO
+        window.deleteTemple = (id) => {
+            if(confirm("¿Estás seguro de borrar este templo de la red AVCSur?")) {
+                remove(ref(db, 'templos/' + id));
+            }
+        };
+
+        // 4. CAMBIAR LOGO
         window.handleLogoChange = async (input) => {
-            if(!window.isAuth) return alert("Solo admin puede cambiar logo");
-            const file = input.files[0];
-            const b64 = await toB64(file);
+            if(!window.isAuth) return;
+            const b64 = await toB64(input.files[0]);
             set(ref(db, 'config/logo'), b64);
-        }
+        };
     </script>
 
     <script>
@@ -305,35 +336,29 @@
 
         function renderCards(data) {
             const grid = document.getElementById('churchGrid');
-            if(data.length === 0) {
-                grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; color:#999; margin-top:40px;">No hay registros compartidos todavía.</p>';
-                return;
-            }
-            grid.innerHTML = '';
+            grid.innerHTML = data.length === 0 ? '<p id="loader">No hay registros disponibles.</p>' : '';
+            
             data.forEach(item => {
-                grid.innerHTML += `
-                    <div class="church-card">
-                        <div class="card-gallery">
-                            <img src="${item.img1}" loading="lazy">
-                            <img src="${item.img2}" loading="lazy">
-                        </div>
-                        <div class="card-content">
-                            <h2>${item.name}</h2>
-                            <p>${item.addr}</p>
-                            <a href="${item.link}" target="_blank" class="btn-maps">
-                                📍 ABRIR EN GOOGLE MAPS
-                            </a>
-                        </div>
+                const div = document.createElement('div');
+                div.className = 'church-card';
+                div.innerHTML = `
+                    <div class="card-gallery">
+                        <img src="${item.img1}" loading="lazy">
+                        <img src="${item.img2}" loading="lazy">
+                    </div>
+                    <div class="card-content">
+                        <h2>${item.name}</h2>
+                        <p>${item.addr}</p>
+                        <a href="${item.link}" target="_blank" class="btn-maps">📍 VER EN GOOGLE MAPS</a>
+                    </div>
+                    <div class="admin-controls" id="ctrl-${item.id}">
+                        <button class="btn-edit" onclick="prepEdit('${item.id}')">EDITAR</button>
+                        <button class="btn-delete" onclick="deleteTemple('${item.id}')">BORRAR</button>
                     </div>
                 `;
-            });
-        }
-
-        function searchLocal() {
-            const val = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = Array.from(document.querySelectorAll('.church-card')).forEach(card => {
-                const text = card.innerText.toLowerCase();
-                card.style.display = text.includes(val) ? 'block' : 'none';
+                grid.appendChild(div);
+                // Si ya está logueado, mostrar controles inmediatamente
+                if(window.isAuth) div.querySelector('.admin-controls').style.display = 'flex';
             });
         }
 
@@ -341,11 +366,42 @@
             if(document.getElementById('uInp').value === AUTH.u && document.getElementById('pInp').value === AUTH.p) {
                 window.isAuth = true;
                 closeMod('loginOverlay');
-                showMod('addOverlay');
-            } else alert("Error de acceso");
+                // Mostrar todos los controles admin en las tarjetas
+                document.querySelectorAll('.admin-controls').forEach(el => el.style.display = 'flex');
+                showManageModal();
+            } else alert("Credenciales incorrectas");
         }
 
-        function checkAuth() { window.isAuth ? showMod('addOverlay') : showMod('loginOverlay'); }
+        function checkAuth() {
+            window.isAuth ? showManageModal() : showMod('loginOverlay');
+        }
+
+        function showManageModal() {
+            document.getElementById('manageTitle').innerText = "Nuevo Templo";
+            document.getElementById('editKey').value = "";
+            document.getElementById('nameIn').value = "";
+            document.getElementById('addrIn').value = "";
+            document.getElementById('linkIn').value = "";
+            showMod('manageOverlay');
+        }
+
+        function prepEdit(id) {
+            const item = window.globalList.find(x => x.id === id);
+            document.getElementById('manageTitle').innerText = "Editar Templo";
+            document.getElementById('editKey').value = id;
+            document.getElementById('nameIn').value = item.name;
+            document.getElementById('addrIn').value = item.addr;
+            document.getElementById('linkIn').value = item.link;
+            showMod('manageOverlay');
+        }
+
+        function searchLocal() {
+            const val = document.getElementById('searchInput').value.toLowerCase();
+            document.querySelectorAll('.church-card').forEach(card => {
+                card.style.display = card.innerText.toLowerCase().includes(val) ? 'block' : 'none';
+            });
+        }
+
         function triggerLogoUpload() { if(window.isAuth) document.getElementById('logoFile').click(); }
         function showMod(id) { document.getElementById(id).style.display = 'flex'; }
         function closeMod(id) { document.getElementById(id).style.display = 'none'; }
