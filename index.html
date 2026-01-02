@@ -20,7 +20,6 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-        
         body { background-color: var(--bg-body); color: var(--text-dark); overflow-x: hidden; padding-bottom: 80px; }
 
         /* --- HEADER CON GRADIENTE ANIMADO --- */
@@ -29,43 +28,42 @@
             background-size: 400% 400%;
             animation: gradientAnim 12s ease infinite;
             color: var(--white);
-            padding: 60px 20px;
+            padding: 60px 20px 80px;
             text-align: center;
             border-bottom: 5px solid var(--yellow-accent);
             box-shadow: 0 4px 20px rgba(0,0,0,0.4);
             position: relative;
-            z-index: 10;
         }
+        @keyframes gradientAnim { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        @keyframes gradientAnim {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* BOTONES SUPERIORES */
+        .top-actions { position: absolute; top: 20px; right: 20px; display: flex; gap: 10px; align-items: center; }
+        
+        .zone-select {
+            background: rgba(255,255,255,0.15);
+            border: 2px solid var(--yellow-accent);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            outline: none;
+            backdrop-filter: blur(5px);
+            cursor: pointer;
         }
+        .zone-select option { color: black; }
 
-        /* BOTÓN LUPA SUPERIOR DERECHA */
         .search-trigger {
-            position: absolute;
-            top: 25px;
-            right: 25px;
             background: rgba(255,255,255,0.15);
             border: 2px solid var(--yellow-accent);
             color: var(--white);
-            width: 45px;
-            height: 45px;
+            width: 40px; height: 40px;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: var(--transition);
-            backdrop-filter: blur(5px);
-            z-index: 20;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; backdrop-filter: blur(5px);
         }
-        .search-trigger:active { transform: scale(0.9); }
 
         .logo-box {
-            width: 110px; height: 110px;
+            width: 100px; height: 100px;
             background: var(--white);
             border-radius: 50%;
             margin: 0 auto 20px;
@@ -76,174 +74,91 @@
         }
         .logo-box img { width: 100%; height: 100%; object-fit: cover; }
 
-        header h1 {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: clamp(30px, 9vw, 42px);
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            font-weight: 700;
-        }
+        header h1 { font-family: 'Rajdhani', sans-serif; font-size: clamp(28px, 8vw, 38px); text-transform: uppercase; letter-spacing: 3px; font-weight: 700; }
         header h1 span { color: var(--yellow-accent); }
 
-        /* --- OVERLAY DE BÚSQUEDA PROFESIONAL --- */
+        /* --- BUSQUEDA OVERLAY --- */
         #searchOverlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(10, 47, 92, 0.4);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            display: none;
-            z-index: 3000;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 15vh;
-            opacity: 0;
-            transition: var(--transition);
+            position: fixed; inset: 0; background: rgba(10, 47, 92, 0.4);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            display: none; z-index: 3000; flex-direction: column; align-items: center; padding-top: 15vh;
+            opacity: 0; transition: var(--transition);
         }
         #searchOverlay.active { display: flex; opacity: 1; }
+        .search-box { background: var(--white); padding: 20px 30px; border-radius: 60px; display: flex; align-items: center; border: 2px solid var(--yellow-accent); width: 90%; max-width: 600px; }
+        .search-box input { flex: 1; border: none; outline: none; font-size: 20px; font-weight: 600; color: var(--blue-main); margin-left: 15px; background: transparent; }
 
-        .search-container {
-            width: 90%;
-            max-width: 600px;
-            transform: translateY(-20px);
-            transition: var(--transition);
-        }
-        #searchOverlay.active .search-container { transform: translateY(0); }
+        /* --- TARJETAS --- */
+        .main-container { max-width: 1200px; margin: 40px auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 35px; padding: 0 25px; }
 
-        .search-box {
-            background: var(--white);
-            padding: 20px 30px;
-            border-radius: 60px;
-            display: flex;
-            align-items: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-            border: 2px solid var(--yellow-accent);
-        }
-        .search-box input {
-            flex: 1;
-            border: none;
-            outline: none;
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--blue-main);
-            margin-left: 15px;
-            background: transparent;
-        }
-
-        .close-search {
-            margin-top: 30px;
-            background: var(--yellow-accent);
-            color: var(--blue-main);
-            border: none;
-            padding: 12px 30px;
-            border-radius: 30px;
-            font-weight: 800;
-            text-transform: uppercase;
-            cursor: pointer;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        /* --- GRID DE TARJETAS --- */
-        .main-container {
-            max-width: 1200px;
-            margin: 40px auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 35px;
-            padding: 0 25px;
-        }
-
-        .church-card {
-            background: var(--white);
-            border-radius: 30px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            display: flex;
-            flex-direction: column;
-            transition: var(--transition);
-            animation: cardFadeIn 0.8s backwards;
-        }
+        .church-card { background: var(--white); border-radius: 30px; overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; transition: var(--transition); animation: cardFadeIn 0.8s backwards; }
         @keyframes cardFadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        .card-gallery {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            height: 200px;
-            background: #f0f0f0;
-            gap: 3px;
+        /* SLIDER DE 3 IMAGENES */
+        .card-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            height: 220px;
+            background: #eee;
+            scrollbar-width: none;
         }
-        .card-gallery img { width: 100%; height: 100%; object-fit: cover; }
-
-        .card-content { padding: 30px; background: var(--white); flex-grow: 1; }
-        .card-content h2 { color: var(--blue-main); font-size: 22px; margin-bottom: 15px; font-weight: 700; }
-        .card-content p { font-size: 15px; color: var(--text-gray); margin-bottom: 12px; display: flex; gap: 10px; line-height: 1.5; }
-        .card-content .phone-link { color: var(--blue-main); font-weight: 700; margin-top: 10px; display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 16px; }
-
-        .btn-maps {
-            display: flex; align-items: center; justify-content: center;
-            background: var(--blue-main); color: var(--white);
-            padding: 16px; border-radius: 18px;
-            text-decoration: none; font-weight: 700; font-size: 14px;
-            gap: 10px; width: 100%; margin-top: 25px;
-            box-shadow: 0 5px 15px rgba(10, 47, 92, 0.2);
+        .card-slider::-webkit-scrollbar { display: none; }
+        .card-slider img {
+            min-width: 100%;
+            height: 100%;
+            object-fit: cover;
+            scroll-snap-align: start;
         }
 
-        /* --- ADMIN CONTROLS --- */
-        .admin-controls {
-            display: none;
-            padding: 15px 30px 30px;
-            gap: 15px;
-            background: #fafafa;
-            border-top: 1px solid #f0f0f0;
-        }
-        .btn-edit { flex: 1; background: #eef4ff; color: var(--blue-main); border: none; padding: 12px; border-radius: 12px; font-weight: 700; cursor: pointer; }
-        .btn-delete { background: #fff1f1; color: var(--danger); border: none; padding: 12px; border-radius: 12px; font-weight: 700; cursor: pointer; }
+        .card-content { padding: 25px; background: var(--white); flex-grow: 1; }
+        .card-content h2 { color: var(--blue-main); font-size: 20px; margin-bottom: 12px; font-weight: 700; }
+        .card-content p { font-size: 14px; color: var(--text-gray); margin-bottom: 8px; display: flex; gap: 8px; align-items: flex-start; }
+        .contact-info { margin-top: 10px; padding: 12px; background: #f8f9fa; border-radius: 15px; border-left: 4px solid var(--yellow-accent); }
+        .contact-name { font-weight: 700; font-size: 13px; color: var(--blue-main); text-transform: uppercase; margin-bottom: 4px; display: block;}
+        .phone-link { color: var(--blue-light); font-weight: 700; text-decoration: none; font-size: 15px; display: flex; align-items: center; gap: 6px; }
 
-        /* --- MODALES --- */
-        .modal-overlay {
-            display: none; position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); backdrop-filter: blur(10px);
-            z-index: 4000; align-items: center; justify-content: center;
-            padding: 20px;
-        }
-        .modal-body {
-            background: var(--white);
-            padding: 35px;
-            border-radius: 35px;
-            width: 100%; max-width: 500px;
-            max-height: 90vh; overflow-y: auto;
-            transform: scale(0.9); opacity: 0;
-            transition: var(--transition);
-        }
+        .btn-maps { display: flex; align-items: center; justify-content: center; background: var(--blue-main); color: var(--white); padding: 14px; border-radius: 16px; text-decoration: none; font-weight: 700; font-size: 14px; gap: 10px; width: 100%; margin-top: 20px; box-shadow: 0 5px 15px rgba(10, 47, 92, 0.2); }
+
+        /* ADMIN */
+        .admin-controls { display: none; padding: 15px 25px 25px; gap: 10px; background: #fafafa; border-top: 1px solid #f0f0f0; }
+        .btn-edit { flex: 1; background: #eef4ff; color: var(--blue-main); border: none; padding: 10px; border-radius: 12px; font-weight: 700; cursor: pointer; }
+        .btn-delete { background: #fff1f1; color: var(--danger); border: none; padding: 10px; border-radius: 12px; font-weight: 700; cursor: pointer; }
+
+        /* MODALES */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); z-index: 4000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-body { background: var(--white); padding: 30px; border-radius: 35px; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; transform: scale(0.9); opacity: 0; transition: var(--transition); }
         .modal-overlay.active { display: flex; }
         .modal-overlay.active .modal-body { transform: scale(1); opacity: 1; }
 
-        .form-field { margin-bottom: 20px; }
-        .form-field label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 8px; color: var(--blue-main); text-transform: uppercase; }
-        .form-field input { width: 100%; padding: 15px; border: 2px solid #f0f0f0; border-radius: 14px; font-size: 15px; outline: none; }
+        .form-field { margin-bottom: 15px; }
+        .form-field label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 6px; color: var(--blue-main); text-transform: uppercase; }
+        .form-field input, .form-field select { width: 100%; padding: 12px; border: 2px solid #f0f0f0; border-radius: 12px; font-size: 14px; outline: none; }
 
         .static-footer { text-align: center; padding: 60px 20px 140px; font-size: 16px; font-weight: 700; color: var(--blue-main); letter-spacing: 2px; opacity: 0.7; }
 
-        nav {
-            position: fixed; bottom: 0; width: 100%;
-            background: var(--blue-main);
-            display: flex; justify-content: space-around;
-            padding: 18px 0; border-top: 5px solid var(--yellow-accent);
-            z-index: 1500;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.2);
-        }
+        nav { position: fixed; bottom: 0; width: 100%; background: var(--blue-main); display: flex; justify-content: space-around; padding: 18px 0; border-top: 5px solid var(--yellow-accent); z-index: 1500; box-shadow: 0 -5px 20px rgba(0,0,0,0.2); }
         .nav-link { background: none; border: none; color: var(--white); font-weight: 700; cursor: pointer; font-size: 11px; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 8px; }
 
-        #loader { text-align: center; grid-column: 1/-1; padding: 120px; color: var(--blue-main); font-weight: 700; font-size: 1.3rem; }
+        #loader { text-align: center; grid-column: 1/-1; padding: 100px; color: var(--blue-main); font-weight: 700; font-size: 1.3rem; }
     </style>
 </head>
 <body>
 
     <header>
-        <button class="search-trigger" onclick="openSearch()">
-            <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20"><path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"></path></svg>
-        </button>
+        <div class="top-actions">
+            <select class="zone-select" id="zoneFilter" onchange="filterByZone()">
+                <option value="todas">TODAS LAS ZONAS</option>
+                <option value="Zona 1">ZONA 1</option>
+                <option value="Zona 2">ZONA 2</option>
+                <option value="Zona 3">ZONA 3</option>
+                <option value="Zona 4">ZONA 4</option>
+                <option value="Zona 5">ZONA 5</option>
+            </select>
+            <button class="search-trigger" onclick="openSearch()">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"></path></svg>
+            </button>
+        </div>
 
         <div class="logo-box" id="logoDisplay">
             <img id="logoImg" src="" style="display:none;">
@@ -257,19 +172,17 @@
         <div class="search-container">
             <div class="search-box">
                 <svg width="28" height="28" fill="var(--blue-main)" viewBox="0 0 20 20"><path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"></path></svg>
-                <input type="text" id="searchInput" placeholder="Escribe el nombre o ciudad..." onkeyup="searchLocal()">
+                <input type="text" id="searchInput" placeholder="Buscar nombre o ciudad..." onkeyup="searchLocal()">
             </div>
-            <center><button class="close-search" onclick="closeSearch()">Ver Resultados</button></center>
+            <center><button style="margin-top:30px; background:var(--yellow-accent); color:var(--blue-main); border:none; padding:12px 30px; border-radius:30px; font-weight:800; cursor:pointer;" onclick="closeSearch()">Ver Resultados</button></center>
         </div>
     </div>
 
     <div class="main-container" id="churchGrid">
-        <div id="loader">Conectando con AVCSur...</div>
+        <div id="loader">Cargando Directorio...</div>
     </div>
 
-    <footer class="static-footer">
-        Robert Paraco - AVCSur
-    </footer>
+    <footer class="static-footer">Robert Paraco - AVCSur</footer>
 
     <!-- MODAL ACCESO -->
     <div id="loginOverlay" class="modal-overlay">
@@ -289,19 +202,30 @@
             <input type="hidden" id="editKey">
             <div class="form-field"><label>Nombre del Templo</label><input type="text" id="nameIn"></div>
             <div class="form-field"><label>Dirección Corta</label><input type="text" id="addrIn"></div>
+            <div class="form-field">
+                <label>Zona Correspondiente</label>
+                <select id="zoneIn">
+                    <option value="Zona 1">ZONA 1</option>
+                    <option value="Zona 2">ZONA 2</option>
+                    <option value="Zona 3">ZONA 3</option>
+                    <option value="Zona 4">ZONA 4</option>
+                    <option value="Zona 5">ZONA 5</option>
+                </select>
+            </div>
+            <div class="form-field"><label>Nombre del Contacto</label><input type="text" id="contactIn" placeholder="Ej: Robert Paraco"></div>
             <div class="form-field"><label>Teléfono (WhatsApp)</label><input type="tel" id="phoneIn" placeholder="Ej: +58 412 1234567"></div>
             <div class="form-field"><label>Enlace Google Maps</label><input type="url" id="linkIn"></div>
-            <div class="form-field"><label>Foto Exterior</label><input type="file" id="f1" accept="image/*"></div>
-            <div class="form-field"><label>Foto Interior</label><input type="file" id="f2" accept="image/*"></div>
+            <div class="form-field"><label>Foto 1 (Principal)</label><input type="file" id="f1" accept="image/*"></div>
+            <div class="form-field"><label>Foto 2 (Detalle)</label><input type="file" id="f2" accept="image/*"></div>
+            <div class="form-field"><label>Foto 3 (Interior)</label><input type="file" id="f3" accept="image/*"></div>
             <button id="saveBtn" onclick="saveToFirebase()" style="width:100%; background:var(--blue-main); color:white; padding:18px; border:none; border-radius:16px; font-weight:700; cursor:pointer;">SINCRO CON RED</button>
             
             <div style="margin-top:30px; padding-top:20px; border-top:2px solid #eee; text-align:center;">
-                <p style="font-size: 11px; font-weight: 700; color: var(--blue-main); margin-bottom:12px;">ACTUALIZAR LOGO GLOBAL</p>
+                <p style="font-size: 11px; font-weight: 700; color: var(--blue-main); margin-bottom:12px;">LOGO GLOBAL</p>
                 <input type="file" id="logoFile" style="display:none" accept="image/*" onchange="handleLogoChange(this)">
-                <button onclick="document.getElementById('logoFile').click()" style="background:#f4f4f4; border:1px solid #ddd; padding:15px; border-radius:15px; width:100%; cursor:pointer; font-weight:700; font-size:13px;">SUBIR NUEVO ICONO</button>
+                <button onclick="document.getElementById('logoFile').click()" style="background:#f4f4f4; border:1px solid #ddd; padding:12px; border-radius:15px; width:100%; cursor:pointer; font-weight:700;">SUBIR NUEVO ICONO</button>
             </div>
-
-            <button onclick="closeMod('manageOverlay')" style="background:none; border:none; width:100%; margin-top:30px; color:var(--text-gray); cursor:pointer; font-weight:bold;">Cerrar Gestión</button>
+            <button onclick="closeMod('manageOverlay')" style="background:none; border:none; width:100%; margin-top:30px; color:var(--text-gray); cursor:pointer; font-weight:bold;">Cerrar Panel</button>
         </div>
     </div>
 
@@ -356,35 +280,36 @@
             const key = document.getElementById('editKey').value;
             const name = document.getElementById('nameIn').value;
             const addr = document.getElementById('addrIn').value;
+            const zona = document.getElementById('zoneIn').value;
+            const contact = document.getElementById('contactIn').value;
             const phone = document.getElementById('phoneIn').value;
             const link = document.getElementById('linkIn').value;
             const file1 = document.getElementById('f1').files[0];
             const file2 = document.getElementById('f2').files[0];
+            const file3 = document.getElementById('f3').files[0];
 
-            if(!name || !addr || !link) return alert("Faltan campos.");
-            btn.disabled = true; btn.innerText = "Sincronizando...";
+            if(!name || !addr || !link) return alert("Faltan datos.");
+            btn.disabled = true; btn.innerText = "Procesando...";
 
-            let data = { name, addr, phone, link };
+            let data = { name, addr, zona, contact, phone, link };
             if(file1) data.img1 = await toB64(file1);
             if(file2) data.img2 = await toB64(file2);
+            if(file3) data.img3 = await toB64(file3);
 
             if(key) {
                 update(ref(db, 'templos/' + key), data).then(() => finalize());
             } else {
-                if(!file1 || !file2) { btn.disabled = false; return alert("Sube las fotos."); }
+                if(!file1 || !file2 || !file3) { btn.disabled = false; return alert("Carga las 3 fotos."); }
                 push(ref(db, 'templos'), data).then(() => finalize());
             }
             function finalize() { btn.disabled = false; closeMod('manageOverlay'); }
         };
 
-        window.deleteTemple = (id) => {
-            if(confirm("¿Borrar definitivamente?")) remove(ref(db, 'templos/' + id));
-        };
-
+        window.deleteTemple = (id) => { if(confirm("¿Eliminar definitivamente?")) remove(ref(db, 'templos/' + id)); };
         window.handleLogoChange = async (input) => {
             if(!window.isAuth || !input.files[0]) return;
             const b64 = await toB64(input.files[0]);
-            set(ref(db, 'config/logo'), b64).then(() => alert("Logo Actualizado."));
+            set(ref(db, 'config/logo'), b64);
         };
     </script>
 
@@ -392,51 +317,44 @@
         const AUTH = { u: "admin_templo", p: "Templo2026*" };
         window.isAuth = false;
 
-        // FUNCIONES DE BÚSQUEDA DESPLEGABLE
-        function openSearch() {
-            const overlay = document.getElementById('searchOverlay');
-            overlay.style.display = 'flex';
-            setTimeout(() => {
-                overlay.classList.add('active');
-                document.getElementById('searchInput').focus();
-            }, 10);
-        }
-
-        function closeSearch() {
-            const overlay = document.getElementById('searchOverlay');
-            overlay.classList.remove('active');
-            setTimeout(() => overlay.style.display = 'none', 500);
-        }
+        function openSearch() { const ov = document.getElementById('searchOverlay'); ov.style.display = 'flex'; setTimeout(() => ov.classList.add('active'), 10); }
+        function closeSearch() { const ov = document.getElementById('searchOverlay'); ov.classList.remove('active'); setTimeout(() => ov.style.display = 'none', 500); }
 
         function searchLocal() {
             const val = document.getElementById('searchInput').value.toLowerCase();
-            const cards = document.querySelectorAll('.church-card');
-            cards.forEach(card => {
-                card.style.display = card.innerText.toLowerCase().includes(val) ? 'flex' : 'none';
-            });
+            document.querySelectorAll('.church-card').forEach(c => c.style.display = c.innerText.toLowerCase().includes(val) ? 'flex' : 'none');
+        }
+
+        function filterByZone() {
+            const val = document.getElementById('zoneFilter').value;
+            renderCards(val === 'todas' ? window.globalList : window.globalList.filter(c => c.zona === val));
         }
 
         function renderCards(data) {
             const grid = document.getElementById('churchGrid');
-            grid.innerHTML = data.length === 0 ? '<p id="loader">Buscando...</p>' : '';
+            grid.innerHTML = data.length === 0 ? '<p id="loader">Sin resultados...</p>' : '';
             data.forEach((item, index) => {
                 const div = document.createElement('div');
                 div.className = 'church-card';
-                div.style.animationDelay = (index * 0.05) + 's';
                 div.innerHTML = `
-                    <div class="card-gallery">
-                        <img src="${item.img1}" loading="lazy">
-                        <img src="${item.img2}" loading="lazy">
+                    <div class="card-slider">
+                        <img src="${item.img1}">
+                        <img src="${item.img2}">
+                        <img src="${item.img3}">
                     </div>
                     <div class="card-content">
+                        <small style="color:var(--yellow-accent); font-weight:800; text-transform:uppercase;">${item.zona || 'Sin Zona'}</small>
                         <h2>${item.name}</h2>
                         <p>📍 ${item.addr}</p>
-                        ${item.phone ? `<a href="tel:${item.phone}" class="phone-link">📞 ${item.phone}</a>` : ''}
-                        <a href="${item.link}" target="_blank" class="btn-maps">EXPLORAR EN MAPS</a>
+                        <div class="contact-info">
+                            <span class="contact-name">👤 ${item.contact || 'S/N Contacto'}</span>
+                            ${item.phone ? `<a href="tel:${item.phone}" class="phone-link">📞 ${item.phone}</a>` : 'Sin Teléfono'}
+                        </div>
+                        <a href="${item.link}" target="_blank" class="btn-maps">VER RUTA EN MAPS</a>
                     </div>
                     <div class="admin-controls" id="ctrl-${item.id}">
-                        <button class="btn-edit" onclick="prepEdit('${item.id}')">MODIFICAR</button>
-                        <button class="btn-delete" onclick="deleteTemple('${item.id}')">ELIMINAR</button>
+                        <button class="btn-edit" onclick="prepEdit('${item.id}')">EDITAR</button>
+                        <button class="btn-delete" onclick="deleteTemple('${item.id}')">BORRAR</button>
                     </div>
                 `;
                 grid.appendChild(div);
@@ -446,50 +364,40 @@
 
         function validateAdmin() {
             if(document.getElementById('uInp').value === AUTH.u && document.getElementById('pInp').value === AUTH.p) {
-                window.isAuth = true;
-                closeMod('loginOverlay');
+                window.isAuth = true; closeMod('loginOverlay');
                 document.querySelectorAll('.admin-controls').forEach(el => el.style.display = 'flex');
                 showManageModal();
-            } else alert("Acceso Denegado.");
+            } else alert("Error.");
         }
 
         function checkAuth() { window.isAuth ? showManageModal() : showMod('loginOverlay'); }
-
-        function showManageModal() {
+        function showManageModal() { 
             document.getElementById('manageTitle').innerText = "Nuevo Registro";
             document.getElementById('editKey').value = "";
             document.getElementById('nameIn').value = "";
             document.getElementById('addrIn').value = "";
+            document.getElementById('contactIn').value = "";
             document.getElementById('phoneIn').value = "";
             document.getElementById('linkIn').value = "";
-            showMod('manageOverlay');
+            showMod('manageOverlay'); 
         }
 
         function prepEdit(id) {
-            const item = window.globalList.find(x => x.id === id);
-            document.getElementById('manageTitle').innerText = "Modificar Templo";
+            const it = window.globalList.find(x => x.id === id);
+            document.getElementById('manageTitle').innerText = "Editar Templo";
             document.getElementById('editKey').value = id;
-            document.getElementById('nameIn').value = item.name;
-            document.getElementById('addrIn').value = item.addr;
-            document.getElementById('phoneIn').value = item.phone || "";
-            document.getElementById('linkIn').value = item.link;
+            document.getElementById('nameIn').value = it.name;
+            document.getElementById('addrIn').value = it.addr;
+            document.getElementById('zoneIn').value = it.zona || 'Zona 1';
+            document.getElementById('contactIn').value = it.contact || '';
+            document.getElementById('phoneIn').value = it.phone || "";
+            document.getElementById('linkIn').value = it.link;
             showMod('manageOverlay');
         }
 
-        function showMod(id) { 
-            const el = document.getElementById(id);
-            el.style.display = 'flex'; 
-            setTimeout(() => el.classList.add('active'), 20);
-        }
-        function closeMod(id) { 
-            const el = document.getElementById(id);
-            el.classList.remove('active');
-            setTimeout(() => el.style.display = 'none', 400);
-        }
-        const toB64 = f => new Promise((res, rej) => {
-            const r = new FileReader(); r.readAsDataURL(f);
-            r.onload = () => res(r.result); r.onerror = e => rej(e);
-        });
+        function showMod(id) { const el = document.getElementById(id); el.style.display = 'flex'; setTimeout(() => el.classList.add('active'), 20); }
+        function closeMod(id) { const el = document.getElementById(id); el.classList.remove('active'); setTimeout(() => el.style.display = 'none', 400); }
+        const toB64 = f => new Promise((res, rej) => { const r = new FileReader(); r.readAsDataURL(f); r.onload = () => res(r.result); r.onerror = e => rej(e); });
     </script>
 </body>
 </html>
