@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Church Maps Admin Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0b011d;
+            --neon-yellow: #f3ff00;
+            --neon-pink: #ff00e5;
+            --neon-purple: #9d00ff;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --input-bg: #1a0b2e;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-dark); color: white; display: flex; justify-content: center; min-height: 100vh; overflow: hidden; }
+
+        .app-shell {
+            width: 100%; max-width: 414px; height: 100vh;
+            background: radial-gradient(circle at 0% 0%, #1a0b2e 0%, #0b011d 100%);
+            display: flex; flex-direction: column; position: relative; overflow: hidden;
+            border: 1px solid var(--glass-border);
+        }
+
+        /* --- VISTAS --- */
+        .view { display: none; flex-direction: column; height: 100%; width: 100%; position: absolute; top: 0; left: 0; transition: 0.4s; }
+        .view.active { display: flex; }
+
+        /* --- HEADER --- */
+        header { padding: 30px 20px 10px; background: rgba(11, 1, 29, 0.8); backdrop-filter: blur(10px); z-index: 10; }
+        h1 { font-family: 'Rajdhani', sans-serif; font-size: 24px; font-style: italic; text-transform: uppercase; letter-spacing: 2px; }
+        h1 span { color: var(--neon-yellow); text-shadow: 0 0 15px rgba(243, 255, 0, 0.6); }
+
+        /* --- FORMULARIO ADMIN --- */
+        .admin-content { padding: 20px; overflow-y: auto; flex: 1; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 11px; text-transform: uppercase; color: var(--neon-purple); margin-bottom: 8px; font-weight: bold; letter-spacing: 1px; }
+        
+        .form-group input, .form-group select {
+            width: 100%; background: var(--input-bg); border: 1px solid var(--glass-border);
+            border-radius: 12px; padding: 15px; color: white; outline: none; transition: 0.3s;
+        }
+        .form-group input:focus { border-color: var(--neon-pink); box-shadow: 0 0 10px rgba(255, 0, 229, 0.3); }
+
+        .btn-submit {
+            width: 100%; background: var(--neon-pink); color: white; padding: 18px; border: none;
+            border-radius: 15px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px;
+            cursor: pointer; box-shadow: 0 0 20px rgba(255, 0, 229, 0.4); margin-top: 10px;
+        }
+
+        /* --- LISTA DE DIRECCIONES (USUARIO) --- */
+        .search-container { margin: 15px 20px; position: relative; }
+        .search-container input {
+            width: 100%; background: var(--glass); border: 1px solid var(--neon-purple);
+            border-radius: 15px; padding: 12px 15px; color: white; outline: none;
+        }
+
+        .address-list { flex: 1; padding: 0 20px 100px; overflow-y: auto; }
+        .card {
+            background: var(--glass); border: 1px solid var(--glass-border); border-radius: 20px;
+            padding: 15px; margin-bottom: 15px; display: flex; align-items: center;
+        }
+        .card-content h3 { font-size: 15px; margin-bottom: 4px; color: var(--neon-yellow); }
+        .card-content p { font-size: 12px; color: #aaa; }
+
+        /* --- NAVBAR --- */
+        nav {
+            position: absolute; bottom: 0; width: 100%; background: rgba(11, 1, 29, 0.9);
+            padding: 15px; display: flex; justify-content: space-around; border-top: 1px solid var(--glass-border);
+        }
+        .nav-btn { background: none; border: none; color: #666; font-size: 10px; font-weight: bold; text-transform: uppercase; cursor: pointer; }
+        .nav-btn.active { color: var(--neon-yellow); }
+
+        /* --- MODAL DETALLE --- */
+        .modal {
+            position: absolute; bottom: -100%; left: 0; width: 100%; background: #160a2b;
+            border-top: 3px solid var(--neon-yellow); border-radius: 30px 30px 0 0;
+            padding: 30px; transition: 0.5s; z-index: 100;
+        }
+        .modal.active { bottom: 0; }
+    </style>
+</head>
+<body>
+
+    <div class="app-shell">
+        
+        <!-- VISTA USUARIO -->
+        <div id="userView" class="view active">
+            <header>
+                <h1>CHURCH <span>MAPS</span></h1>
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Buscar sede o dirección...">
+                </div>
+            </header>
+            <div class="address-list" id="churchList"></div>
+        </div>
+
+        <!-- VISTA ADMINISTRADOR -->
+        <div id="adminView" class="view">
+            <header>
+                <h1>PANEL <span>ADMIN</span></h1>
+                <p style="font-size: 10px; color: var(--neon-pink); text-transform: uppercase;">Agregar nueva ubicación</p>
+            </header>
+            <div class="admin-content">
+                <form id="addChurchForm">
+                    <div class="form-group">
+                        <label>Nombre de la Iglesia / Sede</label>
+                        <input type="text" id="churchName" placeholder="Ej: Catedral Alpha" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Líder o Pastor a cargo</label>
+                        <input type="text" id="churchLeader" placeholder="Ej: Pastor Juan Pérez" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Dirección Completa (Google Maps)</label>
+                        <input type="text" id="churchAddr" placeholder="Calle, Ciudad, Referencia" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo de Lugar</label>
+                        <select id="churchType">
+                            <option value="Sede Central">Sede Central</option>
+                            <option value="Sede Regional">Sede Regional</option>
+                            <option value="Célula">Célula / Grupo</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-submit">PUBLICAR UBICACIÓN</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- MODAL DETALLE (Compartido) -->
+        <div class="modal" id="detailModal">
+            <h2 id="m-name" style="color: var(--neon-yellow); margin-bottom: 10px;"></h2>
+            <p id="m-leader" style="color: var(--neon-pink); margin-bottom: 5px; font-weight: bold;"></p>
+            <p id="m-addr" style="font-size: 13px; color: #ccc; margin-bottom: 20px;"></p>
+            <button onclick="closeModal()" style="width: 100%; background: var(--glass); border: 1px solid var(--glass-border); color: white; padding: 12px; border-radius: 10px; cursor: pointer;">CERRAR</button>
+        </div>
+
+        <!-- NAVEGACIÓN INFERIOR -->
+        <nav>
+            <button class="nav-btn active" onclick="switchView('user', this)">Explorar</button>
+            <button class="nav-btn" onclick="switchView('admin', this)">Gestionar</button>
+        </nav>
+    </div>
+
+    <script>
+        // BASE DE DATOS INICIAL
+        let churchData = [
+            { name: "Sede Central Alpha", leader: "Apóstol Ricardo M.", addr: "Av. Santidad 450, Ciudad", type: "Sede Central" },
+            { name: "Célula Luz de Vida", leader: "Dra. Elena Gómez", addr: "Calle Esperanza 12, Norte", type: "Célula" }
+        ];
+
+        // Elementos DOM
+        const listContainer = document.getElementById('churchList');
+        const addForm = document.getElementById('addChurchForm');
+        const modal = document.getElementById('detailModal');
+
+        // Función para renderizar la lista
+        function renderChurches(filter = "") {
+            listContainer.innerHTML = '';
+            const filtered = churchData.filter(c => 
+                c.name.toLowerCase().includes(filter.toLowerCase()) || 
+                c.addr.toLowerCase().includes(filter.toLowerCase())
+            );
+
+            filtered.forEach(church => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.onclick = () => openModal(church);
+                card.innerHTML = `
+                    <div style="width: 40px; height: 40px; background: ${church.type === 'Sede Central' ? 'var(--neon-yellow)' : 'var(--neon-purple)'}; border-radius: 10px; margin-right: 15px; display: flex; align-items: center; justify-content: center; color: black; font-weight: bold;">
+                        ${church.name.charAt(0)}
+                    </div>
+                    <div class="card-content">
+                        <h3>${church.name}</h3>
+                        <p>${church.addr}</p>
+                    </div>
+                `;
+                listContainer.appendChild(card);
+            });
+        }
+
+        // Manejar el envío del formulario (ADMIN)
+        addForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Crear nuevo objeto
+            const newChurch = {
+                name: document.getElementById('churchName').value,
+                leader: document.getElementById('churchLeader').value,
+                addr: document.getElementById('churchAddr').value,
+                type: document.getElementById('churchType').value
+            };
+
+            // Agregar a la base de datos
+            churchData.unshift(newChurch); // Unshift lo pone al principio de la lista
+
+            // Limpiar formulario y volver a la vista de usuario para ver el resultado
+            addForm.reset();
+            alert("¡Sede agregada con éxito!");
+            switchView('user', document.querySelectorAll('.nav-btn')[0]);
+            renderChurches();
+        });
+
+        // Cambio de Vistas (User / Admin)
+        function switchView(viewName, btn) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            
+            if(viewName === 'user') document.getElementById('userView').classList.add('active');
+            else document.getElementById('adminView').classList.add('active');
+            
+            btn.classList.add('active');
+        }
+
+        // Buscador
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            renderChurches(e.target.value);
+        });
+
+        // Modal Detalles
+        function openModal(church) {
+            document.getElementById('m-name').innerText = church.name;
+            document.getElementById('m-leader').innerText = "Líder: " + church.leader;
+            document.getElementById('m-addr').innerText = church.addr;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+        }
+
+        // Iniciar App
+        renderChurches();
+    </script>
+</body>
+</html>
