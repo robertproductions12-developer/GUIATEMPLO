@@ -8,166 +8,189 @@
     <style>
         :root {
             --blue-main: #0a2f5c;
+            --blue-light: #16468a;
             --yellow-accent: #ffb81c;
             --white: #ffffff;
-            --bg-body: #f0f2f5;
+            --bg-body: #f4f7f9;
             --text-dark: #1a1a1a;
             --text-gray: #555;
             --danger: #d93025;
-            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow: 0 8px 24px rgba(0,0,0,0.08);
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
         
-        body { background-color: var(--bg-body); color: var(--text-dark); overflow-x: hidden; padding-bottom: 70px; }
+        body { background-color: var(--bg-body); color: var(--text-dark); overflow-x: hidden; padding-bottom: 80px; }
 
-        /* --- HEADER --- */
+        /* --- HEADER CON GRADIENTE ANIMADO --- */
         header {
-            background-color: var(--blue-main);
+            background: linear-gradient(-45deg, #0a2f5c, #16468a, #0a2f5c, #1e3a5f);
+            background-size: 400% 400%;
+            animation: gradientAnim 15s ease infinite;
             color: var(--white);
-            padding: 30px 20px 45px;
+            padding: 40px 20px 70px; /* Más espacio abajo para evitar solapamiento */
             text-align: center;
             border-bottom: 5px solid var(--yellow-accent);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        @keyframes gradientAnim {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .logo-box {
-            width: 95px; height: 95px;
+            width: 100px; height: 100px;
             background: var(--white);
             border-radius: 50%;
-            margin: 0 auto 15px;
+            margin: 0 auto 20px;
             display: flex; align-items: center; justify-content: center;
             border: 3px solid var(--yellow-accent);
             overflow: hidden;
             box-shadow: var(--shadow);
+            transition: var(--transition);
         }
+        .logo-box:hover { transform: scale(1.05); }
         .logo-box img { width: 100%; height: 100%; object-fit: cover; }
         .logo-box span { font-size: 11px; color: var(--blue-main); font-weight: 700; text-align: center; line-height: 1.1; }
 
         header h1 {
             font-family: 'Rajdhani', sans-serif;
-            font-size: clamp(24px, 7vw, 32px);
+            font-size: clamp(26px, 8vw, 36px);
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: var(--white);
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
         header h1 span { color: var(--yellow-accent); }
 
-        /* --- BUSCADOR --- */
+        /* --- BUSCADOR CORREGIDO --- */
         .search-wrapper {
-            max-width: 500px;
-            margin: -22px auto 0;
+            max-width: 550px;
+            margin: -32px auto 0; /* Posición controlada sobre el gradiente */
             padding: 0 20px;
+            position: relative;
+            z-index: 100;
         }
         .search-bar {
             background: var(--white);
             display: flex; align-items: center;
-            padding: 12px 20px;
-            border-radius: 30px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            padding: 14px 24px;
+            border-radius: 50px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+            transition: var(--transition);
         }
+        .search-bar:focus-within { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
         .search-bar input {
             border: none; outline: none; width: 100%;
-            font-size: 16px; margin-left: 10px; color: var(--text-dark);
+            font-size: 16px; margin-left: 12px; color: var(--text-dark);
         }
 
         /* --- CONTENIDO DE TARJETAS --- */
         .main-container {
-            max-width: 1100px;
-            margin: 40px auto;
+            max-width: 1200px;
+            margin: 50px auto;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
+            gap: 30px;
             padding: 0 20px;
         }
 
         .church-card {
             background: var(--white);
-            border-radius: 20px;
+            border-radius: 24px;
             overflow: hidden;
             box-shadow: var(--shadow);
             display: flex;
             flex-direction: column;
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: cardAppear 0.6s forwards;
         }
+        @keyframes cardAppear { to { opacity: 1; transform: translateY(0); } }
+        
+        .church-card:hover { transform: translateY(-8px); box-shadow: 0 15px 40px rgba(0,0,0,0.12); }
 
         .card-gallery {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            height: 180px;
+            height: 190px;
             background: #eee;
             gap: 2px;
         }
         .card-gallery img { width: 100%; height: 100%; object-fit: cover; }
 
         .card-content { 
-            padding: 20px; 
+            padding: 24px; 
             background: var(--white);
             flex-grow: 1;
         }
-        .card-content h2 { color: var(--blue-main); font-size: 20px; margin-bottom: 10px; font-weight: 700; line-height: 1.2; }
-        .card-content p { font-size: 14px; color: var(--text-gray); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-        .card-content .phone-text { color: var(--blue-main); font-weight: 600; margin-top: 5px; text-decoration: none; }
+        .card-content h2 { color: var(--blue-main); font-size: 20px; margin-bottom: 12px; font-weight: 700; }
+        .card-content p { font-size: 14px; color: var(--text-gray); margin-bottom: 10px; display: flex; align-items: center; gap: 10px; line-height: 1.4; }
+        .card-content .phone-text { color: var(--blue-main); font-weight: 700; margin-top: 10px; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-size: 15px; }
 
         .btn-maps {
             display: flex; align-items: center; justify-content: center;
             background: var(--blue-main); color: var(--white);
-            padding: 14px; border-radius: 12px;
+            padding: 15px; border-radius: 14px;
             text-decoration: none; font-weight: 700; font-size: 14px;
-            gap: 8px; width: 100%; margin-top: 15px;
+            gap: 10px; width: 100%; margin-top: 20px;
+            transition: var(--transition);
         }
+        .btn-maps:hover { background: var(--blue-light); }
 
         /* ADMIN CONTROLS */
         .admin-controls {
             display: none;
-            padding: 15px 20px 20px;
-            gap: 10px;
-            background: #f9f9f9;
-            border-top: 1px solid #eee;
+            padding: 15px 24px 24px;
+            gap: 12px;
+            background: #fdfdfd;
+            border-top: 1px solid #f0f0f0;
         }
-        .btn-edit { flex: 1; background: #e8f0fe; color: var(--blue-main); border: none; padding: 10px; border-radius: 8px; font-weight: 700; cursor: pointer; }
-        .btn-delete { background: #feebeb; color: var(--danger); border: none; padding: 10px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+        .btn-edit { flex: 1; background: #eef4ff; color: var(--blue-main); border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: var(--transition); }
+        .btn-delete { background: #fff1f1; color: var(--danger); border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: var(--transition); }
+        .btn-edit:hover { background: #d0e1ff; }
 
-        /* --- MODALES --- */
+        /* --- MODALES FLUIDOS --- */
         .modal-overlay {
             display: none; position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); backdrop-filter: blur(6px);
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
             z-index: 2000; align-items: center; justify-content: center;
             padding: 20px;
         }
         .modal-body {
             background: var(--white);
-            padding: 25px;
-            border-radius: 24px;
+            padding: 30px;
+            border-radius: 28px;
             width: 100%; max-width: 480px;
             max-height: 90vh; overflow-y: auto;
+            transform: scale(0.9); opacity: 0;
+            transition: var(--transition);
         }
-        .modal-body h2 { color: var(--blue-main); margin-bottom: 20px; font-size: 22px; }
+        .modal-overlay.active .modal-body { transform: scale(1); opacity: 1; }
 
-        .form-field { margin-bottom: 15px; }
-        .form-field label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 6px; color: var(--blue-main); text-transform: uppercase; }
-        .form-field input { width: 100%; padding: 12px; border: 1.5px solid #ddd; border-radius: 10px; font-size: 14px; outline: none; }
-        .form-field input:focus { border-color: var(--blue-main); }
+        .form-field { margin-bottom: 18px; }
+        .form-field label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 8px; color: var(--blue-main); text-transform: uppercase; }
+        .form-field input { width: 100%; padding: 14px; border: 2px solid #eee; border-radius: 12px; font-size: 15px; outline: none; transition: var(--transition); }
+        .form-field input:focus { border-color: var(--yellow-accent); }
 
         .btn-action {
             width: 100%; background: var(--blue-main); color: white;
-            padding: 16px; border: none; border-radius: 14px;
-            font-weight: 700; cursor: pointer; font-size: 16px; margin-top: 10px;
-        }
-
-        /* SECCIÓN CAMBIAR LOGO EN ADMIN */
-        .admin-logo-section {
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 2px solid #eee;
-            text-align: center;
+            padding: 18px; border: none; border-radius: 16px;
+            font-weight: 700; cursor: pointer; font-size: 16px; margin-top: 15px;
+            box-shadow: 0 8px 20px rgba(10, 47, 92, 0.2);
         }
 
         /* --- FOOTER --- */
         .static-footer {
             text-align: center;
-            padding: 40px 20px 120px;
-            font-size: 14px;
+            padding: 50px 20px 130px;
+            font-size: 15px;
             font-weight: 700;
             color: var(--blue-main);
             letter-spacing: 1px;
@@ -178,12 +201,12 @@
             position: fixed; bottom: 0; width: 100%;
             background: var(--blue-main);
             display: flex; justify-content: space-around;
-            padding: 14px 0; border-top: 4px solid var(--yellow-accent);
+            padding: 16px 0; border-top: 4px solid var(--yellow-accent);
             z-index: 1500;
         }
-        .nav-link { background: none; border: none; color: var(--white); font-weight: 700; cursor: pointer; font-size: 11px; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .nav-link { background: none; border: none; color: var(--white); font-weight: 700; cursor: pointer; font-size: 11px; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 6px; }
 
-        #loader { text-align: center; grid-column: 1/-1; padding: 100px; color: var(--blue-main); font-weight: 700; }
+        #loader { text-align: center; grid-column: 1/-1; padding: 100px; color: var(--blue-main); font-weight: 700; font-size: 1.2rem; }
     </style>
 </head>
 <body>
@@ -197,62 +220,60 @@
         
         <div class="search-wrapper">
             <div class="search-bar">
-                <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"></path></svg>
-                <input type="text" id="searchInput" placeholder="Buscar templo o ciudad..." onkeyup="searchLocal()">
+                <svg width="22" height="22" fill="var(--blue-main)" viewBox="0 0 20 20"><path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"></path></svg>
+                <input type="text" id="searchInput" placeholder="Buscar por templo o ciudad..." onkeyup="searchLocal()">
             </div>
         </div>
     </header>
 
     <div class="main-container" id="churchGrid">
-        <div id="loader">Cargando Directorio AVCSur...</div>
+        <div id="loader">Conectando con el Directorio...</div>
     </div>
 
     <footer class="static-footer">
         Robert Paraco - AVCSur
     </footer>
 
-    <!-- MODAL LOGIN -->
+    <!-- MODALES -->
     <div id="loginOverlay" class="modal-overlay">
         <div class="modal-body">
-            <h2>Acceso Administrador</h2>
+            <h2 style="color:var(--blue-main); margin-bottom:20px;">Acceso Administrador</h2>
             <div class="form-field"><label>Usuario</label><input type="text" id="uInp"></div>
             <div class="form-field"><label>Contraseña</label><input type="password" id="pInp"></div>
             <button class="btn-action" onclick="validateAdmin()">INGRESAR</button>
-            <button onclick="closeMod('loginOverlay')" style="background:none; border:none; width:100%; margin-top:15px; color:var(--text-gray); cursor:pointer">Cancelar</button>
+            <button onclick="closeMod('loginOverlay')" style="background:none; border:none; width:100%; margin-top:20px; color:var(--text-gray); cursor:pointer; font-weight:600;">Cancelar</button>
         </div>
     </div>
 
-    <!-- MODAL GESTIÓN -->
     <div id="manageOverlay" class="modal-overlay">
         <div class="modal-body">
             <h2 id="manageTitle">Nuevo Registro</h2>
             <input type="hidden" id="editKey">
             <div class="form-field"><label>Nombre del Templo</label><input type="text" id="nameIn"></div>
-            <div class="form-field"><label>Dirección / Ciudad</label><input type="text" id="addrIn"></div>
-            <div class="form-field"><label>Número de Teléfono</label><input type="tel" id="phoneIn" placeholder="Ej: +58 412 0000000"></div>
+            <div class="form-field"><label>Dirección Corta</label><input type="text" id="addrIn"></div>
+            <div class="form-field"><label>Teléfono de Contacto</label><input type="tel" id="phoneIn" placeholder="Ej: +58 412 1234567"></div>
             <div class="form-field"><label>Enlace Google Maps</label><input type="url" id="linkIn"></div>
-            <div class="form-field"><label>Foto 1 (Fachada)</label><input type="file" id="f1" accept="image/*"></div>
-            <div class="form-field"><label>Foto 2 (Salón)</label><input type="file" id="f2" accept="image/*"></div>
+            <div class="form-field"><label>Foto 1 (Exterior)</label><input type="file" id="f1" accept="image/*"></div>
+            <div class="form-field"><label>Foto 2 (Interior)</label><input type="file" id="f2" accept="image/*"></div>
             <button class="btn-action" id="saveBtn" onclick="saveToFirebase()">GUARDAR DATOS</button>
             
-            <!-- OPCIÓN PARA CAMBIAR LOGO PRINCIPAL -->
-            <div class="admin-logo-section">
-                <p style="font-size: 11px; font-weight: 700; color: var(--blue-main); margin-bottom: 10px; text-transform: uppercase;">Cambiar Logotipo de la App</p>
+            <div style="margin-top:25px; padding-top:20px; border-top:2px solid #eee; text-align:center;">
+                <p style="font-size: 11px; font-weight: 700; color: var(--blue-main); margin-bottom:10px;">CAMBIAR LOGO PRINCIPAL</p>
                 <input type="file" id="logoFile" style="display:none" accept="image/*" onchange="handleLogoChange(this)">
-                <button onclick="document.getElementById('logoFile').click()" style="background: #eee; border: 1px solid #ccc; padding: 10px; border-radius: 8px; width: 100%; cursor: pointer; font-weight: 600;">Subir Nuevo Logo Principal</button>
+                <button onclick="document.getElementById('logoFile').click()" style="background:#eee; border:1px solid #ddd; padding:12px; border-radius:12px; width:100%; cursor:pointer; font-weight:600; font-size:13px;">SUBIR NUEVO LOGOTIPO</button>
             </div>
 
-            <button onclick="closeMod('manageOverlay')" style="background:none; border:none; width:100%; margin-top:20px; color:var(--text-gray); cursor:pointer; font-weight: bold;">Cerrar Panel</button>
+            <button onclick="closeMod('manageOverlay')" style="background:none; border:none; width:100%; margin-top:25px; color:var(--text-gray); cursor:pointer; font-weight:bold;">Cerrar Panel</button>
         </div>
     </div>
 
     <nav>
         <button class="nav-link" onclick="location.reload()">
-            <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+            <svg width="22" height="22" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
             Explorar
         </button>
         <button class="nav-link" onclick="checkAuth()">
-            <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"></path></svg>
+            <svg width="22" height="22" fill="currentColor" viewBox="0 0 20 20"><path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"></path></svg>
             Gestionar
         </button>
     </nav>
@@ -275,7 +296,6 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // CARGAR DATOS
         onValue(ref(db, 'templos'), (snapshot) => {
             const data = snapshot.val();
             const list = [];
@@ -293,7 +313,6 @@
             }
         });
 
-        // GUARDAR/EDITAR
         window.saveToFirebase = async () => {
             const btn = document.getElementById('saveBtn');
             const key = document.getElementById('editKey').value;
@@ -305,8 +324,7 @@
             const file2 = document.getElementById('f2').files[0];
 
             if(!name || !addr || !link) return alert("Faltan campos obligatorios.");
-            btn.disabled = true;
-            btn.innerText = "Sincronizando...";
+            btn.disabled = true; btn.innerText = "Sincronizando...";
 
             let data = { name, addr, phone, link };
             if(file1) data.img1 = await toB64(file1);
@@ -315,27 +333,20 @@
             if(key) {
                 update(ref(db, 'templos/' + key), data).then(() => finalize());
             } else {
-                if(!file1 || !file2) {
-                    btn.disabled = false; btn.innerText = "GUARDAR DATOS";
-                    return alert("Debe subir ambas fotos para un nuevo registro.");
-                }
+                if(!file1 || !file2) { btn.disabled = false; btn.innerText = "GUARDAR DATOS"; return alert("Fotos obligatorias."); }
                 push(ref(db, 'templos'), data).then(() => finalize());
             }
-
-            function finalize() {
-                btn.disabled = false; btn.innerText = "GUARDAR DATOS";
-                closeMod('manageOverlay');
-            }
+            function finalize() { btn.disabled = false; btn.innerText = "GUARDAR DATOS"; closeMod('manageOverlay'); }
         };
 
         window.deleteTemple = (id) => {
-            if(confirm("¿Eliminar este templo de la base de datos?")) remove(ref(db, 'templos/' + id));
+            if(confirm("¿Eliminar este templo definitivamente?")) remove(ref(db, 'templos/' + id));
         };
 
         window.handleLogoChange = async (input) => {
             if(!window.isAuth || !input.files[0]) return;
             const b64 = await toB64(input.files[0]);
-            set(ref(db, 'config/logo'), b64).then(() => alert("Logotipo actualizado globalmente."));
+            set(ref(db, 'config/logo'), b64).then(() => alert("Logo actualizado."));
         };
     </script>
 
@@ -345,11 +356,12 @@
 
         function renderCards(data) {
             const grid = document.getElementById('churchGrid');
-            grid.innerHTML = data.length === 0 ? '<p id="loader">No hay templos registrados.</p>' : '';
+            grid.innerHTML = data.length === 0 ? '<p id="loader">No hay registros.</p>' : '';
             
-            data.forEach(item => {
+            data.forEach((item, index) => {
                 const div = document.createElement('div');
                 div.className = 'church-card';
+                div.style.animationDelay = (index * 0.1) + 's';
                 div.innerHTML = `
                     <div class="card-gallery">
                         <img src="${item.img1}" loading="lazy">
@@ -377,7 +389,7 @@
                 closeMod('loginOverlay');
                 document.querySelectorAll('.admin-controls').forEach(el => el.style.display = 'flex');
                 showManageModal();
-            } else alert("Datos incorrectos");
+            } else alert("Credenciales incorrectas.");
         }
 
         function checkAuth() { window.isAuth ? showManageModal() : showMod('loginOverlay'); }
@@ -410,8 +422,16 @@
             });
         }
 
-        function showMod(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeMod(id) { document.getElementById(id).style.display = 'none'; }
+        function showMod(id) { 
+            const el = document.getElementById(id);
+            el.style.display = 'flex'; 
+            setTimeout(() => el.classList.add('active'), 10);
+        }
+        function closeMod(id) { 
+            const el = document.getElementById(id);
+            el.classList.remove('active');
+            setTimeout(() => el.style.display = 'none', 400);
+        }
         const toB64 = f => new Promise((res, rej) => {
             const r = new FileReader(); r.readAsDataURL(f);
             r.onload = () => res(r.result); r.onerror = e => rej(e);
