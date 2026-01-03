@@ -20,153 +20,230 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background-color: var(--bg-body); color: var(--text-dark); overflow-x: hidden; padding-bottom: 80px; }
+        
+        body { 
+            background-color: var(--bg-body); 
+            color: var(--text-dark); 
+            overflow-x: hidden; 
+            padding-top: 260px; /* Espacio para el header fijo */
+            padding-bottom: 80px; 
+        }
 
-        /* --- HEADER CON ANIMACIÓN DE CAMINO --- */
+        /* --- HEADER FIJO ESTATICO --- */
         header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
             background: linear-gradient(-45deg, #0a2f5c, #1a4b8f, #0d3b75, #081f3d);
             background-size: 400% 400%;
             animation: gradientAnim 12s ease infinite;
             color: var(--white);
-            padding: 40px 20px 50px;
+            padding: 20px 20px 30px;
             text-align: center;
             border-bottom: 5px solid var(--yellow-accent);
             box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-            position: relative;
             overflow: hidden;
         }
         @keyframes gradientAnim { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        /* Animación de rayas (camino trazado) */
+        /* Animación de rayas decorativa */
         .path-animation {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0; right: 0; width: 150px; height: 100%;
             pointer-events: none;
-            opacity: 0.3;
+            opacity: 0.5;
+            z-index: 1;
         }
         .path-line {
             fill: none;
             stroke: var(--yellow-accent);
-            stroke-width: 2;
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-            animation: drawPath 8s linear infinite;
+            stroke-width: 3;
+            stroke-dasharray: 100;
+            animation: dash 3s linear infinite;
         }
-        @keyframes drawPath { to { stroke-dashoffset: 0; } }
+        @keyframes dash { to { stroke-dashoffset: -200; } }
 
-        /* BUSCADOR DEBAJO DEL TEXTO */
-        .search-container-fixed {
-            max-width: 500px;
-            margin: 20px auto 0;
-            position: relative;
-            z-index: 5;
-        }
-        .search-bar-pro {
-            background: var(--white);
-            display: flex;
-            align-items: center;
-            padding: 12px 20px;
-            border-radius: 50px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            border: 2px solid var(--yellow-accent);
-        }
-        .search-bar-pro input {
-            flex: 1; border: none; outline: none; padding-left: 10px; font-size: 16px; color: var(--blue-main);
-        }
-
-        /* MENÚ ZONAS SUPERIOR DERECHO */
-        .top-right-menu {
+        /* CONTROLES SUPERIORES */
+        .header-controls {
             position: absolute;
             top: 15px;
             right: 15px;
+            display: flex;
+            gap: 10px;
             z-index: 10;
         }
-        .zone-select {
+
+        .music-btn {
             background: rgba(255,255,255,0.2);
+            border: 1px solid var(--yellow-accent);
+            color: white;
+            width: 35px; height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px;
+        }
+
+        .zone-select {
+            background: rgba(0,0,0,0.3);
             border: 2px solid var(--yellow-accent);
             color: white;
-            padding: 6px 15px;
+            padding: 5px 12px;
             border-radius: 20px;
-            font-weight: 800;
-            backdrop-filter: blur(10px);
+            font-weight: 700;
+            font-size: 11px;
             cursor: pointer;
-            font-size: 12px;
+            outline: none;
         }
         .zone-select option { color: #000; }
 
         .logo-box {
-            width: 90px; height: 90px;
+            width: 70px; height: 70px;
             background: var(--white);
             border-radius: 50%;
             margin: 0 auto 10px;
             display: flex; align-items: center; justify-content: center;
             border: 3px solid var(--yellow-accent);
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            position: relative; z-index: 2;
         }
         .logo-box img { width: 100%; height: 100%; object-fit: cover; }
 
-        header h1 { font-family: 'Rajdhani', sans-serif; font-size: 32px; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; }
-        header h1 span { color: var(--yellow-accent); }
+        header h1 { 
+            font-family: 'Rajdhani', sans-serif; 
+            font-size: 26px; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            margin-bottom: 15px;
+            position: relative; z-index: 2;
+        }
 
-        /* --- TARJETAS CON SLIDER --- */
-        .main-container { max-width: 1200px; margin: 40px auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 30px; padding: 0 20px; }
+        /* BUSCADOR ALINEADO DEBAJO DEL TEXTO */
+        .search-container {
+            max-width: 450px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        .search-bar {
+            background: white;
+            display: flex; align-items: center;
+            padding: 10px 18px;
+            border-radius: 50px;
+            border: 2px solid var(--yellow-accent);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .search-bar input {
+            flex: 1; border: none; outline: none; padding-left: 10px; font-size: 15px; color: var(--blue-main);
+        }
 
-        .church-card { background: var(--white); border-radius: 25px; overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; transition: var(--transition); }
-        .church-card:hover { transform: translateY(-5px); }
+        /* --- TARJETAS --- */
+        .main-container { 
+            max-width: 1200px; 
+            margin: 30px auto; 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+            gap: 25px; 
+            padding: 0 20px;
+            justify-content: center; /* Centrado en desktop */
+        }
+
+        .church-card { 
+            background: var(--white); 
+            border-radius: 25px; 
+            overflow: hidden; 
+            box-shadow: var(--shadow); 
+            width: 100%;
+            max-width: 380px;
+            margin: 0 auto; /* Centrado en mobile */
+            transition: var(--transition);
+        }
 
         .card-slider {
             display: flex;
             overflow-x: auto;
             scroll-snap-type: x mandatory;
-            height: 230px;
+            height: 220px;
             background: #eee;
             scrollbar-width: none;
         }
         .card-slider::-webkit-scrollbar { display: none; }
         .card-slider img { min-width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start; }
 
-        .card-content { padding: 25px; background: var(--white); flex-grow: 1; }
-        .card-content h2 { color: var(--blue-main); font-size: 20px; margin-bottom: 8px; font-weight: 700; }
-        .card-content p { font-size: 14px; color: var(--text-gray); margin-bottom: 12px; display: flex; gap: 8px; }
+        .card-content { padding: 22px; }
+        .card-content h2 { color: var(--blue-main); font-size: 19px; margin-bottom: 8px; font-weight: 700; }
         
-        .contact-box { background: #f8f9fa; padding: 12px; border-radius: 15px; border-left: 5px solid var(--yellow-accent); margin-bottom: 15px; }
-        .contact-box strong { display: block; font-size: 12px; color: var(--blue-main); text-transform: uppercase; }
-        .phone-link { color: var(--blue-light); font-weight: 700; text-decoration: none; font-size: 15px; display: flex; align-items: center; gap: 8px; margin-top: 5px; }
+        .contact-box { 
+            background: #f8f9fa; 
+            padding: 12px; 
+            border-radius: 15px; 
+            border-left: 5px solid var(--yellow-accent); 
+            margin: 15px 0; 
+        }
+        .contact-box strong { display: block; font-size: 11px; color: var(--blue-main); text-transform: uppercase; }
+        .phone-link { color: var(--blue-light); font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 8px; margin-top: 4px; }
 
-        .btn-maps { display: flex; align-items: center; justify-content: center; background: var(--blue-main); color: var(--white); padding: 14px; border-radius: 15px; text-decoration: none; font-weight: 700; font-size: 14px; width: 100%; }
+        .btn-maps { 
+            display: flex; align-items: center; justify-content: center; 
+            background: var(--blue-main); color: var(--white); 
+            padding: 14px; border-radius: 15px; text-decoration: none; 
+            font-weight: 700; width: 100%; 
+        }
+
+        /* --- VIDEO Y MUSICA --- */
+        .video-section {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            background: #000;
+        }
+        .video-container iframe {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
+        }
 
         /* --- ADMIN CONTROLS --- */
-        .admin-controls { display: none; padding: 15px 25px 25px; gap: 10px; background: #fafafa; border-top: 1px solid #f0f0f0; }
+        .admin-controls { display: none; padding: 15px; gap: 10px; background: #f1f1f1; }
         .btn-edit { flex: 1; background: #eef4ff; color: var(--blue-main); border: none; padding: 10px; border-radius: 10px; font-weight: 700; cursor: pointer; }
         .btn-delete { background: #fff1f1; color: var(--danger); border: none; padding: 10px; border-radius: 10px; font-weight: 700; cursor: pointer; }
 
         /* --- MODALES --- */
-        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); z-index: 4000; align-items: center; justify-content: center; padding: 20px; }
-        .modal-body { background: var(--white); padding: 30px; border-radius: 30px; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; transition: var(--transition); }
-        .modal-overlay.active { display: flex; }
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 4000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-body { background: var(--white); padding: 25px; border-radius: 25px; width: 100%; max-width: 450px; max-height: 90vh; overflow-y: auto; }
 
         .form-field { margin-bottom: 15px; }
         .form-field label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 5px; color: var(--blue-main); text-transform: uppercase; }
         .form-field input, .form-field select { width: 100%; padding: 12px; border: 2px solid #f0f0f0; border-radius: 12px; font-size: 14px; outline: none; }
 
-        .static-footer { text-align: center; padding: 50px 20px 140px; font-size: 15px; font-weight: 700; color: var(--blue-main); letter-spacing: 2px; opacity: 0.6; }
+        .static-footer { text-align: center; padding: 40px 20px 120px; font-size: 14px; font-weight: 700; color: var(--blue-main); opacity: 0.6; }
 
-        nav { position: fixed; bottom: 0; width: 100%; background: var(--blue-main); display: flex; justify-content: space-around; padding: 18px 0; border-top: 5px solid var(--yellow-accent); z-index: 1500; }
-        .nav-link { background: none; border: none; color: var(--white); font-weight: 700; cursor: pointer; font-size: 11px; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        nav { position: fixed; bottom: 0; width: 100%; background: var(--blue-main); display: flex; justify-content: space-around; padding: 15px 0; border-top: 5px solid var(--yellow-accent); z-index: 1500; }
+        .nav-link { background: none; border: none; color: var(--white); font-weight: 700; cursor: pointer; font-size: 11px; text-transform: uppercase; }
 
-        #loader { text-align: center; grid-column: 1/-1; padding: 100px; color: var(--blue-main); font-weight: 700; font-size: 1.3rem; }
+        #loader { text-align: center; padding: 100px; color: var(--blue-main); font-weight: 700; }
     </style>
 </head>
 <body>
 
+    <audio id="bgMusic" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
     <header>
-        <!-- Animación de rayas decorativa -->
-        <svg class="path-animation" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <path class="path-line" d="M-10,20 Q30,50 60,20 T110,40 M-10,80 Q40,60 70,90 T110,70" />
+        <svg class="path-animation" viewBox="0 0 100 100">
+            <path class="path-line" d="M10,10 Q50,50 90,10 T10,90" />
         </svg>
 
-        <div class="top-right-menu">
+        <div class="header-controls">
+            <button class="music-btn" onclick="toggleMusic()" id="musicIcon">🎵</button>
             <select class="zone-select" id="zoneFilter" onchange="filterByZone()">
                 <option value="todas">ZONAS</option>
                 <option value="Zona 1">Zona 1</option>
@@ -179,20 +256,29 @@
 
         <div class="logo-box">
             <img id="logoImg" src="" style="display:none;">
-            <span id="logoLabel">LOGO<br>AVCSur</span>
+            <span id="logoLabel">LOGO</span>
         </div>
         <h1>TEMPLOS <span>AVCSur</span></h1>
 
-        <div class="search-container-fixed">
-            <div class="search-bar-pro">
-                <svg width="20" height="20" fill="var(--blue-main)" viewBox="0 0 20 20"><path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"></path></svg>
-                <input type="text" id="searchInput" placeholder="¿Qué templo buscas?" onkeyup="searchLocal()">
+        <div class="search-container">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="¿Qué templo buscas hoy?" onkeyup="searchLocal()">
+                <span>🔍</span>
             </div>
         </div>
     </header>
 
     <div class="main-container" id="churchGrid">
-        <div id="loader">Cargando Red AVCSur...</div>
+        <div id="loader">Cargando Guía Pro...</div>
+    </div>
+
+    <!-- SECCIÓN DE VIDEO ANIMADO AL FINAL -->
+    <div class="video-section">
+        <h3 style="color: var(--blue-main); margin-bottom: 20px; font-family: 'Rajdhani';">NUESTRA MISIÓN</h3>
+        <div class="video-container">
+            <!-- Reemplaza el ID del video con el que desees -->
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=0&mute=1" allowfullscreen></iframe>
+        </div>
     </div>
 
     <footer class="static-footer">Robert Paraco - AVCSur</footer>
@@ -200,11 +286,11 @@
     <!-- MODALES -->
     <div id="loginOverlay" class="modal-overlay">
         <div class="modal-body">
-            <h2 style="color:var(--blue-main); margin-bottom:20px; text-align:center;">Acceso Administrador</h2>
+            <h2 style="color:var(--blue-main); margin-bottom:20px;">Acceso Admin</h2>
             <div class="form-field"><label>Usuario</label><input type="text" id="uInp"></div>
             <div class="form-field"><label>Contraseña</label><input type="password" id="pInp"></div>
-            <button onclick="validateAdmin()" style="width:100%; background:var(--blue-main); color:white; padding:18px; border:none; border-radius:15px; font-weight:700; cursor:pointer;">ENTRAR</button>
-            <button onclick="closeMod('loginOverlay')" style="background:none; border:none; width:100%; margin-top:20px; color:var(--text-gray); cursor:pointer;">Cerrar</button>
+            <button onclick="validateAdmin()" style="width:100%; background:var(--blue-main); color:white; padding:15px; border:none; border-radius:12px; font-weight:700;">ENTRAR</button>
+            <button onclick="closeMod('loginOverlay')" style="background:none; border:none; width:100%; margin-top:15px; color:var(--text-gray);">Cerrar</button>
         </div>
     </div>
 
@@ -223,26 +309,20 @@
                     <option value="Zona 5">Zona 5</option>
                 </select>
             </div>
-            <div class="form-field"><label>Nombre del Contacto</label><input type="text" id="contactIn"></div>
+            <div class="form-field"><label>Nombre de Contacto</label><input type="text" id="contactIn"></div>
             <div class="form-field"><label>Teléfono</label><input type="tel" id="phoneIn"></div>
-            <div class="form-field"><label>Google Maps Link</label><input type="url" id="linkIn"></div>
+            <div class="form-field"><label>Link Maps</label><input type="url" id="linkIn"></div>
             <div class="form-field"><label>Foto 1</label><input type="file" id="f1" accept="image/*"></div>
             <div class="form-field"><label>Foto 2</label><input type="file" id="f2" accept="image/*"></div>
             <div class="form-field"><label>Foto 3</label><input type="file" id="f3" accept="image/*"></div>
-            <button id="saveBtn" onclick="saveToFirebase()" style="width:100%; background:var(--blue-main); color:white; padding:18px; border:none; border-radius:15px; font-weight:700; cursor:pointer;">GUARDAR EN RED</button>
-            
-            <div style="margin-top:20px; border-top:1px solid #eee; padding-top:15px; text-align:center;">
-                <p style="font-size:10px; font-weight:700; color:var(--blue-main); margin-bottom:10px;">LOGO PRINCIPAL</p>
-                <input type="file" id="logoFile" style="display:none" accept="image/*" onchange="handleLogoChange(this)">
-                <button onclick="document.getElementById('logoFile').click()" style="background:#eee; border:none; padding:10px; border-radius:10px; font-size:12px; cursor:pointer;">Cambiar Logotipo App</button>
-            </div>
-            <button onclick="closeMod('manageOverlay')" style="background:none; border:none; width:100%; margin-top:20px; color:var(--text-gray); font-weight:700;">Cerrar Panel</button>
+            <button id="saveBtn" onclick="saveToFirebase()" style="width:100%; background:var(--blue-main); color:white; padding:15px; border:none; border-radius:12px; font-weight:700;">GUARDAR</button>
+            <button onclick="closeMod('manageOverlay')" style="background:none; border:none; width:100%; margin-top:20px; color:var(--text-gray);">Cancelar</button>
         </div>
     </div>
 
     <nav>
-        <button class="nav-link" onclick="location.reload()">Explorar</button>
-        <button class="nav-link" onclick="checkAuth()">Gestionar</button>
+        <button class="nav-link" onclick="location.reload()">INICIO</button>
+        <button class="nav-link" onclick="checkAuth()">ADMIN</button>
     </nav>
 
     <script type="module">
@@ -270,11 +350,6 @@
             renderCards(window.globalList);
         });
 
-        onValue(ref(db, 'config/logo'), (snap) => {
-            const logo = snap.val();
-            if(logo) { document.getElementById('logoImg').src = logo; document.getElementById('logoImg').style.display = 'block'; document.getElementById('logoLabel').style.display = 'none'; }
-        });
-
         window.saveToFirebase = async () => {
             const btn = document.getElementById('saveBtn');
             const key = document.getElementById('editKey').value;
@@ -286,10 +361,7 @@
                 phone: document.getElementById('phoneIn').value,
                 link: document.getElementById('linkIn').value
             };
-            if(!data.name || !data.addr || !data.link) return alert("Faltan datos básicos");
             
-            btn.disabled = true; btn.innerText = "Sincronizando...";
-
             const f1 = document.getElementById('f1').files[0];
             const f2 = document.getElementById('f2').files[0];
             const f3 = document.getElementById('f3').files[0];
@@ -298,25 +370,23 @@
             if(f2) data.img2 = await toB64(f2);
             if(f3) data.img3 = await toB64(f3);
 
-            if(key) update(ref(db, 'templos/' + key), data).then(() => finalize());
-            else {
-                if(!f1 || !f2 || !f3) { btn.disabled = false; btn.innerText = "GUARDAR"; return alert("Debes subir las 3 fotos"); }
-                push(ref(db, 'templos'), data).then(() => finalize());
-            }
-            function finalize() { btn.disabled = false; closeMod('manageOverlay'); }
+            if(key) update(ref(db, 'templos/' + key), data).then(() => closeMod('manageOverlay'));
+            else push(ref(db, 'templos'), data).then(() => closeMod('manageOverlay'));
         };
 
         window.deleteTemple = (id) => { if(confirm("¿Eliminar?")) remove(ref(db, 'templos/' + id)); };
-        window.handleLogoChange = async (input) => {
-            if(!window.isAuth || !input.files[0]) return;
-            const b64 = await toB64(input.files[0]);
-            set(ref(db, 'config/logo'), b64);
-        };
     </script>
 
     <script>
         const AUTH = { u: "admin_templo", p: "Templo2026*" };
         window.isAuth = false;
+
+        function toggleMusic() {
+            const m = document.getElementById('bgMusic');
+            const btn = document.getElementById('musicIcon');
+            if(m.paused) { m.play(); btn.innerText = "⏸️"; }
+            else { m.pause(); btn.innerText = "🎵"; }
+        }
 
         function searchLocal() {
             const val = document.getElementById('searchInput').value.toLowerCase();
@@ -330,25 +400,23 @@
 
         function renderCards(data) {
             const grid = document.getElementById('churchGrid');
-            grid.innerHTML = data.length === 0 ? '<p id="loader">Sin resultados</p>' : '';
+            grid.innerHTML = data.length === 0 ? '<p>No hay templos</p>' : '';
             data.forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'church-card';
                 div.innerHTML = `
                     <div class="card-slider">
-                        <img src="${item.img1}">
-                        <img src="${item.img2}">
-                        <img src="${item.img3}">
+                        <img src="${item.img1 || ''}"><img src="${item.img2 || ''}"><img src="${item.img3 || ''}">
                     </div>
                     <div class="card-content">
-                        <small style="color:var(--yellow-accent); font-weight:800; text-transform:uppercase;">${item.zona || 'Zona 1'}</small>
+                        <small style="color:var(--yellow-accent); font-weight:800;">${item.zona || 'Zona 1'}</small>
                         <h2>${item.name}</h2>
                         <p>📍 ${item.addr}</p>
                         <div class="contact-box">
                             <strong>👤 ${item.contact || 'S/N Contacto'}</strong>
-                            ${item.phone ? `<a href="tel:${item.phone}" class="phone-link">📞 ${item.phone}</a>` : ''}
+                            <a href="tel:${item.phone}" class="phone-link">📞 ${item.phone || 'N/A'}</a>
                         </div>
-                        <a href="${item.link}" target="_blank" class="btn-maps">EXPLORAR MAPA</a>
+                        <a href="${item.link}" target="_blank" class="btn-maps">VER EN MAPAS</a>
                     </div>
                     <div class="admin-controls" id="ctrl-${item.id}">
                         <button class="btn-edit" onclick="prepEdit('${item.id}')">EDITAR</button>
@@ -363,39 +431,22 @@
         function validateAdmin() {
             if(document.getElementById('uInp').value === AUTH.u && document.getElementById('pInp').value === AUTH.p) {
                 window.isAuth = true; closeMod('loginOverlay');
-                document.querySelectorAll('.admin-controls').forEach(el => el.style.display = 'flex');
-                showManageModal();
+                renderCards(window.globalList); showManageModal();
             } else alert("Error");
         }
 
         function checkAuth() { window.isAuth ? showManageModal() : showMod('loginOverlay'); }
-        function showManageModal() { 
-            document.getElementById('manageTitle').innerText = "Nuevo Registro";
-            document.getElementById('editKey').value = "";
-            document.getElementById('nameIn').value = "";
-            document.getElementById('addrIn').value = "";
-            document.getElementById('contactIn').value = "";
-            document.getElementById('phoneIn').value = "";
-            document.getElementById('linkIn').value = "";
-            showMod('manageOverlay'); 
-        }
-
+        function showManageModal() { showMod('manageOverlay'); }
         function prepEdit(id) {
             const it = window.globalList.find(x => x.id === id);
-            document.getElementById('manageTitle').innerText = "Editar Templo";
             document.getElementById('editKey').value = id;
             document.getElementById('nameIn').value = it.name;
             document.getElementById('addrIn').value = it.addr;
-            document.getElementById('zoneIn').value = it.zona || 'Zona 1';
-            document.getElementById('contactIn').value = it.contact || '';
-            document.getElementById('phoneIn').value = it.phone || "";
-            document.getElementById('linkIn').value = it.link;
-            showMod('manageOverlay');
+            showManageModal();
         }
-
-        function showMod(id) { const el = document.getElementById(id); el.style.display = 'flex'; setTimeout(() => el.classList.add('active'), 20); }
-        function closeMod(id) { const el = document.getElementById(id); el.classList.remove('active'); setTimeout(() => el.style.display = 'none', 400); }
-        const toB64 = f => new Promise((res, rej) => { const r = new FileReader(); r.readAsDataURL(f); r.onload = () => res(r.result); r.onerror = e => rej(e); });
+        function showMod(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeMod(id) { document.getElementById(id).style.display = 'none'; }
+        const toB64 = f => new Promise((res) => { const r = new FileReader(); r.readAsDataURL(f); r.onload = () => res(r.result); });
     </script>
 </body>
 </html>
