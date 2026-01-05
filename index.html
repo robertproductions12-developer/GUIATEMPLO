@@ -247,7 +247,7 @@
     <footer class="footer-main">
         <div class="social-icons">
             <a href="https://www.instagram.com/robert_paraco?igsh=MWx1NXdpZDIxdHdsMg=="> <i class="fab fa-instagram"></i></a>
-            <a href="https://www.youtube.com/channel/UCjKTs1EPUXqaZ9_tBjwFQhQ"> <i class="fab fa-youtube"></i></a>
+            <a href="#"> <i class="fab fa-youtube"></i></a>
             <a href="https://www.tiktok.com/@robert_paraco?_r=1&_t=ZM-92YDqsdjjAZ"> <i class="fab fa-tiktok"></i></a>
         </div>
         <p style="font-size:11px; letter-spacing:3px; opacity:0.6; font-weight:700;">DEVELOPER - ROBERT PARACO</p>
@@ -282,6 +282,7 @@
         const SUPER_ADMIN = "superadmin@avcsur.com";
         let userRole = null;
         let userData = null;
+        let userFullInfo = null; // Guardamos info completa del usuario
         let allTemplos = [];
         let selectedUserId = null;
 
@@ -290,6 +291,7 @@
                 userData = user;
                 onValue(ref(db, `users/${user.uid}`), (snap) => {
                     const info = snap.val();
+                    userFullInfo = info; // Sincronizamos info para parentAdmin
                     userRole = (user.email === SUPER_ADMIN) ? 'super' : (info ? info.role : 'reader');
 
                     document.getElementById('authSplash').style.display = 'none';
@@ -401,8 +403,17 @@
             const grid = document.getElementById('churchGrid');
             grid.innerHTML = "";
             let filtered = data;
-            if(userRole === 'admin') filtered = data.filter(i => i.ownerId === userData.uid);
-            if(userRole === 'super' && selectedUserId) filtered = data.filter(i => i.ownerId === selectedUserId);
+
+            // --- FILTRADO POR ROL (CORREGIDO) ---
+            if(userRole === 'admin') {
+                filtered = data.filter(i => i.ownerId === userData.uid);
+            } else if(userRole === 'super') {
+                if(selectedUserId) filtered = data.filter(i => i.ownerId === selectedUserId);
+            } else if(userRole === 'reader') {
+                // El lector solo ve los templos de su admin padre (parentAdmin)
+                const pAdmin = userFullInfo ? userFullInfo.parentAdmin : null;
+                filtered = data.filter(i => i.ownerId === pAdmin);
+            }
 
             filtered.forEach(item => {
                 const div = document.createElement('div');
