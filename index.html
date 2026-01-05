@@ -23,40 +23,55 @@
         
         body { background-color: var(--bg-body); color: var(--text-dark); overflow-x: hidden; padding-top: 280px; }
 
+        /* PANTALLA DE LOGIN INICIAL PROFESIONAL */
+        #authSplash {
+            position: fixed; inset: 0; z-index: 9000;
+            background: linear-gradient(-45deg, #0a2f5c, #1a4b8f, #0d3b75, #081f3d);
+            background-size: 400% 400%; animation: gradientAnim 15s ease infinite;
+            display: flex; align-items: center; justify-content: center; padding: 20px;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 40px; border-radius: 40px; width: 100%; max-width: 400px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3); text-align: center; color: white;
+        }
+
+        .login-card h2 { font-family: 'Rajdhani'; font-size: 32px; margin-bottom: 30px; letter-spacing: 2px; }
+        .login-card input {
+            width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 15px; border: none;
+            background: rgba(255, 255, 255, 0.9); font-size: 16px; outline: none;
+        }
+        .login-card button {
+            width: 100%; padding: 18px; border-radius: 15px; border: none;
+            background: var(--yellow-accent); color: var(--blue-main);
+            font-weight: 800; font-size: 16px; cursor: pointer; transition: 0.3s;
+        }
+
         /* HEADER */
         header {
             position: fixed; top: 0; left: 0; width: 100%; z-index: 2000;
-            background: linear-gradient(-45deg, #0a2f5c, #1a4b8f, #0d3b75, #081f3d);
-            background-size: 400% 400%; animation: gradientAnim 12s ease infinite;
-            color: var(--white); padding: 25px 20px 35px; text-align: center;
+            background: var(--blue-main); color: var(--white); padding: 25px 20px 35px; text-align: center;
             border-bottom: 5px solid var(--yellow-accent); box-shadow: 0 5px 25px rgba(0,0,0,0.4);
         }
-        @keyframes gradientAnim { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
         .logo-box {
             width: 85px; height: 85px; background: var(--white); border-radius: 50%; margin: 0 auto 12px;
             display: flex; align-items: center; justify-content: center; border: 3px solid var(--yellow-accent);
-            overflow: hidden; position: relative; z-index: 2; box-shadow: var(--shadow);
+            overflow: hidden; position: relative; z-index: 2;
         }
         .logo-box img { width: 100%; height: 100%; object-fit: cover; }
 
-        header h1 { font-family: 'Rajdhani', sans-serif; font-size: 30px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; }
+        header h1 { font-family: 'Rajdhani', sans-serif; font-size: 30px; text-transform: uppercase; letter-spacing: 2px; }
         header h1 span { color: var(--yellow-accent); }
 
-        .search-container { max-width: 480px; margin: 0 auto; position: relative; z-index: 2; }
-        .search-bar {
-            background: white; display: flex; align-items: center; padding: 12px 22px; border-radius: 50px;
-            border: 2px solid var(--yellow-accent); box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-        }
-        .search-bar input { flex: 1; border: none; outline: none; padding-left: 10px; font-size: 16px; color: var(--blue-main); }
-
-        /* CONTENIDO */
+        /* GRID Y TARJETAS */
         .main-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; padding: 20px; }
-        .church-card { background: var(--white); border-radius: 30px; overflow: hidden; box-shadow: var(--shadow); transition: var(--transition); position: relative; }
-        
-        .card-slider { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; height: 230px; background: #eee; scrollbar-width: none; }
-        .card-slider img { min-width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start; }
-
+        .church-card { background: var(--white); border-radius: 30px; overflow: hidden; box-shadow: var(--shadow); position: relative; }
+        .card-slider { display: flex; overflow-x: auto; height: 230px; background: #eee; scrollbar-width: none; }
+        .card-slider img { min-width: 100%; height: 100%; object-fit: cover; }
         .card-content { padding: 25px; }
         .owner-tag { font-size: 10px; background: #eee; padding: 2px 8px; border-radius: 10px; float: right; color: #888; }
         
@@ -75,68 +90,67 @@
         nav { position: fixed; bottom: 0; width: 100%; background: var(--blue-main); display: flex; justify-content: space-around; padding: 15px 0; border-top: 5px solid var(--yellow-accent); z-index: 3000; }
         .nav-link { background: none; border: none; color: var(--white); font-weight: 700; cursor: pointer; font-size: 11px; }
 
-        /* PANEL SUPER ADMIN */
-        .user-list-item { padding: 12px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
-        .user-list-item:hover { background: #f9f9f9; }
-        .view-all-badge { background: var(--yellow-accent); color: var(--blue-main); padding: 2px 10px; border-radius: 10px; font-size: 10px; font-weight: 800; }
+        .user-info-bar { position: fixed; top: 10px; left: 10px; z-index: 3000; font-size: 10px; color: white; background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 20px; }
 
-        .user-info-bar { position: fixed; top: 10px; left: 10px; z-index: 3000; font-size: 10px; color: white; background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 20px; display: none; }
+        /* LISTA USUARIOS */
+        .user-list-item { padding: 15px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        .btn-wipe { background: var(--danger); color: white; border: none; padding: 5px 10px; border-radius: 8px; font-size: 10px; cursor: pointer; }
+
+        @keyframes gradientAnim { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
     </style>
 </head>
 <body>
 
-    <div id="userInfo" class="user-info-bar"></div>
+    <!-- PANTALLA DE LOGIN INICIAL -->
+    <div id="authSplash">
+        <div class="login-card">
+            <h2>AVCSUR<span>PANEL</span></h2>
+            <div id="authInputs">
+                <input type="email" id="emailInp" placeholder="Correo electrónico">
+                <input type="password" id="passInp" placeholder="Contraseña">
+                <button id="authBtn" onclick="handleAuth()">INGRESAR AL PANEL</button>
+                <p id="toggleAuthText" style="margin-top:20px; font-size:12px; cursor:pointer; text-decoration: underline;" onclick="toggleAuthMode()">¿No tienes cuenta? Regístrate aquí</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="userInfo" class="user-info-bar" style="display:none;"></div>
 
     <header>
         <div class="logo-box">
-            <img id="logoImg" src="">
-            <span id="logoLabel">AVCSur</span>
+            <img id="logoImg" src="" style="display:none;">
+            <span id="logoLabel">LOGO</span>
         </div>
-        <h1 id="mainTitle">TEMPLOS <span></span></h1>
-        <div class="search-container">
-            <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Buscar templo..." onkeyup="searchLocal()">
+        <h1 id="mainTitle">TEMPLOS <span>AVCSur</span></h1>
+        <div class="search-container" style="margin-top:15px;">
+            <div style="background: white; display: flex; align-items: center; padding: 10px 20px; border-radius: 50px;">
+                <input type="text" id="searchInput" placeholder="Buscar mi templo..." onkeyup="searchLocal()" style="flex:1; border:none; outline:none;">
                 <span>🔍</span>
             </div>
         </div>
     </header>
 
-    <div class="main-container" id="churchGrid">
-        <div style="text-align: center; padding: 50px; grid-column: 1/-1;">Inicia sesión para ver tu contenido...</div>
-    </div>
+    <div class="main-container" id="churchGrid"></div>
 
-    <!-- MODAL DE LOGIN / REGISTRO -->
-    <div id="loginOverlay" class="modal-overlay">
-        <div class="modal-body">
-            <h2 id="authTitle" style="color:var(--blue-main); text-align:center; margin-bottom:20px;">Acceso Administrador</h2>
-            <div class="form-field"><label>Correo Electrónico</label><input type="email" id="emailInp"></div>
-            <div class="form-field"><label>Contraseña</label><input type="password" id="passInp"></div>
-            
-            <button id="authBtn" onclick="handleAuth()" style="width:100%; background:var(--blue-main); color:white; padding:15px; border:none; border-radius:12px; font-weight:700; margin-bottom:10px;">ENTRAR</button>
-            
-            <p id="toggleAuthText" style="text-align:center; font-size:12px; cursor:pointer; color:var(--blue-light);" onclick="toggleAuthMode()">¿No tienes cuenta? Regístrate aquí</p>
-            
-            <button onclick="closeMod('loginOverlay')" style="background:none; border:none; width:100%; margin-top:15px; color:var(--text-gray);">Cancelar</button>
-        </div>
-    </div>
-
-    <!-- MODAL GESTION TEMPLO -->
+    <!-- MODAL GESTION -->
     <div id="manageOverlay" class="modal-overlay">
         <div class="modal-body">
-            <!-- SECCION PERFIL -->
-            <div style="background: #f0f4f8; padding: 15px; border-radius: 15px; margin-bottom: 20px;">
-                <p style="font-size: 11px; font-weight: 800; color: var(--blue-main); margin-bottom: 10px; text-transform: uppercase;">Configuración de Mi Guía</p>
-                <div class="form-field">
-                    <label>Nombre de mi Guía (Encabezado)</label>
-                    <div style="display: flex; gap: 5px;">
-                        <input type="text" id="customTitleIn" placeholder="Ej: Templos de Mi Zona">
-                        <button onclick="updateHeaderTitle()" style="background: var(--blue-main); color: white; border: none; padding: 0 15px; border-radius: 10px; font-size: 10px; cursor: pointer;">OK</button>
-                    </div>
-                </div>
+            <!-- SECCIÓN SUPER ADMIN: CAMBIAR LOGO UNIVERSAL -->
+            <div id="superAdminTools" style="display:none; background: #fff3cd; padding: 15px; border-radius: 15px; margin-bottom: 20px; border: 1px solid #ffeeba;">
+                <p style="font-size: 10px; font-weight: 800; color: #856404; margin-bottom: 10px;">HERRAMIENTAS MASTER (S. ADMIN)</p>
+                <button onclick="document.getElementById('globalLogoFile').click()" style="width:100%; background:var(--blue-main); color:white; padding:10px; border:none; border-radius:10px; font-size:11px; cursor:pointer;">CAMBIAR LOGO UNIVERSAL</button>
+                <input type="file" id="globalLogoFile" hidden accept="image/*" onchange="uploadGlobalLogo(this)">
+                <button onclick="showUsersModal()" style="width:100%; background:var(--white); color:var(--danger); padding:10px; border:none; border-radius:10px; font-size:11px; cursor:pointer; margin-top:5px; font-weight:700; border:1px solid var(--danger);">ELIMINAR / VER USUARIOS</button>
             </div>
 
-            <!-- BOTON ESPECIAL SUPER ADMIN -->
-            <button id="btnUsersPanel" onclick="showUsersModal()" style="display:none; width:100%; background:var(--yellow-accent); color:var(--blue-main); padding:12px; border:none; border-radius:12px; font-weight:800; margin-bottom:20px;">VER TODOS LOS USUARIOS</button>
+            <!-- PERFIL INDIVIDUAL -->
+            <div style="background: #f0f4f8; padding: 15px; border-radius: 15px; margin-bottom: 20px;">
+                <label style="font-size:10px; font-weight:800;">NOMBRE DE MI GUÍA PERSONAL</label>
+                <div style="display: flex; gap: 5px; margin-top:5px;">
+                    <input type="text" id="customTitleIn" style="flex:1; padding:8px; border-radius:8px; border:1px solid #ccc;">
+                    <button onclick="updateHeaderTitle()" style="background:var(--blue-main); color:white; border:none; padding:0 10px; border-radius:8px;">OK</button>
+                </div>
+            </div>
 
             <h2 id="manageTitle">Nuevo Registro</h2>
             <input type="hidden" id="editKey">
@@ -148,31 +162,26 @@
             <div class="form-field"><label>Contacto</label><input type="text" id="contactIn"></div>
             <div class="form-field"><label>Teléfono</label><input type="tel" id="phoneIn"></div>
             <div class="form-field"><label>Maps URL</label><input type="url" id="linkIn"></div>
-            <div class="form-field"><label>Fotos (3)</label>
-                <input type="file" id="f1" accept="image/*" style="margin-bottom:5px">
-                <input type="file" id="f2" accept="image/*" style="margin-bottom:5px">
-                <input type="file" id="f3" accept="image/*">
-            </div>
-            <button id="saveBtn" onclick="saveToFirebase()" style="width:100%; background:var(--blue-main); color:white; padding:16px; border:none; border-radius:12px; font-weight:700;">GUARDAR DATOS</button>
+            <div class="form-field"><label>Foto Principal</label><input type="file" id="f1" accept="image/*"></div>
+            
+            <button id="saveBtn" onclick="saveToFirebase()" style="width:100%; background:var(--blue-main); color:white; padding:16px; border:none; border-radius:12px; font-weight:700;">GUARDAR TEMPLO</button>
             <button onclick="closeMod('manageOverlay')" style="background:none; border:none; width:100%; margin-top:15px; color:var(--text-gray);">Cerrar</button>
         </div>
     </div>
 
-    <!-- MODAL LISTA DE USUARIOS (SOLO SUPER ADMIN) -->
+    <!-- MODAL LISTA USUARIOS -->
     <div id="usersOverlay" class="modal-overlay">
         <div class="modal-body">
-            <h2 style="color:var(--blue-main); margin-bottom:20px;">Control de Usuarios</h2>
-            <div id="usersContainer">
-                <!-- Se llena dinamicamente -->
-            </div>
+            <h2 style="color:var(--blue-main); margin-bottom:20px;">Gestión de Usuarios</h2>
+            <div id="usersContainer"></div>
             <button onclick="closeMod('usersOverlay')" style="width:100%; background:var(--blue-main); color:white; padding:12px; border:none; border-radius:12px; margin-top:20px;">CERRAR</button>
         </div>
     </div>
 
     <nav>
         <button class="nav-link" onclick="location.reload()">INICIO</button>
-        <button class="nav-link" onclick="checkAuthAction()">GESTIÓN</button>
-        <button id="logoutBtn" class="nav-link" style="display:none; color:var(--yellow-accent);" onclick="logout()">SALIR</button>
+        <button class="nav-link" onclick="showMod('manageOverlay')">GESTIÓN</button>
+        <button class="nav-link" style="color:var(--yellow-accent);" onclick="logout()">SALIR</button>
     </nav>
 
     <script type="module">
@@ -194,124 +203,118 @@
         const db = getDatabase(app);
         const auth = getAuth(app);
 
-        // CLAVE MAESTRA SUPER ADMIN
-        const SUPER_ADMIN_EMAIL = "superadmin@avcsur.com"; 
-
+        const SUPER_ADMIN = "superadmin@avcsur.com"; 
         let currentUser = null;
         let isRegisterMode = false;
-        let selectedUserFilter = null; // Para el Super Admin
 
-        // Monitorear Usuario
+        // --- AUTH CONTROL ---
         onAuthStateChanged(auth, (user) => {
-            currentUser = user;
-            const info = document.getElementById('userInfo');
-            const logBtn = document.getElementById('logoutBtn');
-            const btnUsers = document.getElementById('btnUsersPanel');
-
             if(user) {
-                info.innerText = `Sesión: ${user.email}`;
-                info.style.display = 'block';
-                logBtn.style.display = 'block';
-                btnUsers.style.display = (user.email === SUPER_ADMIN_EMAIL) ? 'block' : 'none';
+                currentUser = user;
+                document.getElementById('authSplash').style.display = 'none';
+                document.getElementById('userInfo').style.display = 'block';
+                document.getElementById('userInfo').innerText = `Admin: ${user.email}`;
+                if(user.email === SUPER_ADMIN) document.getElementById('superAdminTools').style.display = 'block';
+                loadGlobalLogo();
                 loadUserConfig(user.uid);
+                loadData();
             } else {
-                info.style.display = 'none';
-                logBtn.style.display = 'none';
-                document.getElementById('mainTitle').innerHTML = 'TEMPLOS <span>AVCSur</span>';
+                document.getElementById('authSplash').style.display = 'flex';
+                document.getElementById('userInfo').style.display = 'none';
             }
-            loadData();
         });
 
-        // Cargar Configuración del Encabezado
+        window.handleAuth = async () => {
+            const email = document.getElementById('emailInp').value;
+            const pass = document.getElementById('passInp').value;
+            if(!email || !pass) return alert("Por favor rellena los datos");
+            try {
+                if(isRegisterMode) await createUserWithEmailAndPassword(auth, email, pass);
+                else await signInWithEmailAndPassword(auth, email, pass);
+            } catch (e) { alert("Error: " + e.message); }
+        };
+
+        window.logout = () => signOut(auth).then(() => location.reload());
+
+        window.toggleAuthMode = () => {
+            isRegisterMode = !isRegisterMode;
+            document.getElementById('authBtn').innerText = isRegisterMode ? "REGISTRAR CUENTA" : "INGRESAR AL PANEL";
+            document.getElementById('toggleAuthText').innerText = isRegisterMode ? "¿Ya tienes cuenta? Entra aquí" : "¿No tienes cuenta? Regístrate aquí";
+        };
+
+        // --- GLOBAL LOGO ---
+        function loadGlobalLogo() {
+            onValue(ref(db, 'config/globalLogo'), (snap) => {
+                const logo = snap.val();
+                if(logo) {
+                    document.getElementById('logoImg').src = logo;
+                    document.getElementById('logoImg').style.display = 'block';
+                    document.getElementById('logoLabel').style.display = 'none';
+                }
+            });
+        }
+
+        window.uploadGlobalLogo = async (input) => {
+            if(currentUser.email !== SUPER_ADMIN) return;
+            const b64 = await toB64(input.files[0]);
+            set(ref(db, 'config/globalLogo'), b64).then(() => alert("Logo Universal actualizado"));
+        };
+
+        // --- USER CONFIG ---
         function loadUserConfig(uid) {
-            onValue(ref(db, `users_config/${uid}`), (snap) => {
-                const config = snap.val();
-                if(config && config.headerTitle) {
-                    document.getElementById('mainTitle').innerHTML = `${config.headerTitle} <span>AVCSur</span>`;
-                    document.getElementById('customTitleIn').value = config.headerTitle;
+            onValue(ref(db, `users_config/${uid}/headerTitle`), (snap) => {
+                const title = snap.val();
+                if(title) {
+                    document.getElementById('mainTitle').innerHTML = `${title} <span>AVCSur</span>`;
+                    document.getElementById('customTitleIn').value = title;
                 }
             });
         }
 
         window.updateHeaderTitle = () => {
-            const newTitle = document.getElementById('customTitleIn').value;
-            if(!currentUser || !newTitle) return;
-            set(ref(db, `users_config/${currentUser.uid}/headerTitle`), newTitle)
-                .then(() => alert("Título actualizado correctamente"));
+            const val = document.getElementById('customTitleIn').value;
+            if(val) set(ref(db, `users_config/${currentUser.uid}/headerTitle`), val);
         };
 
-        // Cargar Datos de Templos
+        // --- DATA & USERS ---
         function loadData() {
             onValue(ref(db, 'templos'), (snap) => {
                 const data = snap.val();
                 const list = [];
-                const usersFound = new Set();
-
+                const users = new Set();
                 for(let k in data) {
-                    const item = data[k];
-                    list.push({ id: k, ...item });
-                    if(item.ownerEmail) usersFound.add(item.ownerEmail);
+                    list.push({ id: k, ...data[k] });
+                    if(data[k].ownerEmail) users.add(data[k].ownerEmail);
                 }
-                
                 window.globalList = list.reverse();
-                window.usersInSystem = Array.from(usersFound);
-                
-                renderCards(window.globalList);
+                window.systemUsers = Array.from(users);
+                renderCards();
             });
         }
 
-        // Renderizado con Filtrado por Usuario
-        function renderCards(data) {
+        function renderCards() {
             const grid = document.getElementById('churchGrid');
             grid.innerHTML = "";
-
-            // LOGICA DE FILTRADO:
-            let filtered = [];
             
-            if(!currentUser) {
-                grid.innerHTML = '<div style="text-align: center; padding: 50px; grid-column: 1/-1;">Inicia sesión para ver contenido</div>';
-                return;
-            }
-
-            if(currentUser.email === SUPER_ADMIN_EMAIL) {
-                // Si es Super Admin y hay un filtro de usuario seleccionado
-                if(selectedUserFilter) {
-                    filtered = data.filter(item => item.ownerEmail === selectedUserFilter);
-                } else {
-                    filtered = data; // Ve todo por defecto
-                }
-            } else {
-                // Administrador normal solo ve lo suyo
-                filtered = data.filter(item => item.ownerId === currentUser.uid);
-            }
-
-            if(filtered.length === 0) {
-                grid.innerHTML = '<div style="text-align: center; padding: 50px; grid-column: 1/-1;">No hay registros encontrados</div>';
-                return;
+            // Los usuarios normales solo ven lo suyo. El Super Admin ve TODO.
+            let filtered = window.globalList;
+            if(currentUser.email !== SUPER_ADMIN) {
+                filtered = window.globalList.filter(item => item.ownerId === currentUser.uid);
             }
 
             filtered.forEach(item => {
-                const canManage = currentUser && (currentUser.uid === item.ownerId || currentUser.email === SUPER_ADMIN_EMAIL);
                 const div = document.createElement('div');
                 div.className = 'church-card';
                 div.innerHTML = `
-                    <div class="card-slider">
-                        <img src="${item.img1 || 'https://via.placeholder.com/400x230?text=Sin+Foto'}">
-                        ${item.img2 ? `<img src="${item.img2}">` : ''}
-                        ${item.img3 ? `<img src="${item.img3}">` : ''}
-                    </div>
+                    <div class="card-slider"><img src="${item.img1 || 'https://via.placeholder.com/400x230'}"></div>
                     <div class="card-content">
-                        <span class="owner-tag">${item.ownerEmail ? item.ownerEmail.split('@')[0] : 'Admin'}</span>
+                        <span class="owner-tag">${item.ownerEmail.split('@')[0]}</span>
                         <small style="color:var(--yellow-accent); font-weight:800;">${item.zona}</small>
                         <h2>${item.name}</h2>
-                        <p style="font-size:13px; color:var(--text-gray); margin:5px 0;">📍 ${item.addr}</p>
-                        <div style="background:#f8f9fa; padding:10px; border-radius:10px; margin:10px 0;">
-                            <strong style="font-size:11px; display:block;">CONTACTO: ${item.contact}</strong>
-                            <a href="tel:${item.phone}" style="text-decoration:none; color:var(--blue-light); font-weight:bold;">📞 ${item.phone}</a>
-                        </div>
-                        <a href="${item.link}" target="_blank" style="display:block; text-align:center; background:var(--blue-main); color:white; padding:12px; border-radius:10px; text-decoration:none; font-weight:700; font-size:13px;">VER EN MAPAS</a>
+                        <p style="font-size:13px; color:var(--text-gray);">📍 ${item.addr}</p>
+                        <a href="${item.link}" target="_blank" style="display:block; text-align:center; background:var(--blue-main); color:white; padding:10px; border-radius:10px; text-decoration:none; margin-top:15px; font-weight:700; font-size:12px;">VER MAPA</a>
                     </div>
-                    <div class="admin-controls" id="ctrl-${item.id}" style="${canManage ? 'display:flex' : 'display:none'}">
+                    <div class="admin-controls" style="display:flex">
                         <button class="btn-edit" onclick="prepEdit('${item.id}')">EDITAR</button>
                         <button class="btn-delete" onclick="deleteTemple('${item.id}')">BORRAR</button>
                     </div>
@@ -320,57 +323,29 @@
             });
         }
 
-        // Panel de Usuarios para Super Admin
         window.showUsersModal = () => {
             const container = document.getElementById('usersContainer');
-            container.innerHTML = `<div class="user-list-item" onclick="filterByUser(null)">
-                <strong>TODOS LOS TEMPLOS</strong>
-                <span class="view-all-badge">VER TODO</span>
-            </div>`;
-            
-            window.usersInSystem.forEach(email => {
+            container.innerHTML = "";
+            window.systemUsers.forEach(u => {
+                if(u === SUPER_ADMIN) return;
                 const div = document.createElement('div');
                 div.className = 'user-list-item';
-                div.onclick = () => filterByUser(email);
-                div.innerHTML = `<span>${email}</span> <span>👁️</span>`;
+                div.innerHTML = `<span>${u}</span> <button class="btn-wipe" onclick="wipeUser('${u}')">ELIMINAR TODO</button>`;
                 container.appendChild(div);
             });
             showMod('usersOverlay');
         };
 
-        window.filterByUser = (email) => {
-            selectedUserFilter = email;
-            renderCards(window.globalList);
-            closeMod('usersOverlay');
-            if(email) alert("Viendo templos de: " + email);
-        };
-
-        // Auth Logic
-        window.handleAuth = async () => {
-            const email = document.getElementById('emailInp').value;
-            const pass = document.getElementById('passInp').value;
-            if(!email || !pass) return alert("Completa los campos");
-            try {
-                if(isRegisterMode) {
-                    await createUserWithEmailAndPassword(auth, email, pass);
-                } else {
-                    await signInWithEmailAndPassword(auth, email, pass);
-                }
-                closeMod('loginOverlay');
-            } catch (e) { alert("Error: " + e.message); }
-        };
-
-        window.logout = () => { signOut(auth); location.reload(); };
-
-        window.toggleAuthMode = () => {
-            isRegisterMode = !isRegisterMode;
-            document.getElementById('authTitle').innerText = isRegisterMode ? "Crear Nueva Cuenta" : "Acceso Administrador";
-            document.getElementById('authBtn').innerText = isRegisterMode ? "REGISTRARME" : "ENTRAR";
-            document.getElementById('toggleAuthText').innerText = isRegisterMode ? "¿Ya tienes cuenta? Entra aquí" : "¿No tienes cuenta? Regístrate aquí";
+        window.wipeUser = (email) => {
+            if(confirm(`¿Seguro que quieres borrar a ${email} y todo su contenido?`)) {
+                window.globalList.forEach(item => {
+                    if(item.ownerEmail === email) remove(ref(db, `templos/${item.id}`));
+                });
+                alert("Contenido del usuario eliminado.");
+            }
         };
 
         window.saveToFirebase = async () => {
-            if(!currentUser) return;
             const key = document.getElementById('editKey').value;
             const data = {
                 name: document.getElementById('nameIn').value,
@@ -383,27 +358,18 @@
                 ownerId: currentUser.uid
             };
             const f1 = document.getElementById('f1').files[0];
-            const f2 = document.getElementById('f2').files[0];
-            const f3 = document.getElementById('f3').files[0];
             if(f1) data.img1 = await toB64(f1);
-            if(f2) data.img2 = await toB64(f2);
-            if(f3) data.img3 = await toB64(f3);
 
-            if(key) update(ref(db, 'templos/' + key), data).then(() => closeMod('manageOverlay'));
+            if(key) update(ref(db, `templos/${key}`), data).then(() => closeMod('manageOverlay'));
             else push(ref(db, 'templos'), data).then(() => closeMod('manageOverlay'));
         };
 
-        window.deleteTemple = (id) => { if(confirm("¿Eliminar?")) remove(ref(db, 'templos/' + id)); };
-        window.checkAuthAction = () => currentUser ? showMod('manageOverlay') : showMod('loginOverlay');
+        window.deleteTemple = (id) => { if(confirm("¿Eliminar?")) remove(ref(db, `templos/${id}`)); };
         window.prepEdit = (id) => {
             const it = window.globalList.find(x => x.id === id);
             document.getElementById('editKey').value = id;
             document.getElementById('nameIn').value = it.name;
             document.getElementById('addrIn').value = it.addr;
-            document.getElementById('zoneIn').value = it.zona;
-            document.getElementById('contactIn').value = it.contact;
-            document.getElementById('phoneIn').value = it.phone;
-            document.getElementById('linkIn').value = it.link;
             showMod('manageOverlay');
         };
         const toB64 = f => new Promise((res) => { const r = new FileReader(); r.readAsDataURL(f); r.onload = () => res(r.result); });
