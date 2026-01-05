@@ -75,6 +75,11 @@
         nav { position: fixed; bottom: 0; width: 100%; background: var(--blue-main); display: flex; justify-content: space-around; padding: 15px 0; border-top: 5px solid var(--yellow-accent); z-index: 3000; }
         .nav-link { background: none; border: none; color: var(--white); font-weight: 700; cursor: pointer; font-size: 11px; }
 
+        /* PANEL SUPER ADMIN */
+        .user-list-item { padding: 12px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+        .user-list-item:hover { background: #f9f9f9; }
+        .view-all-badge { background: var(--yellow-accent); color: var(--blue-main); padding: 2px 10px; border-radius: 10px; font-size: 10px; font-weight: 800; }
+
         .user-info-bar { position: fixed; top: 10px; left: 10px; z-index: 3000; font-size: 10px; color: white; background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 20px; display: none; }
     </style>
 </head>
@@ -87,7 +92,7 @@
             <img id="logoImg" src="">
             <span id="logoLabel">AVCSur</span>
         </div>
-        <h1>TEMPLOS <span>AVCSur</span></h1>
+        <h1 id="mainTitle">TEMPLOS <span>AVCSur</span></h1>
         <div class="search-container">
             <div class="search-bar">
                 <input type="text" id="searchInput" placeholder="Buscar templo..." onkeyup="searchLocal()">
@@ -97,7 +102,7 @@
     </header>
 
     <div class="main-container" id="churchGrid">
-        <div style="text-align: center; padding: 50px; grid-column: 1/-1;">Cargando templos...</div>
+        <div style="text-align: center; padding: 50px; grid-column: 1/-1;">Inicia sesión para ver tu contenido...</div>
     </div>
 
     <!-- MODAL DE LOGIN / REGISTRO -->
@@ -118,6 +123,21 @@
     <!-- MODAL GESTION TEMPLO -->
     <div id="manageOverlay" class="modal-overlay">
         <div class="modal-body">
+            <!-- SECCION PERFIL -->
+            <div style="background: #f0f4f8; padding: 15px; border-radius: 15px; margin-bottom: 20px;">
+                <p style="font-size: 11px; font-weight: 800; color: var(--blue-main); margin-bottom: 10px; text-transform: uppercase;">Configuración de Mi Guía</p>
+                <div class="form-field">
+                    <label>Nombre de mi Guía (Encabezado)</label>
+                    <div style="display: flex; gap: 5px;">
+                        <input type="text" id="customTitleIn" placeholder="Ej: Templos de Mi Zona">
+                        <button onclick="updateHeaderTitle()" style="background: var(--blue-main); color: white; border: none; padding: 0 15px; border-radius: 10px; font-size: 10px; cursor: pointer;">OK</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BOTON ESPECIAL SUPER ADMIN -->
+            <button id="btnUsersPanel" onclick="showUsersModal()" style="display:none; width:100%; background:var(--yellow-accent); color:var(--blue-main); padding:12px; border:none; border-radius:12px; font-weight:800; margin-bottom:20px;">VER TODOS LOS USUARIOS</button>
+
             <h2 id="manageTitle">Nuevo Registro</h2>
             <input type="hidden" id="editKey">
             <div class="form-field"><label>Nombre del Templo</label><input type="text" id="nameIn"></div>
@@ -135,6 +155,17 @@
             </div>
             <button id="saveBtn" onclick="saveToFirebase()" style="width:100%; background:var(--blue-main); color:white; padding:16px; border:none; border-radius:12px; font-weight:700;">GUARDAR DATOS</button>
             <button onclick="closeMod('manageOverlay')" style="background:none; border:none; width:100%; margin-top:15px; color:var(--text-gray);">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- MODAL LISTA DE USUARIOS (SOLO SUPER ADMIN) -->
+    <div id="usersOverlay" class="modal-overlay">
+        <div class="modal-body">
+            <h2 style="color:var(--blue-main); margin-bottom:20px;">Control de Usuarios</h2>
+            <div id="usersContainer">
+                <!-- Se llena dinamicamente -->
+            </div>
+            <button onclick="closeMod('usersOverlay')" style="width:100%; background:var(--blue-main); color:white; padding:12px; border:none; border-radius:12px; margin-top:20px;">CERRAR</button>
         </div>
     </div>
 
@@ -168,119 +199,99 @@
 
         let currentUser = null;
         let isRegisterMode = false;
+        let selectedUserFilter = null; // Para el Super Admin
 
         // Monitorear Usuario
         onAuthStateChanged(auth, (user) => {
             currentUser = user;
             const info = document.getElementById('userInfo');
             const logBtn = document.getElementById('logoutBtn');
+            const btnUsers = document.getElementById('btnUsersPanel');
+
             if(user) {
-                info.innerText = `Sesión: ${user.email} ${user.email === SUPER_ADMIN_EMAIL ? '(SUPER)' : ''}`;
+                info.innerText = `Sesión: ${user.email}`;
                 info.style.display = 'block';
                 logBtn.style.display = 'block';
+                btnUsers.style.display = (user.email === SUPER_ADMIN_EMAIL) ? 'block' : 'none';
+                loadUserConfig(user.uid);
             } else {
                 info.style.display = 'none';
                 logBtn.style.display = 'none';
+                document.getElementById('mainTitle').innerHTML = 'TEMPLOS <span>AVCSur</span>';
             }
             loadData();
         });
 
-        // Cargar Datos
+        // Cargar Configuración del Encabezado
+        function loadUserConfig(uid) {
+            onValue(ref(db, `users_config/${uid}`), (snap) => {
+                const config = snap.val();
+                if(config && config.headerTitle) {
+                    document.getElementById('mainTitle').innerHTML = `${config.headerTitle} <span>AVCSur</span>`;
+                    document.getElementById('customTitleIn').value = config.headerTitle;
+                }
+            });
+        }
+
+        window.updateHeaderTitle = () => {
+            const newTitle = document.getElementById('customTitleIn').value;
+            if(!currentUser || !newTitle) return;
+            set(ref(db, `users_config/${currentUser.uid}/headerTitle`), newTitle)
+                .then(() => alert("Título actualizado correctamente"));
+        };
+
+        // Cargar Datos de Templos
         function loadData() {
             onValue(ref(db, 'templos'), (snap) => {
                 const data = snap.val();
                 const list = [];
-                for(let k in data) list.push({ id: k, ...data[k] });
+                const usersFound = new Set();
+
+                for(let k in data) {
+                    const item = data[k];
+                    list.push({ id: k, ...item });
+                    if(item.ownerEmail) usersFound.add(item.ownerEmail);
+                }
+                
                 window.globalList = list.reverse();
+                window.usersInSystem = Array.from(usersFound);
+                
                 renderCards(window.globalList);
             });
         }
 
-        // Auth Logic
-        window.handleAuth = async () => {
-            const email = document.getElementById('emailInp').value;
-            const pass = document.getElementById('passInp').value;
-            if(!email || !pass) return alert("Completa los campos");
-
-            try {
-                if(isRegisterMode) {
-                    await createUserWithEmailAndPassword(auth, email, pass);
-                    alert("Cuenta creada con éxito");
-                } else {
-                    await signInWithEmailAndPassword(auth, email, pass);
-                }
-                closeMod('loginOverlay');
-            } catch (e) { alert("Error: " + e.message); }
-        };
-
-        window.logout = () => signOut(auth);
-
-        window.toggleAuthMode = () => {
-            isRegisterMode = !isRegisterMode;
-            document.getElementById('authTitle').innerText = isRegisterMode ? "Crear Nueva Cuenta" : "Acceso Administrador";
-            document.getElementById('authBtn').innerText = isRegisterMode ? "REGISTRARME" : "ENTRAR";
-            document.getElementById('toggleAuthText').innerText = isRegisterMode ? "¿Ya tienes cuenta? Entra aquí" : "¿No tienes cuenta? Regístrate aquí";
-        };
-
-        // Guardar Templo
-        window.saveToFirebase = async () => {
-            if(!currentUser) return;
-            const key = document.getElementById('editKey').value;
-            const btn = document.getElementById('saveBtn');
-            btn.innerText = "PROCESANDO...";
-            btn.disabled = true;
-
-            const data = {
-                name: document.getElementById('nameIn').value,
-                addr: document.getElementById('addrIn').value,
-                zona: document.getElementById('zoneIn').value,
-                contact: document.getElementById('contactIn').value,
-                phone: document.getElementById('phoneIn').value,
-                link: document.getElementById('linkIn').value,
-                ownerEmail: currentUser.email,
-                ownerId: currentUser.uid
-            };
-
-            const f1 = document.getElementById('f1').files[0];
-            const f2 = document.getElementById('f2').files[0];
-            const f3 = document.getElementById('f3').files[0];
-
-            if(f1) data.img1 = await toB64(f1);
-            if(f2) data.img2 = await toB64(f2);
-            if(f3) data.img3 = await toB64(f3);
-
-            if(key) {
-                update(ref(db, 'templos/' + key), data).then(() => {
-                    closeMod('manageOverlay');
-                    btn.disabled = false; btn.innerText = "GUARDAR";
-                });
-            } else {
-                push(ref(db, 'templos'), data).then(() => {
-                    closeMod('manageOverlay');
-                    btn.disabled = false; btn.innerText = "GUARDAR";
-                });
-            }
-        };
-
-        window.deleteTemple = (id) => {
-            if(confirm("¿Estás seguro de eliminar este registro?")) {
-                remove(ref(db, 'templos/' + id));
-            }
-        };
-
-        window.checkAuthAction = () => {
-            if(currentUser) showMod('manageOverlay');
-            else showMod('loginOverlay');
-        };
-
-        // Renderizado con lógica de permisos
+        // Renderizado con Filtrado por Usuario
         function renderCards(data) {
             const grid = document.getElementById('churchGrid');
             grid.innerHTML = "";
-            data.forEach(item => {
-                // El usuario puede editar si es el dueño O si es el Super Admin
+
+            // LOGICA DE FILTRADO:
+            let filtered = [];
+            
+            if(!currentUser) {
+                grid.innerHTML = '<div style="text-align: center; padding: 50px; grid-column: 1/-1;">Inicia sesión para ver contenido</div>';
+                return;
+            }
+
+            if(currentUser.email === SUPER_ADMIN_EMAIL) {
+                // Si es Super Admin y hay un filtro de usuario seleccionado
+                if(selectedUserFilter) {
+                    filtered = data.filter(item => item.ownerEmail === selectedUserFilter);
+                } else {
+                    filtered = data; // Ve todo por defecto
+                }
+            } else {
+                // Administrador normal solo ve lo suyo
+                filtered = data.filter(item => item.ownerId === currentUser.uid);
+            }
+
+            if(filtered.length === 0) {
+                grid.innerHTML = '<div style="text-align: center; padding: 50px; grid-column: 1/-1;">No hay registros encontrados</div>';
+                return;
+            }
+
+            filtered.forEach(item => {
                 const canManage = currentUser && (currentUser.uid === item.ownerId || currentUser.email === SUPER_ADMIN_EMAIL);
-                
                 const div = document.createElement('div');
                 div.className = 'church-card';
                 div.innerHTML = `
@@ -309,6 +320,81 @@
             });
         }
 
+        // Panel de Usuarios para Super Admin
+        window.showUsersModal = () => {
+            const container = document.getElementById('usersContainer');
+            container.innerHTML = `<div class="user-list-item" onclick="filterByUser(null)">
+                <strong>TODOS LOS TEMPLOS</strong>
+                <span class="view-all-badge">VER TODO</span>
+            </div>`;
+            
+            window.usersInSystem.forEach(email => {
+                const div = document.createElement('div');
+                div.className = 'user-list-item';
+                div.onclick = () => filterByUser(email);
+                div.innerHTML = `<span>${email}</span> <span>👁️</span>`;
+                container.appendChild(div);
+            });
+            showMod('usersOverlay');
+        };
+
+        window.filterByUser = (email) => {
+            selectedUserFilter = email;
+            renderCards(window.globalList);
+            closeMod('usersOverlay');
+            if(email) alert("Viendo templos de: " + email);
+        };
+
+        // Auth Logic
+        window.handleAuth = async () => {
+            const email = document.getElementById('emailInp').value;
+            const pass = document.getElementById('passInp').value;
+            if(!email || !pass) return alert("Completa los campos");
+            try {
+                if(isRegisterMode) {
+                    await createUserWithEmailAndPassword(auth, email, pass);
+                } else {
+                    await signInWithEmailAndPassword(auth, email, pass);
+                }
+                closeMod('loginOverlay');
+            } catch (e) { alert("Error: " + e.message); }
+        };
+
+        window.logout = () => { signOut(auth); location.reload(); };
+
+        window.toggleAuthMode = () => {
+            isRegisterMode = !isRegisterMode;
+            document.getElementById('authTitle').innerText = isRegisterMode ? "Crear Nueva Cuenta" : "Acceso Administrador";
+            document.getElementById('authBtn').innerText = isRegisterMode ? "REGISTRARME" : "ENTRAR";
+            document.getElementById('toggleAuthText').innerText = isRegisterMode ? "¿Ya tienes cuenta? Entra aquí" : "¿No tienes cuenta? Regístrate aquí";
+        };
+
+        window.saveToFirebase = async () => {
+            if(!currentUser) return;
+            const key = document.getElementById('editKey').value;
+            const data = {
+                name: document.getElementById('nameIn').value,
+                addr: document.getElementById('addrIn').value,
+                zona: document.getElementById('zoneIn').value,
+                contact: document.getElementById('contactIn').value,
+                phone: document.getElementById('phoneIn').value,
+                link: document.getElementById('linkIn').value,
+                ownerEmail: currentUser.email,
+                ownerId: currentUser.uid
+            };
+            const f1 = document.getElementById('f1').files[0];
+            const f2 = document.getElementById('f2').files[0];
+            const f3 = document.getElementById('f3').files[0];
+            if(f1) data.img1 = await toB64(f1);
+            if(f2) data.img2 = await toB64(f2);
+            if(f3) data.img3 = await toB64(f3);
+
+            if(key) update(ref(db, 'templos/' + key), data).then(() => closeMod('manageOverlay'));
+            else push(ref(db, 'templos'), data).then(() => closeMod('manageOverlay'));
+        };
+
+        window.deleteTemple = (id) => { if(confirm("¿Eliminar?")) remove(ref(db, 'templos/' + id)); };
+        window.checkAuthAction = () => currentUser ? showMod('manageOverlay') : showMod('loginOverlay');
         window.prepEdit = (id) => {
             const it = window.globalList.find(x => x.id === id);
             document.getElementById('editKey').value = id;
@@ -318,18 +404,14 @@
             document.getElementById('contactIn').value = it.contact;
             document.getElementById('phoneIn').value = it.phone;
             document.getElementById('linkIn').value = it.link;
-            document.getElementById('manageTitle').innerText = "Editando Templo";
             showMod('manageOverlay');
         };
-
         const toB64 = f => new Promise((res) => { const r = new FileReader(); r.readAsDataURL(f); r.onload = () => res(r.result); });
     </script>
 
     <script>
-        // Funciones de UI Globales
         function showMod(id) { document.getElementById(id).style.display = 'flex'; }
         function closeMod(id) { document.getElementById(id).style.display = 'none'; }
-        
         function searchLocal() {
             const val = document.getElementById('searchInput').value.toLowerCase();
             document.querySelectorAll('.church-card').forEach(c => {
