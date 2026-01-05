@@ -25,7 +25,7 @@
         body { 
             background-color: var(--bg-body); 
             color: var(--text-dark); 
-            padding-top: 240px; /* Espacio para el header fijo */
+            padding-top: 240px; 
             padding-bottom: 100px; 
         }
 
@@ -42,8 +42,8 @@
             overflow: hidden;
         }
 
-        /* Animación Estilo Mapas */
-        header::before {
+        /* ANIMACIÓN DE LÍNEAS (COMPARTIDA) */
+        header::before, #authSplash::before {
             content: "";
             position: absolute;
             top: 0; left: 0; width: 200%; height: 100%;
@@ -53,7 +53,7 @@
             background-size: 30px 30px;
             transform: rotate(-15deg);
             animation: moveLines 20s linear infinite;
-            z-index: -1;
+            z-index: 0;
         }
 
         @keyframes moveLines {
@@ -71,31 +71,31 @@
         header h1 { font-family: 'Montserrat', sans-serif; font-size: 24px; position: relative; z-index: 2; }
         header h1 span { color: var(--yellow-accent); font-size: 12px; display: block; }
 
-        /* BUSCADOR */
         .search-container {
             max-width: 500px; margin: 15px auto 0; background: white; border-radius: 50px; 
             padding: 8px 15px; display: flex; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            position: relative; z-index: 2;
         }
         .search-container input { flex: 1; border: none; outline: none; padding: 5px; font-size: 14px; }
 
-        /* LOGIN SPLASH */
+        /* LOGIN SPLASH CON ANIMACIÓN */
         #authSplash {
             position: fixed; inset: 0; z-index: 9999;
             background: linear-gradient(-45deg, #0a2f5c, #1a4b8f, #0d3b75);
             display: flex; align-items: center; justify-content: center; padding: 20px;
+            overflow: hidden;
         }
         .login-card {
+            position: relative; z-index: 2;
             background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px);
             padding: 40px; border-radius: 30px; width: 100%; max-width: 380px; text-align: center; color: white;
             border: 1px solid rgba(255,255,255,0.2);
         }
         .login-card input { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px; border: none; }
-        .login-card button { width: 100%; padding: 15px; border-radius: 12px; border: none; background: var(--yellow-accent); font-weight: 800; cursor: pointer; }
+        .login-card button { width: 100%; padding: 15px; border-radius: 12px; border: none; background: var(--yellow-accent); font-weight: 800; cursor: pointer; color: var(--blue-main); }
 
-        /* CONTENEDOR PRINCIPAL */
         .main-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 20px; }
 
-        /* TARJETAS */
         .church-card { background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; transition: 0.3s; }
         .church-card:hover { transform: translateY(-5px); }
         
@@ -107,12 +107,10 @@
         .card-info-row { display: flex; align-items: center; gap: 8px; font-size: 13px; margin-bottom: 8px; color: var(--text-gray); }
         .card-info-row i { color: var(--blue-light); width: 16px; }
 
-        /* SECCIÓN VIDEO FINAL */
         .video-container { max-width: 1000px; margin: 40px auto; padding: 20px; }
         .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 20px; overflow: hidden; background: #000; box-shadow: var(--shadow); }
-        .video-wrapper video, .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .video-wrapper video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-        /* MODALES */
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 5000; align-items: center; justify-content: center; padding: 20px; }
         .modal-body { background: var(--white); padding: 25px; border-radius: 25px; width: 100%; max-width: 450px; max-height: 90vh; overflow-y: auto; }
         
@@ -120,15 +118,12 @@
         .form-field label { font-size: 11px; font-weight: 800; color: var(--blue-main); display: block; margin-bottom: 4px; }
         .form-field input, .form-field select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; }
 
-        /* PANEL SUPER ADMIN */
         .super-panel { background: #fdf2d2; padding: 15px; border-radius: 15px; margin-bottom: 20px; border: 1px solid var(--yellow-accent); }
         .user-selector { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid var(--blue-main); margin-bottom: 10px; font-weight: 700; }
 
-        /* NAV */
         nav { position: fixed; bottom: 0; width: 100%; background: var(--blue-main); display: flex; justify-content: space-around; padding: 15px 0; border-top: 4px solid var(--yellow-accent); z-index: 3000; }
         .nav-link { background: none; border: none; color: white; font-weight: 700; font-size: 11px; cursor: pointer; }
 
-        /* FOOTER */
         .footer-main { background: #05162b; color: white; padding: 40px 20px 100px; text-align: center; }
         .social-icons { display: flex; justify-content: center; gap: 20px; margin-bottom: 15px; }
         .social-icons a { color: var(--yellow-accent); font-size: 22px; }
@@ -145,7 +140,7 @@
 
     <div id="authSplash">
         <div class="login-card">
-            <h2 style="font-family:'Montserrat'; margin-bottom:20px;">MAPSTEM</h2>
+            <h2 style="font-family:'Montserrat'; margin-bottom:20px; letter-spacing: 2px;">MAPSTEM</h2>
             <input type="email" id="emailInp" placeholder="Usuario">
             <input type="password" id="passInp" placeholder="Contraseña">
             <button onclick="handleAuth()">INGRESAR</button>
@@ -166,12 +161,11 @@
         </div>
     </header>
 
-    <!-- CUADRICULA DE TARJETAS -->
     <div class="main-container" id="churchGrid"></div>
 
     <!-- VIDEO AL FINAL -->
     <div id="videoSection" class="video-container" style="display:none;">
-        <h2 style="text-align:center; font-family:'Rajdhani'; color:var(--blue-main); margin-bottom:15px;">VIDEO INSTITUCIONAL</h2>
+        <h2 style="text-align:center; font-family:'Rajdhani'; color:var(--blue-main); margin-bottom:15px; letter-spacing: 2px;">MAPSTEM VIDEO</h2>
         <div class="video-wrapper">
             <video controls poster="https://via.placeholder.com/800x450?text=MAPSTEM+VIDEO">
                 <source src="video.mp4" type="video/mp4">
@@ -183,30 +177,21 @@
     <div id="manageOverlay" class="modal-overlay">
         <div class="modal-body">
             
-            <!-- PANEL SUPER ADMIN: GESTIÓN DE USUARIOS -->
+            <!-- PANEL SUPER ADMIN -->
             <div id="superTools" style="display:none;" class="super-panel">
-                <p style="font-size:11px; font-weight:800; margin-bottom:8px;">GESTIÓN DE USUARIOS (SUPER ADMIN)</p>
+                <p style="font-size:11px; font-weight:800; margin-bottom:8px; color:var(--blue-main);">PANEL DE ADMINISTRADORES</p>
                 <select id="userSelect" class="user-selector" onchange="filterByUser(this.value)">
-                    <option value="all">Ver todos los usuarios</option>
+                    <option value="all">Ver todos los registros</option>
                 </select>
                 <div id="userDetails" style="display:none; margin-bottom:10px;">
-                    <button id="deleteUserBtn" onclick="deleteSelectedUser()" style="width:100%; background:var(--danger); color:white; border:none; padding:8px; border-radius:8px; font-size:11px; font-weight:700;">ELIMINAR ESTE USUARIO Y SUS DATOS</button>
+                    <button id="deleteUserBtn" onclick="deleteSelectedUser()" style="width:100%; background:var(--danger); color:white; border:none; padding:10px; border-radius:8px; font-size:11px; font-weight:700;">ELIMINAR ADMINISTRADOR SELECCIONADO</button>
                 </div>
                 <hr style="margin:10px 0; opacity:0.2;">
                 <div class="form-field">
-                    <input type="email" id="newAdminEmail" placeholder="Nuevo Admin Email">
+                    <label>CREAR NUEVO ADMINISTRADOR</label>
+                    <input type="email" id="newAdminEmail" placeholder="Email">
                     <input type="password" id="newAdminPass" placeholder="Contraseña">
-                    <button onclick="createUser('admin')" style="width:100%; background:var(--blue-main); color:white; padding:10px; border-radius:8px; border:none; margin-top:5px; font-weight:700;">CREAR ADMINISTRADOR</button>
-                </div>
-            </div>
-
-            <!-- PANEL ADMIN -->
-            <div id="adminTools" style="display:none; background:#e3f2fd; padding:15px; border-radius:15px; margin-bottom:20px;">
-                <p style="font-size:11px; font-weight:800; margin-bottom:8px; color:var(--blue-light);">CREAR LECTOR</p>
-                <div class="form-field">
-                    <input type="email" id="newReaderEmail" placeholder="Email Lector">
-                    <input type="password" id="newReaderPass" placeholder="Clave">
-                    <button onclick="createUser('reader')" style="width:100%; background:var(--success); color:white; padding:10px; border-radius:8px; border:none; margin-top:5px; font-weight:700;">REGISTRAR LECTOR</button>
+                    <button onclick="createUser('admin')" style="width:100%; background:var(--blue-main); color:white; padding:10px; border-radius:8px; border:none; margin-top:5px; font-weight:700;">REGISTRAR ADMIN</button>
                 </div>
             </div>
 
@@ -215,11 +200,14 @@
             <div class="form-field"><label>Nombre del Templo</label><input type="text" id="nameIn"></div>
             <div class="form-field"><label>Dirección</label><input type="text" id="addrIn"></div>
             <div class="form-field"><label>Zona</label>
-                <select id="zoneIn"><option>Zona 1</option><option>Zona 2</option><option>Zona 3</option><option>Zona 4</option><option>Zona 5</option></select>
+                <select id="zoneIn">
+                    <option>Zona 1</option><option>Zona 2</option><option>Zona 3</option><option>Zona 4</option><option>Zona 5</option>
+                    <option>Zona 6</option><option>Zona 7</option><option>Zona 8</option><option>Zona 9</option><option>Zona 10</option>
+                </select>
             </div>
             <div class="form-field"><label>Persona de Contacto</label><input type="text" id="contactIn"></div>
             <div class="form-field"><label>Teléfono</label><input type="tel" id="phoneIn"></div>
-            <div class="form-field"><label>Maps URL (Google Maps)</label><input type="url" id="linkIn"></div>
+            <div class="form-field"><label>Maps URL</label><input type="url" id="linkIn"></div>
             
             <div class="form-field">
                 <label>FOTOS (MÁXIMO 3)</label>
@@ -273,7 +261,7 @@
         let allTemplos = [];
         let selectedUserId = null;
 
-        onAuthStateChanged(auth, async (user) => {
+        onAuthStateChanged(auth, (user) => {
             if(user) {
                 userData = user;
                 onValue(ref(db, `users/${user.uid}`), (snap) => {
@@ -292,7 +280,6 @@
                         document.getElementById('superTools').style.display = 'block';
                         loadUsersList();
                     }
-                    if(userRole === 'admin') document.getElementById('adminTools').style.display = 'block';
                     if(userRole === 'reader') document.getElementById('btnManage').style.display = 'none';
 
                     loadData();
@@ -300,17 +287,17 @@
             }
         });
 
-        // CARGAR TODOS LOS USUARIOS PARA EL SELECTOR (SOLO SUPERADMIN)
+        // FILTRAR SOLO ADMINISTRADORES PARA EL SUPERADMIN
         function loadUsersList() {
             onValue(ref(db, 'users'), (snap) => {
                 const users = snap.val();
                 const select = document.getElementById('userSelect');
                 select.innerHTML = '<option value="all">Ver todos los registros</option>';
                 for(let id in users) {
-                    if(users[id].email !== SUPER_ADMIN) {
+                    if(users[id].role === 'admin') {
                         let opt = document.createElement('option');
                         opt.value = id;
-                        opt.innerText = `${users[id].email} (${users[id].role})`;
+                        opt.innerText = users[id].email;
                         select.appendChild(opt);
                     }
                 }
@@ -325,23 +312,16 @@
 
         window.deleteSelectedUser = () => {
             if(!selectedUserId) return;
-            if(confirm("¿Estás seguro de eliminar este usuario? Se borrarán también todos sus templos cargados.")){
-                // Borrar templos del usuario
-                allTemplos.forEach(t => {
-                    if(t.ownerId === selectedUserId) remove(ref(db, `templos/${t.id}`));
-                });
-                // Borrar usuario
-                remove(ref(db, `users/${selectedUserId}`)).then(() => {
-                    alert("Usuario eliminado");
-                    window.filterByUser('all');
-                });
+            if(confirm("¿Eliminar este Administrador y todos sus datos cargados?")){
+                allTemplos.forEach(t => { if(t.ownerId === selectedUserId) remove(ref(db, `templos/${t.id}`)); });
+                remove(ref(db, `users/${selectedUserId}`)).then(() => alert("Administrador eliminado"));
             }
         };
 
         window.handleAuth = () => {
             const email = document.getElementById('emailInp').value;
             const pass = document.getElementById('passInp').value;
-            signInWithEmailAndPassword(auth, email, pass).catch(e => alert("Error: " + e.message));
+            signInWithEmailAndPassword(auth, email, pass).catch(e => alert("Acceso denegado"));
         };
 
         window.logout = () => signOut(auth).then(() => location.reload());
@@ -355,8 +335,7 @@
                 contact: document.getElementById('contactIn').value,
                 phone: document.getElementById('phoneIn').value,
                 link: document.getElementById('linkIn').value,
-                ownerId: userData.uid,
-                ownerEmail: userData.email
+                ownerId: userData.uid
             };
 
             const f1 = document.getElementById('f1').files[0];
@@ -368,23 +347,15 @@
             if(f3) data.img3 = await toB64(f3);
 
             if(key) update(ref(db, `templos/${key}`), data).then(() => closeMod('manageOverlay'));
-            else push(ref(db, 'templos'), data).then(() => {
-                closeMod('manageOverlay');
-                clearForm();
-            });
+            else push(ref(db, 'templos'), data).then(() => { closeMod('manageOverlay'); clearForm(); });
         };
 
         function renderCards(data) {
             const grid = document.getElementById('churchGrid');
             grid.innerHTML = "";
-            
             let filtered = data;
             if(userRole === 'admin') filtered = data.filter(i => i.ownerId === userData.uid);
             if(userRole === 'super' && selectedUserId) filtered = data.filter(i => i.ownerId === selectedUserId);
-            if(userRole === 'reader') {
-                // El lector ve lo que su admin padre subió (Lógica simplificada: ve todo lo que no sea superadmin o por parentAdmin)
-                filtered = data; 
-            }
 
             filtered.forEach(item => {
                 const div = document.createElement('div');
@@ -396,19 +367,17 @@
                         ${item.img3 ? `<img src="${item.img3}">` : ''}
                     </div>
                     <div class="card-content">
-                        <span style="font-size:10px; font-weight:800; color:var(--yellow-accent); text-transform:uppercase;">${item.zona}</span>
+                        <span style="font-size:10px; font-weight:800; color:var(--yellow-accent);">${item.zona}</span>
                         <h2 style="font-family:'Montserrat'; font-size:18px; margin-bottom:10px; color:var(--blue-main);">${item.name}</h2>
-                        
                         <div class="card-info-row"><i class="fas fa-map-marker-alt"></i> <span>${item.addr}</span></div>
-                        <div class="card-info-row"><i class="fas fa-user"></i> <span>Contacto: ${item.contact || 'No asignado'}</span></div>
-                        <div class="card-info-row"><i class="fas fa-phone"></i> <span>Tel: ${item.phone || 'N/A'}</span></div>
-                        
-                        <a href="${item.link}" target="_blank" style="display:block; margin-top:15px; text-align:center; background:var(--blue-main); color:white; padding:12px; border-radius:10px; text-decoration:none; font-weight:700; font-size:12px;">VER EN GOOGLE MAPS</a>
+                        <div class="card-info-row"><i class="fas fa-user"></i> <span>${item.contact || 'No asignado'}</span></div>
+                        <div class="card-info-row"><i class="fas fa-phone"></i> <span>${item.phone || 'N/A'}</span></div>
+                        <a href="${item.link}" target="_blank" style="display:block; margin-top:15px; text-align:center; background:var(--blue-main); color:white; padding:12px; border-radius:10px; text-decoration:none; font-weight:700; font-size:12px;">VER MAPA</a>
                     </div>
                     ${(userRole === 'super' || (userRole === 'admin' && item.ownerId === userData.uid)) ? `
                     <div style="display:flex; gap:5px; padding:10px; background:#f8f9fa;">
-                        <button onclick="prepEdit('${item.id}')" style="flex:1; padding:8px; border:none; background:var(--blue-light); color:white; border-radius:5px; font-weight:700; cursor:pointer;">EDITAR</button>
-                        <button onclick="deleteTemplo('${item.id}')" style="padding:8px; border:none; background:var(--danger); color:white; border-radius:5px; cursor:pointer;"><i class="fas fa-trash"></i></button>
+                        <button onclick="prepEdit('${item.id}')" style="flex:1; padding:8px; background:var(--blue-light); color:white; border:none; border-radius:5px; font-weight:700; cursor:pointer;">EDITAR</button>
+                        <button onclick="deleteTemplo('${item.id}')" style="padding:8px; background:var(--danger); color:white; border:none; border-radius:5px; cursor:pointer;"><i class="fas fa-trash"></i></button>
                     </div>` : ''}
                 `;
                 grid.appendChild(div);
@@ -424,23 +393,14 @@
             });
         };
 
-        window.deleteTemplo = (id) => {
-            if(confirm("¿Borrar este registro?")) remove(ref(db, `templos/${id}`));
-        };
+        window.deleteTemplo = (id) => { if(confirm("¿Borrar este registro?")) remove(ref(db, `templos/${id}`)); };
 
         window.createUser = (role) => {
-            const email = (role === 'admin') ? document.getElementById('newAdminEmail').value : document.getElementById('newReaderEmail').value;
-            const pass = (role === 'admin') ? document.getElementById('newAdminPass').value : document.getElementById('newReaderPass').value;
-            if(!email || !pass) return alert("Completa los datos");
-
-            // En un sistema real, el SuperAdmin crearía la cuenta en Auth. 
-            // Aquí simulamos guardándolo en la DB para que el sistema le de acceso.
-            // Nota: El usuario debe registrarse o el Admin usar esta info.
-            const newUserId = btoa(email).replace(/=/g, ""); // ID temporal basado en email
-            set(ref(db, `users/${newUserId}`), {
-                email, pass, role,
-                parentAdmin: userData.uid
-            }).then(() => alert("Usuario registrado en Base de Datos."));
+            const email = document.getElementById('newAdminEmail').value;
+            const pass = document.getElementById('newAdminPass').value;
+            if(!email || !pass) return alert("Datos incompletos");
+            const id = btoa(email).replace(/=/g, "");
+            set(ref(db, `users/${id}`), { email, pass, role }).then(() => alert("Admin registrado"));
         };
 
         window.prepEdit = (id) => {
@@ -471,8 +431,7 @@
         function searchLocal() {
             const val = document.getElementById('searchInput').value.toLowerCase();
             document.querySelectorAll('.church-card').forEach(c => {
-                const text = c.innerText.toLowerCase();
-                c.style.display = text.includes(val) ? 'flex' : 'none';
+                c.style.display = c.innerText.toLowerCase().includes(val) ? 'flex' : 'none';
             });
         }
     </script>
