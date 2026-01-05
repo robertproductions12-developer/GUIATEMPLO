@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Templos AVCSur - Panel Maestro</title>
+    <title>Templos AVCSur - Sistema Jerárquico</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Rajdhani:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -15,106 +15,92 @@
             --text-dark: #1a1a1a;
             --text-gray: #555;
             --danger: #d93025;
+            --success: #28a745;
             --shadow: 0 10px 30px rgba(0,0,0,0.1);
             --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-        
         body { background-color: var(--bg-body); color: var(--text-dark); overflow-x: hidden; padding-top: 280px; }
 
-        /* PANTALLA DE LOGIN INICIAL PROFESIONAL */
+        /* SPLASH LOGIN */
         #authSplash {
             position: fixed; inset: 0; z-index: 9000;
             background: linear-gradient(-45deg, #0a2f5c, #1a4b8f, #0d3b75, #081f3d);
             background-size: 400% 400%; animation: gradientAnim 15s ease infinite;
             display: flex; align-items: center; justify-content: center; padding: 20px;
         }
+        @keyframes gradientAnim { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
         .login-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 40px; border-radius: 40px; width: 100%; max-width: 400px;
+            padding: 40px; border-radius: 35px; width: 100%; max-width: 400px;
             box-shadow: 0 25px 50px rgba(0,0,0,0.3); text-align: center; color: white;
         }
-
         .login-card h2 { font-family: 'Rajdhani'; font-size: 32px; margin-bottom: 30px; letter-spacing: 2px; }
         .login-card input {
-            width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 15px; border: none;
-            background: rgba(255, 255, 255, 0.9); font-size: 16px; outline: none;
+            width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px; border: none;
+            background: white; font-size: 16px; outline: none; color: var(--blue-main);
         }
         .login-card button {
-            width: 100%; padding: 18px; border-radius: 15px; border: none;
+            width: 100%; padding: 18px; border-radius: 12px; border: none;
             background: var(--yellow-accent); color: var(--blue-main);
-            font-weight: 800; font-size: 16px; cursor: pointer; transition: 0.3s;
+            font-weight: 800; font-size: 16px; cursor: pointer;
         }
 
         /* HEADER */
         header {
             position: fixed; top: 0; left: 0; width: 100%; z-index: 2000;
             background: var(--blue-main); color: var(--white); padding: 25px 20px 35px; text-align: center;
-            border-bottom: 5px solid var(--yellow-accent); box-shadow: 0 5px 25px rgba(0,0,0,0.4);
+            border-bottom: 5px solid var(--yellow-accent);
         }
-
         .logo-box {
             width: 85px; height: 85px; background: var(--white); border-radius: 50%; margin: 0 auto 12px;
-            display: flex; align-items: center; justify-content: center; border: 3px solid var(--yellow-accent);
-            overflow: hidden; position: relative; z-index: 2;
+            display: flex; align-items: center; justify-content: center; border: 3px solid var(--yellow-accent); overflow: hidden;
         }
         .logo-box img { width: 100%; height: 100%; object-fit: cover; }
+        header h1 { font-family: 'Rajdhani', sans-serif; font-size: 28px; text-transform: uppercase; }
 
-        header h1 { font-family: 'Rajdhani', sans-serif; font-size: 30px; text-transform: uppercase; letter-spacing: 2px; }
-        header h1 span { color: var(--yellow-accent); }
-
-        /* GRID Y TARJETAS */
-        .main-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; padding: 20px; }
-        .church-card { background: var(--white); border-radius: 30px; overflow: hidden; box-shadow: var(--shadow); position: relative; }
-        .card-slider { display: flex; overflow-x: auto; height: 230px; background: #eee; scrollbar-width: none; }
-        .card-slider img { min-width: 100%; height: 100%; object-fit: cover; }
-        .card-content { padding: 25px; }
-        .owner-tag { font-size: 10px; background: #eee; padding: 2px 8px; border-radius: 10px; float: right; color: #888; }
+        /* GRID */
+        .main-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; padding: 20px; }
+        .church-card { background: var(--white); border-radius: 25px; overflow: hidden; box-shadow: var(--shadow); position: relative; }
+        .card-slider { height: 220px; background: #eee; }
+        .card-slider img { width: 100%; height: 100%; object-fit: cover; }
+        .card-content { padding: 20px; }
         
-        .admin-controls { display: none; padding: 15px; gap: 10px; background: #f8f9fa; border-top: 1px solid #eee; }
+        /* MODALES */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 5000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-body { background: var(--white); padding: 25px; border-radius: 25px; width: 100%; max-width: 450px; max-height: 85vh; overflow-y: auto; }
+        .form-field { margin-bottom: 15px; }
+        .form-field label { display: block; font-size: 10px; font-weight: 800; color: var(--blue-main); margin-bottom: 5px; text-transform: uppercase; }
+        .form-field input, .form-field select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; outline: none; }
+
+        .admin-controls { display: none; padding: 12px; gap: 8px; background: #f8f9fa; border-top: 1px solid #eee; }
         .btn-edit { flex: 1; background: var(--blue-light); color: white; border: none; padding: 10px; border-radius: 10px; font-weight: 700; cursor: pointer; }
         .btn-delete { background: var(--danger); color: white; border: none; padding: 10px; border-radius: 10px; font-weight: 700; cursor: pointer; }
 
-        /* MODALES */
-        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 5000; align-items: center; justify-content: center; padding: 20px; }
-        .modal-body { background: var(--white); padding: 30px; border-radius: 30px; width: 100%; max-width: 450px; max-height: 90vh; overflow-y: auto; }
-        
-        .form-field { margin-bottom: 15px; }
-        .form-field label { display: block; font-size: 11px; font-weight: 700; color: var(--blue-main); text-transform: uppercase; margin-bottom: 5px; }
-        .form-field input, .form-field select { width: 100%; padding: 12px; border: 2px solid #eee; border-radius: 12px; }
-
-        nav { position: fixed; bottom: 0; width: 100%; background: var(--blue-main); display: flex; justify-content: space-around; padding: 15px 0; border-top: 5px solid var(--yellow-accent); z-index: 3000; }
+        nav { position: fixed; bottom: 0; width: 100%; background: var(--blue-main); display: flex; justify-content: space-around; padding: 15px 0; border-top: 4px solid var(--yellow-accent); z-index: 3000; }
         .nav-link { background: none; border: none; color: var(--white); font-weight: 700; cursor: pointer; font-size: 11px; }
 
-        .user-info-bar { position: fixed; top: 10px; left: 10px; z-index: 3000; font-size: 10px; color: white; background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 20px; }
-
-        /* LISTA USUARIOS */
-        .user-list-item { padding: 15px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
-        .btn-wipe { background: var(--danger); color: white; border: none; padding: 5px 10px; border-radius: 8px; font-size: 10px; cursor: pointer; }
-
-        @keyframes gradientAnim { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .role-badge { position: fixed; top: 10px; right: 10px; background: var(--yellow-accent); color: var(--blue-main); padding: 5px 12px; border-radius: 20px; font-size: 10px; font-weight: 800; z-index: 4000; }
+        
+        .user-item { background: #f0f4f8; padding: 10px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
     </style>
 </head>
 <body>
 
-    <!-- PANTALLA DE LOGIN INICIAL -->
     <div id="authSplash">
         <div class="login-card">
             <h2>AVCSUR<span>PANEL</span></h2>
-            <div id="authInputs">
-                <input type="email" id="emailInp" placeholder="Correo electrónico">
-                <input type="password" id="passInp" placeholder="Contraseña">
-                <button id="authBtn" onclick="handleAuth()">INGRESAR AL PANEL</button>
-                <p id="toggleAuthText" style="margin-top:20px; font-size:12px; cursor:pointer; text-decoration: underline;" onclick="toggleAuthMode()">¿No tienes cuenta? Regístrate aquí</p>
-            </div>
+            <input type="email" id="emailInp" placeholder="Correo electrónico">
+            <input type="password" id="passInp" placeholder="Contraseña">
+            <button onclick="handleAuth()">INICIAR SESIÓN</button>
+            <p style="margin-top: 15px; font-size: 11px; opacity: 0.8;">Acceso restringido a personal autorizado</p>
         </div>
     </div>
 
-    <div id="userInfo" class="user-info-bar" style="display:none;"></div>
+    <div id="roleBadge" class="role-badge" style="display:none;"></div>
 
     <header>
         <div class="logo-box">
@@ -122,37 +108,49 @@
             <span id="logoLabel">LOGO</span>
         </div>
         <h1 id="mainTitle">TEMPLOS <span>AVCSur</span></h1>
-        <div class="search-container" style="margin-top:15px;">
-            <div style="background: white; display: flex; align-items: center; padding: 10px 20px; border-radius: 50px;">
-                <input type="text" id="searchInput" placeholder="Buscar mi templo..." onkeyup="searchLocal()" style="flex:1; border:none; outline:none;">
-                <span>🔍</span>
-            </div>
+        <div style="max-width:400px; margin: 15px auto 0; background:white; border-radius:50px; padding:8px 15px; display:flex;">
+            <input type="text" id="searchInput" onkeyup="searchLocal()" placeholder="Buscar templo..." style="flex:1; border:none; outline:none; font-size:14px;">
+            <span>🔍</span>
         </div>
     </header>
 
     <div class="main-container" id="churchGrid"></div>
 
-    <!-- MODAL GESTION -->
+    <!-- MODAL GESTIÓN -->
     <div id="manageOverlay" class="modal-overlay">
         <div class="modal-body">
-            <!-- SECCIÓN SUPER ADMIN: CAMBIAR LOGO UNIVERSAL -->
-            <div id="superAdminTools" style="display:none; background: #fff3cd; padding: 15px; border-radius: 15px; margin-bottom: 20px; border: 1px solid #ffeeba;">
-                <p style="font-size: 10px; font-weight: 800; color: #856404; margin-bottom: 10px;">HERRAMIENTAS MASTER (S. ADMIN)</p>
-                <button onclick="document.getElementById('globalLogoFile').click()" style="width:100%; background:var(--blue-main); color:white; padding:10px; border:none; border-radius:10px; font-size:11px; cursor:pointer;">CAMBIAR LOGO UNIVERSAL</button>
+            <!-- SECCION SUPER ADMIN: GESTIÓN DE ADMINS -->
+            <div id="superTools" style="display:none; border-bottom: 2px solid #eee; margin-bottom: 20px; padding-bottom: 20px;">
+                <p style="color:var(--danger); font-weight:800; font-size:11px; margin-bottom:10px;">CONTROL DE ADMINISTRADORES</p>
+                <div class="form-field">
+                    <input type="email" id="newAdminEmail" placeholder="Correo del nuevo Admin">
+                    <input type="password" id="newAdminPass" placeholder="Clave única" style="margin-top:5px;">
+                    <button onclick="createUser('admin')" style="width:100%; background:var(--blue-main); color:white; padding:10px; border-radius:10px; margin-top:5px; border:none; font-weight:700;">CREAR ADMINISTRADOR</button>
+                </div>
+                <button onclick="showUsers('admin')" style="width:100%; background:#eee; padding:10px; border-radius:10px; border:none; font-size:11px;">VER/EDITAR ADMINISTRADORES</button>
+                <hr style="margin:15px 0;">
+                <button onclick="document.getElementById('globalLogoFile').click()" style="width:100%; background:var(--yellow-accent); padding:10px; border-radius:10px; border:none; font-weight:700;">CAMBIAR LOGO UNIVERSAL</button>
                 <input type="file" id="globalLogoFile" hidden accept="image/*" onchange="uploadGlobalLogo(this)">
-                <button onclick="showUsersModal()" style="width:100%; background:var(--white); color:var(--danger); padding:10px; border:none; border-radius:10px; font-size:11px; cursor:pointer; margin-top:5px; font-weight:700; border:1px solid var(--danger);">ELIMINAR / VER USUARIOS</button>
             </div>
 
-            <!-- PERFIL INDIVIDUAL -->
-            <div style="background: #f0f4f8; padding: 15px; border-radius: 15px; margin-bottom: 20px;">
-                <label style="font-size:10px; font-weight:800;">NOMBRE DE MI GUÍA PERSONAL</label>
-                <div style="display: flex; gap: 5px; margin-top:5px;">
-                    <input type="text" id="customTitleIn" style="flex:1; padding:8px; border-radius:8px; border:1px solid #ccc;">
-                    <button onclick="updateHeaderTitle()" style="background:var(--blue-main); color:white; border:none; padding:0 10px; border-radius:8px;">OK</button>
+            <!-- SECCION ADMIN: GESTIÓN DE LECTORES -->
+            <div id="adminTools" style="display:none; border-bottom: 2px solid #eee; margin-bottom: 20px; padding-bottom: 20px;">
+                <p style="color:var(--blue-light); font-weight:800; font-size:11px; margin-bottom:10px;">CREAR USUARIO LECTOR (CLIENTE)</p>
+                <div class="form-field">
+                    <input type="email" id="newReaderEmail" placeholder="Correo del Lector">
+                    <input type="password" id="newReaderPass" placeholder="Clave Lector" style="margin-top:5px;">
+                    <button onclick="createUser('reader')" style="width:100%; background:var(--success); color:white; padding:10px; border-radius:10px; margin-top:5px; border:none; font-weight:700;">CREAR LECTOR</button>
+                </div>
+                <div class="form-field">
+                    <label>Nombre de mi Guía</label>
+                    <div style="display:flex; gap:5px;">
+                        <input type="text" id="customTitleIn">
+                        <button onclick="updateHeaderTitle()" style="background:var(--blue-main); color:white; border:none; padding:0 10px; border-radius:10px;">OK</button>
+                    </div>
                 </div>
             </div>
 
-            <h2 id="manageTitle">Nuevo Registro</h2>
+            <h2 id="manageTitle">Registrar Templo</h2>
             <input type="hidden" id="editKey">
             <div class="form-field"><label>Nombre del Templo</label><input type="text" id="nameIn"></div>
             <div class="form-field"><label>Dirección</label><input type="text" id="addrIn"></div>
@@ -164,30 +162,30 @@
             <div class="form-field"><label>Maps URL</label><input type="url" id="linkIn"></div>
             <div class="form-field"><label>Foto Principal</label><input type="file" id="f1" accept="image/*"></div>
             
-            <button id="saveBtn" onclick="saveToFirebase()" style="width:100%; background:var(--blue-main); color:white; padding:16px; border:none; border-radius:12px; font-weight:700;">GUARDAR TEMPLO</button>
-            <button onclick="closeMod('manageOverlay')" style="background:none; border:none; width:100%; margin-top:15px; color:var(--text-gray);">Cerrar</button>
+            <button id="saveBtn" onclick="saveTemplo()" style="width:100%; background:var(--blue-main); color:white; padding:16px; border:none; border-radius:12px; font-weight:700;">GUARDAR REGISTRO</button>
+            <button onclick="closeMod('manageOverlay')" style="width:100%; background:none; border:none; margin-top:15px; color:var(--text-gray);">Cancelar</button>
         </div>
     </div>
 
     <!-- MODAL LISTA USUARIOS -->
     <div id="usersOverlay" class="modal-overlay">
         <div class="modal-body">
-            <h2 style="color:var(--blue-main); margin-bottom:20px;">Gestión de Usuarios</h2>
-            <div id="usersContainer"></div>
+            <h2 id="usersTitle">Lista de Usuarios</h2>
+            <div id="usersContainer" style="margin-top:15px;"></div>
             <button onclick="closeMod('usersOverlay')" style="width:100%; background:var(--blue-main); color:white; padding:12px; border:none; border-radius:12px; margin-top:20px;">CERRAR</button>
         </div>
     </div>
 
-    <nav>
+    <nav id="bottomNav" style="display:none;">
         <button class="nav-link" onclick="location.reload()">INICIO</button>
-        <button class="nav-link" onclick="showMod('manageOverlay')">GESTIÓN</button>
+        <button id="btnManage" class="nav-link" onclick="showMod('manageOverlay')">GESTIÓN</button>
         <button class="nav-link" style="color:var(--yellow-accent);" onclick="logout()">SALIR</button>
     </nav>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getDatabase, ref, push, onValue, set, remove, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
         const firebaseConfig = {
              apiKey: "AIzaSyDvYgLYGRrTvLNlhdNHnroBkvHCYXOywfU",
@@ -203,149 +201,137 @@
         const db = getDatabase(app);
         const auth = getAuth(app);
 
-        const SUPER_ADMIN = "superadmin@avcsur.com"; 
-        let currentUser = null;
-        let isRegisterMode = false;
+        const SUPER_ADMIN = "superadmin@avcsur.com";
+        let userRole = null;
+        let userData = null;
 
-        // --- AUTH CONTROL ---
-        onAuthStateChanged(auth, (user) => {
+        // --- AUTENTICACIÓN ---
+        onAuthStateChanged(auth, async (user) => {
             if(user) {
-                currentUser = user;
-                document.getElementById('authSplash').style.display = 'none';
-                document.getElementById('userInfo').style.display = 'block';
-                document.getElementById('userInfo').innerText = `Admin: ${user.email}`;
-                if(user.email === SUPER_ADMIN) document.getElementById('superAdminTools').style.display = 'block';
-                loadGlobalLogo();
-                loadUserConfig(user.uid);
-                loadData();
+                userData = user;
+                onValue(ref(db, `users/${user.uid}`), (snap) => {
+                    const info = snap.val();
+                    // Si no tiene rol en DB pero es el Super Admin manual
+                    if(user.email === SUPER_ADMIN) userRole = 'super';
+                    else userRole = info ? info.role : 'reader';
+
+                    setupUI();
+                    loadGlobalLogo();
+                    loadData();
+                    if(userRole !== 'super') loadHeaderTitle(userRole === 'admin' ? user.uid : info.parentAdmin);
+                });
             } else {
                 document.getElementById('authSplash').style.display = 'flex';
-                document.getElementById('userInfo').style.display = 'none';
+                document.getElementById('bottomNav').style.display = 'none';
             }
         });
 
-        window.handleAuth = async () => {
+        window.handleAuth = () => {
             const email = document.getElementById('emailInp').value;
             const pass = document.getElementById('passInp').value;
-            if(!email || !pass) return alert("Por favor rellena los datos");
-            try {
-                if(isRegisterMode) await createUserWithEmailAndPassword(auth, email, pass);
-                else await signInWithEmailAndPassword(auth, email, pass);
-            } catch (e) { alert("Error: " + e.message); }
+            signInWithEmailAndPassword(auth, email, pass).catch(e => alert("Acceso denegado: " + e.message));
         };
 
         window.logout = () => signOut(auth).then(() => location.reload());
 
-        window.toggleAuthMode = () => {
-            isRegisterMode = !isRegisterMode;
-            document.getElementById('authBtn').innerText = isRegisterMode ? "REGISTRAR CUENTA" : "INGRESAR AL PANEL";
-            document.getElementById('toggleAuthText').innerText = isRegisterMode ? "¿Ya tienes cuenta? Entra aquí" : "¿No tienes cuenta? Regístrate aquí";
-        };
+        function setupUI() {
+            document.getElementById('authSplash').style.display = 'none';
+            document.getElementById('bottomNav').style.display = 'flex';
+            const badge = document.getElementById('roleBadge');
+            badge.innerText = userRole.toUpperCase();
+            badge.style.display = 'block';
 
-        // --- GLOBAL LOGO ---
-        function loadGlobalLogo() {
-            onValue(ref(db, 'config/globalLogo'), (snap) => {
-                const logo = snap.val();
-                if(logo) {
-                    document.getElementById('logoImg').src = logo;
-                    document.getElementById('logoImg').style.display = 'block';
-                    document.getElementById('logoLabel').style.display = 'none';
-                }
-            });
+            document.getElementById('superTools').style.display = (userRole === 'super') ? 'block' : 'none';
+            document.getElementById('adminTools').style.display = (userRole === 'admin') ? 'block' : 'none';
+            
+            // Los lectores no tienen botón de gestión
+            if(userRole === 'reader') document.getElementById('btnManage').style.display = 'none';
         }
 
-        window.uploadGlobalLogo = async (input) => {
-            if(currentUser.email !== SUPER_ADMIN) return;
-            const b64 = await toB64(input.files[0]);
-            set(ref(db, 'config/globalLogo'), b64).then(() => alert("Logo Universal actualizado"));
-        };
+        // --- GESTIÓN DE USUARIOS (CREAR ADMINS/LECTORES) ---
+        window.createUser = (role) => {
+            const email = (role === 'admin') ? document.getElementById('newAdminEmail').value : document.getElementById('newReaderEmail').value;
+            const pass = (role === 'admin') ? document.getElementById('newAdminPass').value : document.getElementById('newReaderPass').value;
+            
+            if(!email || !pass) return alert("Completa los campos");
 
-        // --- USER CONFIG ---
-        function loadUserConfig(uid) {
-            onValue(ref(db, `users_config/${uid}/headerTitle`), (snap) => {
-                const title = snap.val();
-                if(title) {
-                    document.getElementById('mainTitle').innerHTML = `${title} <span>AVCSur</span>`;
-                    document.getElementById('customTitleIn').value = title;
-                }
+            // En un entorno real sin Cloud Functions, guardamos la intención de creación en una lista.
+            // Para este prototipo, guardamos los usuarios en la base de datos de "Permitidos".
+            const userRef = push(ref(db, 'access_requests'));
+            set(userRef, {
+                email, pass, role, 
+                parentAdmin: (role === 'reader') ? userData.uid : 'system',
+                status: 'pending'
+            }).then(() => {
+                alert(`Solicitud enviada. Debes registrar este email en Firebase Auth manualmente o usar una función de backend.`);
+                // Nota: Debido a limitaciones de seguridad de Firebase Client, no se pueden crear usuarios Auth 
+                // sin cerrar la sesión actual. Se recomienda usar Firebase Admin SDK.
             });
-        }
-
-        window.updateHeaderTitle = () => {
-            const val = document.getElementById('customTitleIn').value;
-            if(val) set(ref(db, `users_config/${currentUser.uid}/headerTitle`), val);
         };
 
-        // --- DATA & USERS ---
+        window.showUsers = (role) => {
+            onValue(ref(db, 'users'), (snap) => {
+                const users = snap.val();
+                const container = document.getElementById('usersContainer');
+                container.innerHTML = "";
+                for(let id in users) {
+                    if(users[id].role === role) {
+                        const div = document.createElement('div');
+                        div.className = 'user-item';
+                        div.innerHTML = `<span>${users[id].email}</span> <button onclick="deleteUser('${id}')" style="color:red; border:none; background:none;">✖</button>`;
+                        container.appendChild(div);
+                    }
+                }
+                showMod('usersOverlay');
+            });
+        };
+
+        // --- DATA LOGIC ---
         function loadData() {
             onValue(ref(db, 'templos'), (snap) => {
                 const data = snap.val();
                 const list = [];
-                const users = new Set();
-                for(let k in data) {
-                    list.push({ id: k, ...data[k] });
-                    if(data[k].ownerEmail) users.add(data[k].ownerEmail);
+                for(let k in data) list.push({ id: k, ...data[k] });
+                
+                let filtered = [];
+                if(userRole === 'super') filtered = list;
+                else if(userRole === 'admin') filtered = list.filter(i => i.ownerId === userData.uid);
+                else {
+                    // El lector ve los templos del Admin que lo creó
+                    onValue(ref(db, `users/${userData.uid}`), (s) => {
+                        const myInfo = s.val();
+                        renderCards(list.filter(i => i.ownerId === myInfo.parentAdmin));
+                    });
+                    return;
                 }
-                window.globalList = list.reverse();
-                window.systemUsers = Array.from(users);
-                renderCards();
+                renderCards(filtered.reverse());
             });
         }
 
-        function renderCards() {
+        function renderCards(data) {
             const grid = document.getElementById('churchGrid');
             grid.innerHTML = "";
-            
-            // Los usuarios normales solo ven lo suyo. El Super Admin ve TODO.
-            let filtered = window.globalList;
-            if(currentUser.email !== SUPER_ADMIN) {
-                filtered = window.globalList.filter(item => item.ownerId === currentUser.uid);
-            }
-
-            filtered.forEach(item => {
+            data.forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'church-card';
                 div.innerHTML = `
-                    <div class="card-slider"><img src="${item.img1 || 'https://via.placeholder.com/400x230'}"></div>
+                    <div class="card-slider"><img src="${item.img1 || 'https://via.placeholder.com/400x220'}"></div>
                     <div class="card-content">
-                        <span class="owner-tag">${item.ownerEmail.split('@')[0]}</span>
                         <small style="color:var(--yellow-accent); font-weight:800;">${item.zona}</small>
-                        <h2>${item.name}</h2>
-                        <p style="font-size:13px; color:var(--text-gray);">📍 ${item.addr}</p>
-                        <a href="${item.link}" target="_blank" style="display:block; text-align:center; background:var(--blue-main); color:white; padding:10px; border-radius:10px; text-decoration:none; margin-top:15px; font-weight:700; font-size:12px;">VER MAPA</a>
+                        <h2 style="font-size:18px; margin:5px 0;">${item.name}</h2>
+                        <p style="font-size:12px; color:var(--text-gray);">📍 ${item.addr}</p>
+                        <a href="${item.link}" target="_blank" style="display:block; text-align:center; background:var(--blue-main); color:white; padding:10px; border-radius:10px; text-decoration:none; margin-top:10px; font-weight:700; font-size:12px;">VER MAPA</a>
                     </div>
-                    <div class="admin-controls" style="display:flex">
+                    <div class="admin-controls" style="${userRole !== 'reader' ? 'display:flex' : 'display:none'}">
                         <button class="btn-edit" onclick="prepEdit('${item.id}')">EDITAR</button>
-                        <button class="btn-delete" onclick="deleteTemple('${item.id}')">BORRAR</button>
+                        <button class="btn-delete" onclick="deleteTemplo('${item.id}')">BORRAR</button>
                     </div>
                 `;
                 grid.appendChild(div);
             });
         }
 
-        window.showUsersModal = () => {
-            const container = document.getElementById('usersContainer');
-            container.innerHTML = "";
-            window.systemUsers.forEach(u => {
-                if(u === SUPER_ADMIN) return;
-                const div = document.createElement('div');
-                div.className = 'user-list-item';
-                div.innerHTML = `<span>${u}</span> <button class="btn-wipe" onclick="wipeUser('${u}')">ELIMINAR TODO</button>`;
-                container.appendChild(div);
-            });
-            showMod('usersOverlay');
-        };
-
-        window.wipeUser = (email) => {
-            if(confirm(`¿Seguro que quieres borrar a ${email} y todo su contenido?`)) {
-                window.globalList.forEach(item => {
-                    if(item.ownerEmail === email) remove(ref(db, `templos/${item.id}`));
-                });
-                alert("Contenido del usuario eliminado.");
-            }
-        };
-
-        window.saveToFirebase = async () => {
+        window.saveTemplo = async () => {
             const key = document.getElementById('editKey').value;
             const data = {
                 name: document.getElementById('nameIn').value,
@@ -354,8 +340,7 @@
                 contact: document.getElementById('contactIn').value,
                 phone: document.getElementById('phoneIn').value,
                 link: document.getElementById('linkIn').value,
-                ownerEmail: currentUser.email,
-                ownerId: currentUser.uid
+                ownerId: userData.uid
             };
             const f1 = document.getElementById('f1').files[0];
             if(f1) data.img1 = await toB64(f1);
@@ -364,14 +349,35 @@
             else push(ref(db, 'templos'), data).then(() => closeMod('manageOverlay'));
         };
 
-        window.deleteTemple = (id) => { if(confirm("¿Eliminar?")) remove(ref(db, `templos/${id}`)); };
-        window.prepEdit = (id) => {
-            const it = window.globalList.find(x => x.id === id);
-            document.getElementById('editKey').value = id;
-            document.getElementById('nameIn').value = it.name;
-            document.getElementById('addrIn').value = it.addr;
-            showMod('manageOverlay');
+        window.deleteTemplo = (id) => { if(confirm("¿Eliminar?")) remove(ref(db, `templos/${id}`)); };
+
+        // --- UTILIDADES ---
+        window.uploadGlobalLogo = async (input) => {
+            const b64 = await toB64(input.files[0]);
+            set(ref(db, 'config/globalLogo'), b64);
         };
+
+        function loadGlobalLogo() {
+            onValue(ref(db, 'config/globalLogo'), (snap) => {
+                if(snap.val()) {
+                    document.getElementById('logoImg').src = snap.val();
+                    document.getElementById('logoImg').style.display = 'block';
+                    document.getElementById('logoLabel').style.display = 'none';
+                }
+            });
+        }
+
+        function loadHeaderTitle(uid) {
+            onValue(ref(db, `users_config/${uid}/headerTitle`), (snap) => {
+                if(snap.val()) document.getElementById('mainTitle').innerHTML = `${snap.val()} <span>AVCSur</span>`;
+            });
+        }
+
+        window.updateHeaderTitle = () => {
+            const val = document.getElementById('customTitleIn').value;
+            set(ref(db, `users_config/${userData.uid}/headerTitle`), val);
+        };
+
         const toB64 = f => new Promise((res) => { const r = new FileReader(); r.readAsDataURL(f); r.onload = () => res(r.result); });
     </script>
 
