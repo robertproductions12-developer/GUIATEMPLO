@@ -22,11 +22,21 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         
+        /* ANIMACIÓN DE DEGRADADO PROFESIONAL PARA TODA LA APP */
         body { 
-            background-color: var(--bg-body); 
+            background: linear-gradient(-45deg, #f4f7f9, #e0e8f0, #d1dbe5, #f4f7f9);
+            background-size: 400% 400%;
+            animation: gradientBody 15s ease infinite;
             color: var(--text-dark); 
             padding-top: 240px; 
             padding-bottom: 100px; 
+            min-height: 100vh;
+        }
+
+        @keyframes gradientBody {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* HEADER FIJO CON ANIMACIÓN DE LÍNEAS */
@@ -42,7 +52,6 @@
             overflow: hidden;
         }
 
-        /* ANIMACIÓN DE LÍNEAS (COMPARTIDA) */
         header::before, #authSplash::before {
             content: "";
             position: absolute;
@@ -78,10 +87,12 @@
         }
         .search-container input { flex: 1; border: none; outline: none; padding: 5px; font-size: 14px; }
 
-        /* LOGIN SPLASH CON ANIMACIÓN */
+        /* LOGIN SPLASH CON DEGRADADO ANIMADO */
         #authSplash {
             position: fixed; inset: 0; z-index: 9999;
-            background: linear-gradient(-45deg, #0a2f5c, #1a4b8f, #0d3b75);
+            background: linear-gradient(-45deg, #0a2f5c, #1a4b8f, #0d3b75, #081f3d);
+            background-size: 400% 400%;
+            animation: gradientBody 10s ease infinite;
             display: flex; align-items: center; justify-content: center; padding: 20px;
             overflow: hidden;
         }
@@ -89,46 +100,47 @@
             position: relative; z-index: 2;
             background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px);
             padding: 40px; border-radius: 30px; width: 100%; max-width: 380px; text-align: center; color: white;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 20px 50px rgba(0,0,0,0.3);
         }
-        .login-card input { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px; border: none; }
-        .login-card button { width: 100%; padding: 15px; border-radius: 12px; border: none; background: var(--yellow-accent); font-weight: 800; cursor: pointer; color: var(--blue-main); }
+        .login-card input { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px; border: none; outline: none; }
+        .login-card button { width: 100%; padding: 15px; border-radius: 12px; border: none; background: var(--yellow-accent); font-weight: 800; cursor: pointer; color: var(--blue-main); font-size: 16px; }
 
-        .main-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 20px; }
+        .main-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; padding: 20px; position: relative; z-index: 1; }
 
-        .church-card { background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; transition: 0.3s; }
-        .church-card:hover { transform: translateY(-5px); }
+        .church-card { background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; transition: 0.3s; border: 1px solid rgba(0,0,0,0.05); }
+        .church-card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
         
-        .card-slider { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; height: 200px; scrollbar-width: none; background: #eee; }
+        .card-slider { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; height: 210px; scrollbar-width: none; background: #eee; }
         .card-slider::-webkit-scrollbar { display: none; }
         .card-slider img { min-width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start; }
 
         .card-content { padding: 20px; flex-grow: 1; }
-        .card-info-row { display: flex; align-items: center; gap: 8px; font-size: 13px; margin-bottom: 8px; color: var(--text-gray); }
-        .card-info-row i { color: var(--blue-light); width: 16px; }
+        .card-info-row { display: flex; align-items: center; gap: 10px; font-size: 13px; margin-bottom: 10px; color: var(--text-gray); line-height: 1.4; }
+        .card-info-row i { color: var(--blue-light); width: 18px; font-size: 14px; }
 
-        .video-container { max-width: 1000px; margin: 40px auto; padding: 20px; }
-        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 20px; overflow: hidden; background: #000; box-shadow: var(--shadow); }
+        .video-container { max-width: 1000px; margin: 40px auto; padding: 20px; position: relative; z-index: 1; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 25px; overflow: hidden; background: #000; box-shadow: var(--shadow); border: 4px solid var(--white); }
         .video-wrapper video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 5000; align-items: center; justify-content: center; padding: 20px; }
-        .modal-body { background: var(--white); padding: 25px; border-radius: 25px; width: 100%; max-width: 450px; max-height: 90vh; overflow-y: auto; }
+        .modal-body { background: var(--white); padding: 25px; border-radius: 25px; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
         
-        .form-field { margin-bottom: 12px; }
-        .form-field label { font-size: 11px; font-weight: 800; color: var(--blue-main); display: block; margin-bottom: 4px; }
-        .form-field input, .form-field select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; }
+        .form-field { margin-bottom: 15px; }
+        .form-field label { font-size: 11px; font-weight: 800; color: var(--blue-main); display: block; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+        .form-field input, .form-field select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; outline: none; font-size: 14px; }
 
-        .super-panel { background: #fdf2d2; padding: 15px; border-radius: 15px; margin-bottom: 20px; border: 1px solid var(--yellow-accent); }
-        .user-selector { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid var(--blue-main); margin-bottom: 10px; font-weight: 700; }
+        .super-panel { background: #fff9e6; padding: 20px; border-radius: 20px; margin-bottom: 25px; border: 2px dashed var(--yellow-accent); }
+        .user-selector { width: 100%; padding: 12px; border-radius: 12px; border: 2px solid var(--blue-main); margin-bottom: 15px; font-weight: 700; background: white; cursor: pointer; }
 
-        nav { position: fixed; bottom: 0; width: 100%; background: var(--blue-main); display: flex; justify-content: space-around; padding: 15px 0; border-top: 4px solid var(--yellow-accent); z-index: 3000; }
-        .nav-link { background: none; border: none; color: white; font-weight: 700; font-size: 11px; cursor: pointer; }
+        nav { position: fixed; bottom: 0; width: 100%; background: var(--blue-main); display: flex; justify-content: space-around; padding: 15px 0; border-top: 4px solid var(--yellow-accent); z-index: 3000; box-shadow: 0 -10px 30px rgba(0,0,0,0.2); }
+        .nav-link { background: none; border: none; color: white; font-weight: 700; font-size: 11px; cursor: pointer; text-align: center; }
 
-        .footer-main { background: #05162b; color: white; padding: 40px 20px 100px; text-align: center; }
-        .social-icons { display: flex; justify-content: center; gap: 20px; margin-bottom: 15px; }
-        .social-icons a { color: var(--yellow-accent); font-size: 22px; }
+        .footer-main { background: #05162b; color: white; padding: 60px 20px 120px; text-align: center; position: relative; z-index: 1; }
+        .social-icons { display: flex; justify-content: center; gap: 25px; margin-bottom: 20px; }
+        .social-icons a { color: var(--yellow-accent); font-size: 26px; transition: 0.3s; }
+        .social-icons a:hover { transform: scale(1.2); }
 
-        .role-badge { position: fixed; top: 15px; right: 15px; background: var(--yellow-accent); color: var(--blue-main); padding: 5px 12px; border-radius: 20px; font-size: 10px; font-weight: 800; z-index: 4000; }
+        .role-badge { position: fixed; top: 15px; right: 15px; background: var(--yellow-accent); color: var(--blue-main); padding: 6px 15px; border-radius: 20px; font-size: 11px; font-weight: 800; z-index: 4000; box-shadow: var(--shadow); }
 
         @media (max-width: 600px) {
             body { padding-top: 220px; }
@@ -140,10 +152,11 @@
 
     <div id="authSplash">
         <div class="login-card">
-            <h2 style="font-family:'Montserrat'; margin-bottom:20px; letter-spacing: 2px;">MAPSTEM</h2>
-            <input type="email" id="emailInp" placeholder="Usuario">
+            <h2 style="font-family:'Montserrat'; margin-bottom:25px; letter-spacing: 3px; font-size: 28px;">MAPSTEM</h2>
+            <input type="email" id="emailInp" placeholder="Correo de acceso">
             <input type="password" id="passInp" placeholder="Contraseña">
-            <button onclick="handleAuth()">INGRESAR</button>
+            <button onclick="handleAuth()">ENTRAR AL SISTEMA</button>
+            <p style="margin-top:20px; font-size:10px; opacity:0.7; letter-spacing:1px;">PLATAFORMA DE GESTIÓN AVANZADA</p>
         </div>
     </div>
 
@@ -156,7 +169,7 @@
         </div>
         <h1 id="mainTitle">MAPSTEM <span>GESTIÓN PROFESIONAL</span></h1>
         <div class="search-container">
-            <input type="text" id="searchInput" onkeyup="searchLocal()" placeholder="Buscar templo, zona o dirección...">
+            <input type="text" id="searchInput" onkeyup="searchLocal()" placeholder="Buscar templo, zona, contacto o dirección...">
             <i class="fas fa-search" style="color:#aaa;"></i>
         </div>
     </header>
@@ -165,9 +178,9 @@
 
     <!-- VIDEO AL FINAL -->
     <div id="videoSection" class="video-container" style="display:none;">
-        <h2 style="text-align:center; font-family:'Rajdhani'; color:var(--blue-main); margin-bottom:15px; letter-spacing: 2px;">MAPSTEM VIDEO</h2>
+        <h2 style="text-align:center; font-family:'Rajdhani'; color:var(--blue-main); margin-bottom:20px; letter-spacing: 3px; font-size: 24px;">RECURSOS MAPSTEM</h2>
         <div class="video-wrapper">
-            <video controls poster="https://via.placeholder.com/800x450?text=MAPSTEM+VIDEO">
+            <video controls poster="https://via.placeholder.com/1000x560?text=MAPSTEM+PRESENTACION">
                 <source src="video.mp4" type="video/mp4">
             </video>
         </div>
@@ -179,45 +192,55 @@
             
             <!-- PANEL SUPER ADMIN -->
             <div id="superTools" style="display:none;" class="super-panel">
-                <p style="font-size:11px; font-weight:800; margin-bottom:8px; color:var(--blue-main);">PANEL DE ADMINISTRADORES</p>
-                <select id="userSelect" class="user-selector" onchange="filterByUser(this.value)">
-                    <option value="all">Ver todos los registros</option>
-                </select>
-                <div id="userDetails" style="display:none; margin-bottom:10px;">
-                    <button id="deleteUserBtn" onclick="deleteSelectedUser()" style="width:100%; background:var(--danger); color:white; border:none; padding:10px; border-radius:8px; font-size:11px; font-weight:700;">ELIMINAR ADMINISTRADOR SELECCIONADO</button>
-                </div>
-                <hr style="margin:10px 0; opacity:0.2;">
+                <p style="font-size:12px; font-weight:800; margin-bottom:12px; color:var(--blue-main); border-bottom: 1px solid var(--yellow-accent); padding-bottom:5px;">HERRAMIENTAS DE CONTROL MAESTRO</p>
+                
+                <!-- CARGA DE LOGO DESDE DISPOSITIVO -->
                 <div class="form-field">
-                    <label>CREAR NUEVO ADMINISTRADOR</label>
-                    <input type="email" id="newAdminEmail" placeholder="Email">
-                    <input type="password" id="newAdminPass" placeholder="Contraseña">
-                    <button onclick="createUser('admin')" style="width:100%; background:var(--blue-main); color:white; padding:10px; border-radius:8px; border:none; margin-top:5px; font-weight:700;">REGISTRAR ADMIN</button>
+                    <label>Logo Universal de la App</label>
+                    <input type="file" id="logoFileInp" accept="image/*" onchange="uploadGlobalLogo(this)" style="padding:5px; font-size:11px;">
+                    <small style="font-size:9px; color:var(--text-gray);">Cambia el logo para todos los usuarios.</small>
+                </div>
+
+                <label style="font-size: 11px; font-weight: 800; color: var(--blue-main); margin-top:10px; display:block;">SELECCIONAR ADMINISTRADOR</label>
+                <select id="userSelect" class="user-selector" onchange="filterByUser(this.value)">
+                    <option value="all">Ver todos los registros del sistema</option>
+                </select>
+                
+                <div id="userDetails" style="display:none; margin-bottom:15px;">
+                    <button id="deleteUserBtn" onclick="deleteSelectedUser()" style="width:100%; background:var(--danger); color:white; border:none; padding:12px; border-radius:10px; font-size:12px; font-weight:700; cursor:pointer;">ELIMINAR ESTE ADMIN Y SUS DATOS</button>
+                </div>
+
+                <div class="form-field" style="background:white; padding:15px; border-radius:12px; border:1px solid #eee;">
+                    <label>Nuevo Administrador</label>
+                    <input type="email" id="newAdminEmail" placeholder="Email del Admin" style="margin-bottom:8px;">
+                    <input type="password" id="newAdminPass" placeholder="Clave de acceso">
+                    <button onclick="createUser('admin')" style="width:100%; background:var(--blue-main); color:white; padding:12px; border-radius:10px; border:none; margin-top:10px; font-weight:700; cursor:pointer;">DAR DE ALTA ADMIN</button>
                 </div>
             </div>
 
-            <h2 id="manageTitle" style="font-family:'Montserrat'; font-size:18px; margin-bottom:15px;">Nuevo Registro</h2>
+            <h2 id="manageTitle" style="font-family:'Montserrat'; font-size:20px; margin-bottom:20px; color:var(--blue-main);">Nuevo Registro</h2>
             <input type="hidden" id="editKey">
             <div class="form-field"><label>Nombre del Templo</label><input type="text" id="nameIn"></div>
-            <div class="form-field"><label>Dirección</label><input type="text" id="addrIn"></div>
-            <div class="form-field"><label>Zona</label>
+            <div class="form-field"><label>Dirección Completa</label><input type="text" id="addrIn"></div>
+            <div class="form-field"><label>Zona Asignada</label>
                 <select id="zoneIn">
                     <option>Zona 1</option><option>Zona 2</option><option>Zona 3</option><option>Zona 4</option><option>Zona 5</option>
                     <option>Zona 6</option><option>Zona 7</option><option>Zona 8</option><option>Zona 9</option><option>Zona 10</option>
                 </select>
             </div>
             <div class="form-field"><label>Persona de Contacto</label><input type="text" id="contactIn"></div>
-            <div class="form-field"><label>Teléfono</label><input type="tel" id="phoneIn"></div>
-            <div class="form-field"><label>Maps URL</label><input type="url" id="linkIn"></div>
+            <div class="form-field"><label>Número de Teléfono</label><input type="tel" id="phoneIn"></div>
+            <div class="form-field"><label>Enlace de Google Maps</label><input type="url" id="linkIn"></div>
             
             <div class="form-field">
-                <label>FOTOS (MÁXIMO 3)</label>
-                <input type="file" id="f1" accept="image/*" style="margin-bottom:5px">
-                <input type="file" id="f2" accept="image/*" style="margin-bottom:5px">
+                <label>FOTOS DEL LUGAR (HASTA 3)</label>
+                <input type="file" id="f1" accept="image/*" style="margin-bottom:8px">
+                <input type="file" id="f2" accept="image/*" style="margin-bottom:8px">
                 <input type="file" id="f3" accept="image/*">
             </div>
             
-            <button id="saveBtn" onclick="saveTemplo()" style="width:100%; background:var(--blue-main); color:white; padding:15px; border:none; border-radius:12px; font-weight:800;">GUARDAR REGISTRO</button>
-            <button onclick="closeMod('manageOverlay')" style="width:100%; background:none; border:none; margin-top:10px; color:var(--text-gray); font-size:13px;">Cerrar</button>
+            <button id="saveBtn" onclick="saveTemplo()" style="width:100%; background:var(--blue-main); color:white; padding:18px; border:none; border-radius:15px; font-weight:800; font-size:16px; cursor:pointer;">GUARDAR CAMBIOS</button>
+            <button onclick="closeMod('manageOverlay')" style="width:100%; background:none; border:none; margin-top:15px; color:var(--text-gray); font-size:14px; cursor:pointer;">Cancelar y Volver</button>
         </div>
     </div>
 
@@ -227,13 +250,14 @@
             <a href="#"><i class="fab fa-youtube"></i></a>
             <a href="#"><i class="fab fa-tiktok"></i></a>
         </div>
-        <p style="font-size:10px; letter-spacing:2px; opacity:0.6;">DEVELOPER - ROBERT PARACO</p>
+        <p style="font-size:11px; letter-spacing:3px; opacity:0.6; font-weight:700;">DEVELOPER - ROBERT PARACO</p>
+        <p style="font-size:10px; margin-top:10px; opacity:0.4;">© 2024 MAPSTEM - Todos los derechos reservados.</p>
     </footer>
 
     <nav id="bottomNav" style="display:none;">
-        <button class="nav-link" onclick="location.reload()"><i class="fas fa-home"></i><br>INICIO</button>
-        <button id="btnManage" class="nav-link" onclick="showMod('manageOverlay')"><i class="fas fa-plus-circle"></i><br>GESTIÓN</button>
-        <button class="nav-link" style="color:var(--yellow-accent);" onclick="logout()"><i class="fas fa-sign-out-alt"></i><br>SALIR</button>
+        <button class="nav-link" onclick="location.reload()"><i class="fas fa-home" style="font-size:18px; margin-bottom:5px;"></i><br>INICIO</button>
+        <button id="btnManage" class="nav-link" onclick="showMod('manageOverlay')"><i class="fas fa-plus-circle" style="font-size:18px; margin-bottom:5px;"></i><br>GESTIÓN</button>
+        <button class="nav-link" style="color:var(--yellow-accent);" onclick="logout()"><i class="fas fa-sign-out-alt" style="font-size:18px; margin-bottom:5px;"></i><br>SALIR</button>
     </nav>
 
     <script type="module">
@@ -282,17 +306,39 @@
                     }
                     if(userRole === 'reader') document.getElementById('btnManage').style.display = 'none';
 
+                    loadGlobalLogo();
                     loadData();
                 });
             }
         });
 
-        // FILTRAR SOLO ADMINISTRADORES PARA EL SUPERADMIN
+        // FUNCIONALIDAD LOGO UNIVERSAL (SÓLO SUPER ADMIN)
+        window.uploadGlobalLogo = async (input) => {
+            if (input.files && input.files[0]) {
+                const b64 = await toB64(input.files[0]);
+                set(ref(db, 'config/globalLogo'), b64).then(() => {
+                    alert("Logo Universal Actualizado con éxito.");
+                });
+            }
+        };
+
+        function loadGlobalLogo() {
+            onValue(ref(db, 'config/globalLogo'), (snap) => {
+                const val = snap.val();
+                if(val) {
+                    const img = document.getElementById('logoImg');
+                    img.src = val;
+                    img.style.display = 'block';
+                    document.getElementById('logoLabel').style.display = 'none';
+                }
+            });
+        }
+
         function loadUsersList() {
             onValue(ref(db, 'users'), (snap) => {
                 const users = snap.val();
                 const select = document.getElementById('userSelect');
-                select.innerHTML = '<option value="all">Ver todos los registros</option>';
+                select.innerHTML = '<option value="all">Ver todos los registros del sistema</option>';
                 for(let id in users) {
                     if(users[id].role === 'admin') {
                         let opt = document.createElement('option');
@@ -312,16 +358,17 @@
 
         window.deleteSelectedUser = () => {
             if(!selectedUserId) return;
-            if(confirm("¿Eliminar este Administrador y todos sus datos cargados?")){
+            if(confirm("¿ELIMINAR ESTE ADMINISTRADOR? Esta acción borrará permanentemente al usuario y todos los templos que haya registrado.")){
                 allTemplos.forEach(t => { if(t.ownerId === selectedUserId) remove(ref(db, `templos/${t.id}`)); });
-                remove(ref(db, `users/${selectedUserId}`)).then(() => alert("Administrador eliminado"));
+                remove(ref(db, `users/${selectedUserId}`)).then(() => alert("Administrador eliminado correctamente."));
             }
         };
 
         window.handleAuth = () => {
             const email = document.getElementById('emailInp').value;
             const pass = document.getElementById('passInp').value;
-            signInWithEmailAndPassword(auth, email, pass).catch(e => alert("Acceso denegado"));
+            if(!email || !pass) return alert("Por favor ingresa tus credenciales.");
+            signInWithEmailAndPassword(auth, email, pass).catch(e => alert("Error de acceso: Credenciales no válidas."));
         };
 
         window.logout = () => signOut(auth).then(() => location.reload());
@@ -362,22 +409,22 @@
                 div.className = 'church-card';
                 div.innerHTML = `
                     <div class="card-slider">
-                        <img src="${item.img1 || 'https://via.placeholder.com/400x230?text=Sin+Foto'}">
+                        <img src="${item.img1 || 'https://via.placeholder.com/400x230?text=Sin+Imagen+Cargada'}">
                         ${item.img2 ? `<img src="${item.img2}">` : ''}
                         ${item.img3 ? `<img src="${item.img3}">` : ''}
                     </div>
                     <div class="card-content">
-                        <span style="font-size:10px; font-weight:800; color:var(--yellow-accent);">${item.zona}</span>
-                        <h2 style="font-family:'Montserrat'; font-size:18px; margin-bottom:10px; color:var(--blue-main);">${item.name}</h2>
+                        <span style="font-size:10px; font-weight:800; color:var(--yellow-accent); text-transform:uppercase; letter-spacing:1px;">${item.zona}</span>
+                        <h2 style="font-family:'Montserrat'; font-size:18px; margin: 8px 0 15px; color:var(--blue-main); line-height:1.2;">${item.name}</h2>
                         <div class="card-info-row"><i class="fas fa-map-marker-alt"></i> <span>${item.addr}</span></div>
-                        <div class="card-info-row"><i class="fas fa-user"></i> <span>${item.contact || 'No asignado'}</span></div>
-                        <div class="card-info-row"><i class="fas fa-phone"></i> <span>${item.phone || 'N/A'}</span></div>
-                        <a href="${item.link}" target="_blank" style="display:block; margin-top:15px; text-align:center; background:var(--blue-main); color:white; padding:12px; border-radius:10px; text-decoration:none; font-weight:700; font-size:12px;">VER MAPA</a>
+                        <div class="card-info-row"><i class="fas fa-user-circle"></i> <span>Contacto: ${item.contact || 'No disponible'}</span></div>
+                        <div class="card-info-row"><i class="fas fa-phone-alt"></i> <span>Tel: ${item.phone || 'N/A'}</span></div>
+                        <a href="${item.link}" target="_blank" style="display:block; margin-top:20px; text-align:center; background:var(--blue-main); color:white; padding:12px; border-radius:12px; text-decoration:none; font-weight:700; font-size:12px; letter-spacing:1px; transition:0.3s;">UBICACIÓN EN MAPA</a>
                     </div>
                     ${(userRole === 'super' || (userRole === 'admin' && item.ownerId === userData.uid)) ? `
-                    <div style="display:flex; gap:5px; padding:10px; background:#f8f9fa;">
-                        <button onclick="prepEdit('${item.id}')" style="flex:1; padding:8px; background:var(--blue-light); color:white; border:none; border-radius:5px; font-weight:700; cursor:pointer;">EDITAR</button>
-                        <button onclick="deleteTemplo('${item.id}')" style="padding:8px; background:var(--danger); color:white; border:none; border-radius:5px; cursor:pointer;"><i class="fas fa-trash"></i></button>
+                    <div style="display:flex; gap:5px; padding:15px; background:#fbfbfb; border-top:1px solid #eee;">
+                        <button onclick="prepEdit('${item.id}')" style="flex:1; padding:10px; background:var(--blue-light); color:white; border:none; border-radius:8px; font-weight:700; cursor:pointer;">EDITAR</button>
+                        <button onclick="deleteTemplo('${item.id}')" style="padding:10px; background:var(--danger); color:white; border:none; border-radius:8px; cursor:pointer;"><i class="fas fa-trash"></i></button>
                     </div>` : ''}
                 `;
                 grid.appendChild(div);
@@ -393,14 +440,14 @@
             });
         };
 
-        window.deleteTemplo = (id) => { if(confirm("¿Borrar este registro?")) remove(ref(db, `templos/${id}`)); };
+        window.deleteTemplo = (id) => { if(confirm("¿Deseas eliminar este registro permanentemente?")) remove(ref(db, `templos/${id}`)); };
 
         window.createUser = (role) => {
             const email = document.getElementById('newAdminEmail').value;
             const pass = document.getElementById('newAdminPass').value;
-            if(!email || !pass) return alert("Datos incompletos");
+            if(!email || !pass) return alert("Por favor completa los datos del nuevo administrador.");
             const id = btoa(email).replace(/=/g, "");
-            set(ref(db, `users/${id}`), { email, pass, role }).then(() => alert("Admin registrado"));
+            set(ref(db, `users/${id}`), { email, pass, role }).then(() => alert("Nuevo Administrador registrado correctamente."));
         };
 
         window.prepEdit = (id) => {
@@ -412,13 +459,13 @@
             document.getElementById('contactIn').value = item.contact || '';
             document.getElementById('phoneIn').value = item.phone || '';
             document.getElementById('linkIn').value = item.link;
-            document.getElementById('manageTitle').innerText = "Editar Templo";
+            document.getElementById('manageTitle').innerText = "Editar Registro";
             showMod('manageOverlay');
         };
 
         function clearForm() {
             document.getElementById('editKey').value = "";
-            document.querySelectorAll('.modal-body input').forEach(i => i.value = "");
+            document.querySelectorAll('.modal-body input').forEach(i => { if(i.type !== 'file') i.value = ""; });
             document.getElementById('manageTitle').innerText = "Nuevo Registro";
         }
 
