@@ -2,7 +2,14 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <!-- Optimización para PWA -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0a2f5c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-512.png">
+
     <title>MAPSTEM - Gestión de Templos</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Rajdhani:wght@700&family=Montserrat:wght@800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -22,7 +29,6 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         
-        /* ANIMACIÓN DE DEGRADADO PROFESIONAL PARA TODA LA APP */
         body { 
             background: linear-gradient(-45deg, #f4f7f9, #e0e8f0, #d1dbe5, #f4f7f9);
             background-size: 400% 400%;
@@ -39,7 +45,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* HEADER FIJO CON ANIMACIÓN DE LÍNEAS */
         header {
             position: fixed;
             top: 0; left: 0; width: 100%;
@@ -87,7 +92,6 @@
         }
         .search-container input { flex: 1; border: none; outline: none; padding: 5px; font-size: 14px; }
 
-        /* LOGIN SPLASH CON DEGRADADO ANIMADO */
         #authSplash {
             position: fixed; inset: 0; z-index: 9999;
             background: linear-gradient(-45deg, #0a2f5c, #1a4b8f, #0d3b75, #081f3d);
@@ -102,7 +106,7 @@
             padding: 40px; border-radius: 30px; width: 100%; max-width: 380px; text-align: center; color: white;
             border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 20px 50px rgba(0,0,0,0.3);
         }
-        .login-card input { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px; border: none; outline: none; }
+        .login-card input { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px; border: none; outline: none; color: #333; }
         .login-card button { width: 100%; padding: 15px; border-radius: 12px; border: none; background: var(--yellow-accent); font-weight: 800; cursor: pointer; color: var(--blue-main); font-size: 16px; }
 
         .main-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; padding: 20px; position: relative; z-index: 1; }
@@ -176,7 +180,6 @@
 
     <div class="main-container" id="churchGrid"></div>
 
-    <!-- VIDEO AL FINAL -->
     <div id="videoSection" class="video-container" style="display:none;">
         <h2 style="text-align:center; font-family:'Rajdhani'; color:var(--blue-main); margin-bottom:20px; letter-spacing: 3px; font-size: 24px;">MAPS TEM</h2>
         <div class="video-wrapper">
@@ -186,30 +189,22 @@
         </div>
     </div>
 
-    <!-- MODAL GESTIÓN -->
     <div id="manageOverlay" class="modal-overlay">
         <div class="modal-body">
-            
-            <!-- PANEL SUPER ADMIN -->
             <div id="superTools" style="display:none;" class="super-panel">
                 <p style="font-size:12px; font-weight:800; margin-bottom:12px; color:var(--blue-main); border-bottom: 1px solid var(--yellow-accent); padding-bottom:5px;">HERRAMIENTAS DE CONTROL MAESTRO</p>
-                
-                <!-- CARGA DE LOGO DESDE DISPOSITIVO -->
                 <div class="form-field">
                     <label>Logo Universal de la App</label>
                     <input type="file" id="logoFileInp" accept="image/*" onchange="uploadGlobalLogo(this)" style="padding:5px; font-size:11px;">
                     <small style="font-size:9px; color:var(--text-gray);">Cambia el logo para todos los usuarios.</small>
                 </div>
-
                 <label style="font-size: 11px; font-weight: 800; color: var(--blue-main); margin-top:10px; display:block;">SELECCIONAR ADMINISTRADOR</label>
                 <select id="userSelect" class="user-selector" onchange="filterByUser(this.value)">
                     <option value="all">Ver todos los registros del sistema</option>
                 </select>
-                
                 <div id="userDetails" style="display:none; margin-bottom:15px;">
                     <button id="deleteUserBtn" onclick="deleteSelectedUser()" style="width:100%; background:var(--danger); color:white; border:none; padding:12px; border-radius:10px; font-size:12px; font-weight:700; cursor:pointer;">ELIMINAR ESTE ADMIN Y SUS DATOS</button>
                 </div>
-
                 <div class="form-field" style="background:white; padding:15px; border-radius:12px; border:1px solid #eee;">
                     <label>Nuevo Administrador</label>
                     <input type="email" id="newAdminEmail" placeholder="Email del Admin" style="margin-bottom:8px;">
@@ -231,14 +226,12 @@
             <div class="form-field"><label>Persona de Contacto</label><input type="text" id="contactIn"></div>
             <div class="form-field"><label>Número de Teléfono</label><input type="tel" id="phoneIn"></div>
             <div class="form-field"><label>Enlace de Google Maps</label><input type="url" id="linkIn"></div>
-            
             <div class="form-field">
                 <label>FOTOS DEL LUGAR (HASTA 3)</label>
                 <input type="file" id="f1" accept="image/*" style="margin-bottom:8px">
                 <input type="file" id="f2" accept="image/*" style="margin-bottom:8px">
                 <input type="file" id="f3" accept="image/*">
             </div>
-            
             <button id="saveBtn" onclick="saveTemplo()" style="width:100%; background:var(--blue-main); color:white; padding:18px; border:none; border-radius:15px; font-weight:800; font-size:16px; cursor:pointer;">GUARDAR CAMBIOS</button>
             <button onclick="closeMod('manageOverlay')" style="width:100%; background:none; border:none; margin-top:15px; color:var(--text-gray); font-size:14px; cursor:pointer;">Cancelar y Volver</button>
         </div>
@@ -282,7 +275,7 @@
         const SUPER_ADMIN = "superadmin@avcsur.com";
         let userRole = null;
         let userData = null;
-        let userFullInfo = null; // Guardamos info completa del usuario
+        let userFullInfo = null;
         let allTemplos = [];
         let selectedUserId = null;
 
@@ -291,30 +284,25 @@
                 userData = user;
                 onValue(ref(db, `users/${user.uid}`), (snap) => {
                     const info = snap.val();
-                    userFullInfo = info; // Sincronizamos info para parentAdmin
+                    userFullInfo = info;
                     userRole = (user.email === SUPER_ADMIN) ? 'super' : (info ? info.role : 'reader');
-
                     document.getElementById('authSplash').style.display = 'none';
                     document.getElementById('bottomNav').style.display = 'flex';
                     document.getElementById('videoSection').style.display = 'block';
-                    
                     const badge = document.getElementById('roleBadge');
                     badge.innerText = userRole.toUpperCase();
                     badge.style.display = 'block';
-
                     if(userRole === 'super') {
                         document.getElementById('superTools').style.display = 'block';
                         loadUsersList();
                     }
                     if(userRole === 'reader') document.getElementById('btnManage').style.display = 'none';
-
                     loadGlobalLogo();
                     loadData();
                 });
             }
         });
 
-        // FUNCIONALIDAD LOGO UNIVERSAL (SÓLO SUPER ADMIN)
         window.uploadGlobalLogo = async (input) => {
             if (input.files && input.files[0]) {
                 const b64 = await toB64(input.files[0]);
@@ -360,7 +348,7 @@
 
         window.deleteSelectedUser = () => {
             if(!selectedUserId) return;
-            if(confirm("¿ELIMINAR ESTE ADMINISTRADOR? Esta acción borrará permanentemente al usuario y todos los templos que haya registrado.")){
+            if(confirm("¿ELIMINAR ESTE ADMINISTRADOR?")){
                 allTemplos.forEach(t => { if(t.ownerId === selectedUserId) remove(ref(db, `templos/${t.id}`)); });
                 remove(ref(db, `users/${selectedUserId}`)).then(() => alert("Administrador eliminado correctamente."));
             }
@@ -386,15 +374,12 @@
                 link: document.getElementById('linkIn').value,
                 ownerId: userData.uid
             };
-
             const f1 = document.getElementById('f1').files[0];
             const f2 = document.getElementById('f2').files[0];
             const f3 = document.getElementById('f3').files[0];
-
             if(f1) data.img1 = await toB64(f1);
             if(f2) data.img2 = await toB64(f2);
             if(f3) data.img3 = await toB64(f3);
-
             if(key) update(ref(db, `templos/${key}`), data).then(() => closeMod('manageOverlay'));
             else push(ref(db, 'templos'), data).then(() => { closeMod('manageOverlay'); clearForm(); });
         };
@@ -403,18 +388,14 @@
             const grid = document.getElementById('churchGrid');
             grid.innerHTML = "";
             let filtered = data;
-
-            // --- FILTRADO POR ROL (CORREGIDO) ---
             if(userRole === 'admin') {
                 filtered = data.filter(i => i.ownerId === userData.uid);
             } else if(userRole === 'super') {
                 if(selectedUserId) filtered = data.filter(i => i.ownerId === selectedUserId);
             } else if(userRole === 'reader') {
-                // El lector solo ve los templos de su admin padre (parentAdmin)
                 const pAdmin = userFullInfo ? userFullInfo.parentAdmin : null;
                 filtered = data.filter(i => i.ownerId === pAdmin);
             }
-
             filtered.forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'church-card';
@@ -451,14 +432,14 @@
             });
         };
 
-        window.deleteTemplo = (id) => { if(confirm("¿Deseas eliminar este registro permanentemente?")) remove(ref(db, `templos/${id}`)); };
+        window.deleteTemplo = (id) => { if(confirm("¿Deseas eliminar este registro?")) remove(ref(db, `templos/${id}`)); };
 
         window.createUser = (role) => {
             const email = document.getElementById('newAdminEmail').value;
             const pass = document.getElementById('newAdminPass').value;
-            if(!email || !pass) return alert("Por favor completa los datos del nuevo administrador.");
+            if(!email || !pass) return alert("Completa los datos.");
             const id = btoa(email).replace(/=/g, "");
-            set(ref(db, `users/${id}`), { email, pass, role }).then(() => alert("Nuevo Administrador registrado correctamente."));
+            set(ref(db, `users/${id}`), { email, pass, role }).then(() => alert("Admin registrado."));
         };
 
         window.prepEdit = (id) => {
@@ -490,6 +471,15 @@
             const val = document.getElementById('searchInput').value.toLowerCase();
             document.querySelectorAll('.church-card').forEach(c => {
                 c.style.display = c.innerText.toLowerCase().includes(val) ? 'flex' : 'none';
+            });
+        }
+
+        // --- REGISTRO DEL SERVICE WORKER ---
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('SW registrado', reg))
+                    .catch(err => console.log('Error SW', err));
             });
         }
     </script>
