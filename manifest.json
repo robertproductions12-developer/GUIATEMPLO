@@ -4,14 +4,22 @@
   "short_name": "MAPSTEM",
   "start_url": "/GUIATEMPLO/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#0a2f5c",
   "theme_color": "#0a2f5c",
   "description": "Sistema de gestión y búsqueda de templos.",
   "icons": [
     {
-      "src": "https://via.placeholder.com/512x512.png?text=MAPSTEM",
+      "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
+}
