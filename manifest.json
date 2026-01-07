@@ -1,4 +1,5 @@
 {
+  "id": "/GUIATEMPLO/",
   "name": "MAPSTEM Gestión de Templos",
   "short_name": "MAPSTEM",
   "start_url": "/GUIATEMPLO/",
@@ -13,6 +14,4 @@
       "type": "image/png",
       "purpose": "any maskable"
     }
-  ],
-  "lang": "en"
-}
+  ]
